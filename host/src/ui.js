@@ -51,23 +51,34 @@ export class UI {
 
 	// ---------- Connexion ----------
 
-	showGate({ onSignIn, message, busy, version }) {
+	showGate({ onSignIn, message, version }) {
 		this.hideGate();
 		const error = el("p", { class: "mj-gate-error", role: "alert" }, message || "");
-		const button = el("button", { class: "mj-google-btn", type: "button", disabled: busy }, [
+		const hint = el("p", { class: "mj-gate-note mj-gate-hint" }, "");
+		const label = el("span", {}, "Se connecter avec Google");
+		const button = el("button", { class: "mj-google-btn", type: "button" }, [
 			el("span", { class: "mj-google-g", html: GOOGLE_G }),
-			el("span", {}, busy ? "Connexion…" : "Se connecter avec Google")
+			label
 		]);
+		// Le bouton reste cliquable : sur Windows, si l'onglet du navigateur a
+		// été fermé, un nouveau clic relance simplement la connexion.
+		let attempt = 0;
 		button.addEventListener("click", async () => {
-			button.disabled = true;
-			button.lastChild.textContent = "Connexion…";
+			const mine = ++attempt;
+			label.textContent = "Connexion…";
 			error.textContent = "";
+			hint.textContent = this.host.platformName() === "windows"
+				? "Termine la connexion dans la page Google qui vient de s'ouvrir dans ton navigateur."
+				: "";
 			try {
 				await onSignIn();
 			} catch (e) {
+				if (mine !== attempt) {
+					return;
+				}
 				error.textContent = e && e.code === "cancelled" ? "" : (e && e.message) || "La connexion a échoué.";
-				button.disabled = false;
-				button.lastChild.textContent = "Se connecter avec Google";
+				hint.textContent = "";
+				label.textContent = "Se connecter avec Google";
 			}
 		});
 		this.gateNode = el("div", { class: "mj-gate" }, [
@@ -76,6 +87,7 @@ export class UI {
 				el("h1", {}, "Mon Journal"),
 				el("p", { class: "mj-gate-kicker" }, "Journal · Agenda · Relations"),
 				button,
+				hint,
 				error,
 				el("p", { class: "mj-gate-note" }, "Ton journal est enregistré dans ton propre Google Drive, dans un dossier réservé à l'application. Personne d'autre n'y a accès.")
 			]),

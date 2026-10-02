@@ -37,6 +37,8 @@ html, body { background: var(--mj-bg); }
 .mj-gate h1 { font-family: var(--mj-caps); font-weight: 400; font-size: 42px; letter-spacing: .02em; margin: 6px 0 0; }
 .mj-gate-kicker { margin: 0 0 18px; color: var(--mj-muted); letter-spacing: .22em; text-transform: uppercase; font-size: 12px; }
 .mj-gate-note { color: var(--mj-muted); font-size: 15px; line-height: 1.45; margin-top: 14px; }
+.mj-gate-hint { margin: 4px 0 0; min-height: 0; color: var(--mj-accent); }
+.mj-gate-hint:empty { display: none; }
 .mj-gate-error { color: var(--mj-danger); min-height: 1.2em; margin: 2px 0 0; font-size: 15px; }
 .mj-gate-loading { color: var(--mj-muted); font-size: 18px; }
 .mj-gate-version { position: absolute; bottom: 14px; color: var(--mj-muted); font-size: 13px; margin: 0; opacity: .7; }

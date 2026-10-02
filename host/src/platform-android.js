@@ -46,10 +46,11 @@ export async function createAndroidPlatform() {
 			result = await NativeAuth.authorize({ interactive });
 		} catch (e) {
 			const msg = (e && e.message) || String(e);
-			if (/cancel/i.test(msg)) {
+			const code = e && e.code ? String(e.code) : "";
+			if (code === "cancelled" || code === "16" || /cancel|annul/i.test(msg)) {
 				throw new AppError("cancelled", "Connexion annulée");
 			}
-			if (/network|offline|7:/i.test(msg)) {
+			if (code === "7" || /network|offline/i.test(msg)) {
 				throw new AppError("offline", "Pas de connexion");
 			}
 			throw new AppError("auth", msg);

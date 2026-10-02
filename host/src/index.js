@@ -43,6 +43,7 @@ const Host = {
 	syncStatus: () => state.status,
 	updateState: () => state.update,
 	version: () => (state.platform ? state.platform.version : ""),
+	platformName: () => (state.platform ? state.platform.name : ""),
 
 	// Appelé par $:/plugins/pinkrain/monjournal/startup.js une fois le wiki prêt.
 	attachWiki(tw) {
