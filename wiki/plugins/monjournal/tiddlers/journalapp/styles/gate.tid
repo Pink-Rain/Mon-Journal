@@ -1,0 +1,35 @@
+title: $:/journalapp/styles/gate
+tags: $:/tags/Stylesheet
+
+<$list filter="[[$:/layout]get[text]match[$:/journalapp/layout]]" variable="ja-layout-actif">
+/* =========================================================
+   MON JOURNAL — neutralisation de la page hôte.
+   CE FICHIER N'EST INJECTÉ QUE SI LE LAYOUT "Mon Journal"
+   EST ACTIF (via $:/journalapp/styles/gate).
+   Il ne doit JAMAIS s'appliquer au Standard Layout.
+   ========================================================= */
+
+html {
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+}
+
+html body,
+html body.tc-body {
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	overflow: hidden !important;
+}
+
+body .tc-page-container-wrapper,
+body > .tc-page-container-wrapper {
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	overflow: hidden !important;
+}
+</$list>

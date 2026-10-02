@@ -1,0 +1,51 @@
+title: $:/journalapp/ui/SidebarBottomViews
+
+\whitespace trim
+<$let
+	ja-bottom-category={{{ [[$:/state/journalapp/category]get[text]else[$:/journalapp/categories/accueil]] }}}
+	ja-bottom-label={{{ [<ja-bottom-category>get[all-tiddlers-label]else[Voir tous les tiddlers]] }}}
+>
+<div class="ja-sidebar-bottom-views">
+
+	<$button
+		class={{{ [<ja-view>match[$:/journalapp/views/shared/all-category]then[ja-sidebar-bottom-link ja-active]else[ja-sidebar-bottom-link]] }}}
+		tooltip=<<ja-bottom-label>>
+	>
+		<$action-setfield
+			$tiddler="$:/state/journalapp/view"
+			$field="text"
+			$value="$:/journalapp/views/shared/all-category"
+			$timestamp="no"
+		/>
+		<$action-setfield
+			$tiddler="$:/temp/journalapp/mobile-left"
+			$field="text"
+			$value="closed"
+			$timestamp="no"
+		/>
+		<$text text=<<ja-bottom-label>>/>
+	</$button>
+
+	<$list filter="[<ja-bottom-category>match[$:/journalapp/categories/accueil]]">
+		<$button
+			class={{{ [<ja-view>match[$:/journalapp/views/accueil/uncategorized]then[ja-sidebar-bottom-link ja-active]else[ja-sidebar-bottom-link]] }}}
+			tooltip="Voir tous les tiddlers sans catégorie"
+		>
+			<$action-setfield
+				$tiddler="$:/state/journalapp/view"
+				$field="text"
+				$value="$:/journalapp/views/accueil/uncategorized"
+				$timestamp="no"
+			/>
+			<$action-setfield
+				$tiddler="$:/temp/journalapp/mobile-left"
+				$field="text"
+				$value="closed"
+				$timestamp="no"
+			/>
+			Voir tous les tiddlers sans catégorie
+		</$button>
+	</$list>
+
+</div>
+</$let>

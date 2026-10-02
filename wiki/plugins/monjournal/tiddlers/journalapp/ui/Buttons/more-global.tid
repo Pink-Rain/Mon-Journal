@@ -1,0 +1,17 @@
+title: $:/journalapp/ui/Buttons/more-global
+
+\whitespace trim
+<$button
+	set="$:/state/journalapp/more-menu"
+	setTo="open"
+	tooltip="Plus d'actions"
+	aria-label="Plus d'actions"
+	class=<<tv-config-toolbar-class>>
+>
+	<%if [<tv-config-toolbar-icons>match[yes]] %>
+		{{$:/core/images/down-arrow}}
+	<%endif%>
+	<%if [<tv-config-toolbar-text>match[yes]] %>
+		<span class="tc-btn-text">Plus</span>
+	<%endif%>
+</$button>

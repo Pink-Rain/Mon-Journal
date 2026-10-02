@@ -1,0 +1,4 @@
+title: $:/tags/JournalApp/Category
+list: $:/journalapp/categories/accueil $:/journalapp/categories/agenda $:/journalapp/categories/journal $:/journalapp/categories/projet $:/journalapp/categories/sommeil $:/journalapp/categories/relations $:/journalapp/categories/lieux $:/journalapp/categories/activite $:/journalapp/categories/media $:/journalapp/categories/settings
+
+Tag interne : catégories principales de Mon Journal. Le field list donne l’ordre de la nav.

@@ -1,0 +1,16 @@
+title: $:/journalapp/views/journal/year
+caption: Année
+category: $:/journalapp/categories/journal
+order: 40
+page-width: wide
+slug: year
+tags: $:/tags/JournalApp/View $:/journalapp/categories/journal
+
+\whitespace trim
+<div class="ja-settings-page">
+<div class="ja-settings-hero">
+	<div class="ja-settings-kicker">JOURNAL · ANNÉE</div>
+	<h1><$text text={{$:/state/journalapp/journal-year}}/></h1>
+	<p>Page à construire. Le repère sélectionné est conservé dans <code>$:/state/journalapp/journal-year</code>.</p>
+</div>
+</div>

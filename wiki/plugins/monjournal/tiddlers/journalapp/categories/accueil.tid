@@ -1,0 +1,10 @@
+title: $:/journalapp/categories/accueil
+caption: Accueil
+category-tag: Accueil
+icon-text: 🏠
+landing-view: $:/journalapp/views/accueil/home
+slug: accueil
+tags: $:/tags/JournalApp/Category
+ui-sidebar: $:/journalapp/ui/SidebarAccueil
+
+Configuration interne de la catégorie Accueil.

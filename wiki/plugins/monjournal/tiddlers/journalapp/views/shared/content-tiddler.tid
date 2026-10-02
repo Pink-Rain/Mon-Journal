@@ -1,0 +1,20 @@
+title: $:/journalapp/views/shared/content-tiddler
+caption: Tiddler
+page-width: wide
+slug: content-tiddler
+ui-subheader: $:/journalapp/ui/SubHeaderContentTiddler
+
+\whitespace trim
+<$let
+	ja-content-tiddler={{{ [[$:/state/journalapp/content-tiddler]get[text]] }}}
+>
+	<$list filter="[<ja-content-tiddler>is[tiddler]]">
+		<$transclude $tiddler=<<ja-content-tiddler>> $mode="block"/>
+	</$list>
+
+	<$list filter="[<ja-content-tiddler>!is[tiddler]]">
+		<div class="ja-empty">
+			Aucun tiddler sélectionné.
+		</div>
+	</$list>
+</$let>

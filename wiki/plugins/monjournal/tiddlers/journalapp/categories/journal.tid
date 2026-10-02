@@ -1,0 +1,11 @@
+title: $:/journalapp/categories/journal
+all-tiddlers-label: Voir tous les tiddlers du Journal
+caption: Journal
+category-tag: Journal
+icon-text: 📖
+landing-view: $:/journalapp/views/journal/home
+slug: journal
+tags: $:/tags/JournalApp/Category
+ui-sidebar: $:/journalapp/ui/SidebarJournal
+
+Configuration interne de la catégorie Journal.

@@ -1,0 +1,611 @@
+/* MON JOURNAL — RELATIONS
+   Feuille canonique unique de la fiche Relation : en-tête à onglets,
+   carte portrait, colonnes, marginalia, petits mots. Les briques déjà
+   existantes (ja-pop, ja-imgset, ja-af-seg, ja-basic-card, ja-jform-*)
+   ne sont pas redéfinies ici : seules les pièces propres à la fiche
+   vivent dans ce fichier.
+*/
+
+.ja-rel-sheet {
+  --ja-rel-color: var(--ja-accent);
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------- En-tête et onglets ---------- */
+.ja-rel-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ja-rel-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  padding-bottom: 1px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ja-rel-tabs::-webkit-scrollbar { display: none; }
+
+.ja-rel-tab {
+  appearance: none;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 6px 13px;
+  border: 1px solid var(--ja-border);
+  border-bottom-color: transparent;
+  border-radius: 12px 12px 0 0;
+  background: color-mix(in srgb, var(--ja-panel) 72%, transparent);
+  color: var(--ja-soft);
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: .78rem;
+  cursor: pointer;
+  transition: background .14s ease, color .14s ease, border-color .14s ease;
+}
+
+.ja-rel-tab:hover {
+  color: var(--ja-text);
+  background: var(--ja-panel);
+}
+
+.ja-rel-tab.ja-active {
+  border-color: color-mix(in srgb, var(--ja-accent) 55%, var(--ja-border));
+  background: var(--ja-accent-soft);
+  color: var(--ja-text);
+}
+
+.ja-rel-tab-ico { font-size: .95rem; line-height: 1; }
+.ja-rel-tab-lab { white-space: nowrap; }
+
+.ja-rel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------- Carte principale ---------- */
+.ja-rel-card {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 22px;
+  padding: 18px 22px 20px;
+  border: 1px solid var(--ja-border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--ja-panel) 82%, transparent);
+  box-shadow: var(--ja-shadow);
+}
+
+.ja-rel-portrait {
+  position: relative;
+  align-self: start;
+}
+
+.ja-rel-portrait-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ja-rel-color) 55%, var(--ja-border));
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--ja-panel-2) 80%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ja-rel-color) 12%, transparent);
+}
+
+.ja-rel-portrait-initials {
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: 2.6rem;
+  color: color-mix(in srgb, var(--ja-rel-color) 55%, var(--ja-soft));
+  opacity: .8;
+}
+
+.ja-rel-portrait-img {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.ja-rel-portrait-edit {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--ja-rel-color) 50%, var(--ja-border));
+  border-radius: 999px;
+  background: rgba(12, 13, 18, .7);
+  color: var(--ja-text);
+  font-size: .8rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  backdrop-filter: blur(4px);
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+.ja-rel-portrait:hover .ja-rel-portrait-edit,
+.ja-rel-portrait-edit:focus-visible { opacity: 1; }
+.ja-rel-portrait-edit:hover { transform: scale(1.08); }
+
+.ja-rel-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ja-rel-namebar {
+  display: grid;
+  grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+.ja-rel-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ja-rel-color) 70%, transparent));
+}
+
+.ja-rel-namebar .ja-rel-rule:last-child {
+  background: linear-gradient(270deg, transparent, color-mix(in srgb, var(--ja-rel-color) 70%, transparent));
+}
+
+.ja-rel-name {
+  margin: 0 !important;
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: clamp(1.5rem, 3vw, 2.1rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.1 !important;
+  color: color-mix(in srgb, var(--ja-rel-color) 62%, var(--ja-text));
+  text-align: center;
+}
+
+.ja-rel-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 4px 26px;
+}
+
+.ja-rel-col {
+  min-width: 0;
+  padding-right: 22px;
+}
+
+.ja-rel-col + .ja-rel-col {
+  padding: 0 0 0 26px;
+  border-left: 1px solid color-mix(in srgb, var(--ja-border) 70%, transparent);
+}
+
+.ja-rel-col-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ja-border) 70%, transparent);
+}
+
+.ja-rel-col-title {
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: .95rem;
+  color: color-mix(in srgb, var(--ja-rel-color) 48%, var(--ja-text));
+}
+
+.ja-rel-col-dash { color: var(--ja-soft); opacity: .7; }
+
+.ja-rel-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ja-rel-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 30px;
+  padding: 3px 0;
+}
+
+.ja-rel-line-lab {
+  flex: 0 0 auto;
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: .82rem;
+  color: var(--ja-muted);
+}
+
+.ja-rel-line-val {
+  min-width: 0;
+  color: var(--ja-text);
+  font-size: .92rem;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.ja-rel-contact { justify-content: flex-start; gap: 10px; }
+.ja-rel-contact .ja-rel-line-val { flex: 1 1 auto; }
+.ja-rel-contact-ico { flex: 0 0 22px; font-size: .95rem; }
+
+/* ---------- Marginalia : faits, notes courtes, liens ---------- */
+.ja-rel-strip {
+  display: grid;
+  grid-template-columns: minmax(150px, .8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(140px, .8fr);
+  gap: 18px;
+  padding: 0 6px;
+  align-items: start;
+}
+
+.ja-rel-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.ja-rel-fact {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.ja-rel-fact-ico { font-size: 1.05rem; line-height: 1; }
+
+.ja-rel-fact-val {
+  font-family: "IM Fell Double Pica", "Iowan Old Style", Georgia, serif;
+  font-size: .95rem;
+  color: var(--ja-text);
+}
+
+.ja-rel-fact-link {
+  appearance: none;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--ja-rel-color) 65%, var(--ja-text));
+  font: inherit;
+  font-size: .92rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ja-rel-fact-link:hover { text-decoration: underline; }
+.ja-rel-fact-home { color: var(--ja-soft); font-size: .8rem; }
+
+.ja-rel-notecard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ja-rel-notecard-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ja-rel-notecard-title {
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: .88rem;
+  color: color-mix(in srgb, var(--ja-rel-color) 45%, var(--ja-text));
+}
+
+.ja-rel-mini-edit {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ja-soft);
+  font-size: .78rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .14s ease, background .14s ease;
+}
+
+.ja-rel-notecard:hover .ja-rel-mini-edit,
+.ja-rel-mots:hover .ja-rel-mini-edit,
+.ja-basic-card:hover .ja-rel-mini-edit,
+.ja-rel-mini-edit:focus-visible { opacity: 1; }
+
+.ja-rel-mini-edit:hover {
+  background: rgba(255, 255, 255, .05);
+  color: var(--ja-text);
+}
+
+.ja-rel-notebody {
+  color: var(--ja-text);
+  font-family: "IM Fell Double Pica", "Iowan Old Style", Georgia, serif;
+  font-size: .94rem;
+  line-height: 1.5;
+}
+
+.ja-rel-notebody > :first-child { margin-top: 0; }
+.ja-rel-notebody > :last-child { margin-bottom: 0; }
+
+.ja-rel-add {
+  appearance: none;
+  align-self: flex-start;
+  padding: 4px 11px;
+  border: 1px dashed color-mix(in srgb, var(--ja-border) 90%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ja-soft);
+  font: inherit;
+  font-size: .72rem;
+  cursor: pointer;
+  transition: all .14s ease;
+}
+
+.ja-rel-add:hover {
+  border-color: var(--ja-accent);
+  border-style: solid;
+  color: var(--ja-text);
+  background: var(--ja-accent-soft);
+}
+
+.ja-rel-add-inline { padding: 2px 9px; }
+
+.ja-rel-linkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ja-rel-linkbox-ico { font-size: 1rem; line-height: 1.3; }
+
+.ja-rel-linklist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px 6px;
+  min-width: 0;
+}
+
+.ja-rel-linkname {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--ja-rel-color) 68%, var(--ja-text));
+  font: inherit;
+  font-size: .92rem;
+  cursor: pointer;
+}
+
+.ja-rel-linkname:hover { text-decoration: underline; }
+.ja-rel-linkorigin { color: var(--ja-soft); font-size: .72rem; }
+
+/* ---------- Des petits mots ---------- */
+.ja-rel-mots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 9px 14px;
+  border: 1px solid var(--ja-border);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--ja-panel) 62%, transparent);
+}
+
+.ja-rel-mots-ico { color: var(--ja-soft); }
+
+.ja-rel-mots-lab {
+  flex: 0 0 auto;
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: .86rem;
+  color: var(--ja-muted);
+}
+
+.ja-rel-mots-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: "IM Fell Double Pica", "Iowan Old Style", Georgia, serif;
+  font-size: .95rem;
+  line-height: 1.45;
+  color: var(--ja-text);
+}
+
+.ja-rel-mots-body > :first-child { margin-top: 0; }
+.ja-rel-mots-body > :last-child { margin-bottom: 0; }
+.ja-rel-mots-empty { flex: 1 1 auto; color: var(--ja-soft); font-size: .84rem; font-style: italic; }
+.ja-rel-mots .ja-rel-mini-edit { margin-left: auto; }
+
+/* ---------- Onglets secondaires ---------- */
+.ja-rel-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.ja-rel-notes-grid .ja-rel-notecard,
+.ja-rel-body > .ja-rel-notecard {
+  padding: 13px 15px;
+  border: 1px solid var(--ja-border);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--ja-panel) 62%, transparent);
+}
+
+.ja-rel-journal,
+.ja-rel-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.ja-rel-journal-row .ja-rel-mini-edit { margin-left: auto; }
+
+.ja-rel-linkrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 11px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ja-border) 68%, transparent);
+}
+
+.ja-rel-linkrow:first-child { border-top: 1px solid color-mix(in srgb, var(--ja-border) 68%, transparent); }
+.ja-rel-linkrow-ico { flex: 0 0 20px; color: var(--ja-muted); text-align: center; }
+
+.ja-rel-linkrow-name {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ja-text);
+  font: inherit;
+  font-size: .92rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.ja-rel-linkrow-name:hover { color: var(--ja-accent); }
+
+.ja-rel-linkrow-origin {
+  margin-left: auto;
+  color: var(--ja-soft);
+  font-size: .7rem;
+}
+
+.ja-rel-blank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 220px;
+  padding: 30px;
+  border: 1px dashed color-mix(in srgb, var(--ja-border) 85%, transparent);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .012);
+  text-align: center;
+}
+
+.ja-rel-blank-ico { color: var(--ja-accent); font-size: 1.5rem; }
+
+.ja-rel-blank-title {
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: 1rem;
+  color: var(--ja-text);
+}
+
+.ja-rel-blank-sub {
+  max-width: 380px;
+  color: var(--ja-soft);
+  font-size: .78rem;
+  line-height: 1.45;
+}
+
+/* ---------- Réglages du portrait ---------- */
+.ja-rel-portrait-pop {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 262px;
+  padding: 10px;
+}
+
+.ja-rel-portrait-acts { display: flex; gap: 6px; }
+.ja-rel-portrait-acts .ja-jform-secondary { flex: 1 1 0; }
+.ja-rel-portrait-pop .ja-jform-danger { align-self: flex-start; }
+
+/* ---------- Formulaire : nom affiché et liens ---------- */
+.ja-relation-labelparts { margin: 0 0 11px; }
+
+.ja-relation-labelparts-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--ja-border) 45%, transparent);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .014);
+}
+
+.ja-relation-links-field { margin: 0 0 11px; }
+
+.ja-relation-link-row {
+  grid-template-columns: minmax(0, 1fr) auto 30px;
+  align-items: center;
+}
+
+.ja-relation-link-name {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ja-text);
+  font-size: .84rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ja-pop-title {
+  padding: 4px 9px 6px;
+  color: var(--ja-muted);
+  font-family: "IM Fell Double Pica SC", "IM Fell Double Pica", serif;
+  font-size: .78rem;
+}
+
+.ja-pop-empty {
+  padding: 9px;
+  color: var(--ja-soft);
+  font-size: .74rem;
+  font-style: italic;
+}
+
+/* ---------- Téléphone ---------- */
+@media (max-width: 820px) {
+  .ja-rel-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .ja-rel-portrait {
+    width: min(58%, 200px);
+    margin: 0 auto;
+  }
+
+  .ja-rel-portrait-edit { opacity: 1; }
+
+  .ja-rel-cols { grid-template-columns: 1fr; gap: 14px; }
+
+  .ja-rel-col { padding-right: 0; }
+
+  .ja-rel-col + .ja-rel-col {
+    padding: 12px 0 0;
+    border-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--ja-border) 70%, transparent);
+  }
+
+  .ja-rel-strip { grid-template-columns: 1fr; gap: 14px; }
+
+  .ja-rel-tab-lab { display: none; }
+
+  .ja-rel-tab {
+    min-width: 44px;
+    justify-content: center;
+    padding: 6px 10px;
+  }
+
+  .ja-rel-mini-edit { opacity: 1; }
+
+  .ja-rel-mots { align-items: flex-start; flex-wrap: wrap; }
+}

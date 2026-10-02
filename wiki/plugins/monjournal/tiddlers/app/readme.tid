@@ -1,0 +1,6 @@
+title: $:/plugins/pinkrain/monjournal/readme
+
+Mon Journal emballé en application Windows et Android.
+
+* Le code de l'interface vit dans les tiddlers `$:/journalapp/...` de ce plugin.
+* Les données de chaque personne sont enregistrées sur l'appareil puis synchronisées dans son propre Google Drive.

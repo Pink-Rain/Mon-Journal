@@ -1,0 +1,22 @@
+title: $:/journalapp/views/sommeil/home
+caption: Sommeil
+order: 10
+page-width: wide
+slug: sommeil
+tags: $:/tags/JournalApp/View $:/journalapp/categories/sommeil
+
+\whitespace trim
+<div class="ja-qe-root">
+<div class="ja-qe-headrow">
+  <div class="ja-qe-head"><div class="ja-qe-kicker">Aperçu</div><h1>🌙 Sommeil</h1><p>Tes entrées de sommeil et ton journal de rêves.</p></div>
+  <div class="ja-qe-page-actions ja-qe-page-actions-top">
+    <button class="ja-qe-add ja-entity-page-create" data-ja-open-entity-form="dream">＋ Rêve</button>
+    <button class="ja-qe-add ja-entity-page-create" data-ja-open-entity-form="sleep">＋ Sommeil</button>
+  </div>
+</div>
+<div class="ja-qe-list">
+  <$list filter="[tag[Sommeil]!is[system]!is[draft]sort[title]]" emptyMessage="Aucune entrée pour l’instant.">
+    <div class="ja-qe-card"><span class="ja-qe-icon">🌙</span><span class="ja-qe-card-title"><$text text=<<currentTiddler>>/></span><button class="ja-agenda-inline-edit is-mini ja-qe-card-edit" type="button" title="Modifier" aria-label="Modifier" data-ja-open-entity-form="sleep-auto" data-ja-edit-title=<<currentTiddler>>>✎</button></div>
+  </$list>
+</div>
+</div>

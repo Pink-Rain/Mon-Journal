@@ -1,0 +1,10 @@
+title: $:/journalapp/ui/SubHeaderContentTiddler
+
+\whitespace trim
+<$let
+	ja-content-title={{{ [[$:/state/journalapp/content-tiddler]get[text]else[Tiddler]] }}}
+>
+<div class="ja-subheader-default">
+	<$text text=<<ja-content-title>>/>
+</div>
+</$let>

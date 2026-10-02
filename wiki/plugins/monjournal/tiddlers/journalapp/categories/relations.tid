@@ -1,0 +1,10 @@
+title: $:/journalapp/categories/relations
+all-tiddlers-label: Voir tous les tiddlers des Relations
+caption: Relations
+category-tag: Relations
+icon-text: 👥
+landing-view: $:/journalapp/views/relations/home
+slug: relations
+tags: $:/tags/JournalApp/Category
+
+Configuration interne de la catégorie Relations.

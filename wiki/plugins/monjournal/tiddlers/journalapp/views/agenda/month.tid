@@ -1,0 +1,9 @@
+title: $:/journalapp/views/agenda/month
+caption: Mois
+category: $:/journalapp/categories/agenda
+order: 40
+page-width: full
+slug: month
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="month"/>

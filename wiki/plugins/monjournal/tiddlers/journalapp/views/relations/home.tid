@@ -1,0 +1,17 @@
+title: $:/journalapp/views/relations/home
+caption: Relations
+order: 10
+page-width: wide
+slug: relations
+tags: $:/tags/JournalApp/View $:/journalapp/categories/relations
+
+\whitespace trim
+<div class="ja-qe-root">
+<div class="ja-qe-head"><div class="ja-qe-kicker">Aperçu</div><h1>👤 Relations</h1><p>Tes relations liées au Journal.</p></div>
+<div class="ja-qe-page-actions"><button class="ja-qe-add ja-entity-page-create" data-ja-open-entity-form="person">＋ Créer une relation</button></div>
+<div class="ja-qe-list">
+  <$list filter="[tag[Relations]!is[system]!is[draft]sort[title]]" emptyMessage="Aucune relation pour l’instant.">
+    <div class="ja-qe-card ja-qe-card-link" role="button" tabindex="0" data-ja-open-entity-detail="yes" data-ja-detail-title=<<currentTiddler>>><span class="ja-qe-icon">👤</span><span class="ja-qe-card-title"><$text text={{{ [<currentTiddler>get[label]else<currentTiddler>] }}}/></span><button class="ja-agenda-inline-edit is-mini ja-qe-card-edit" type="button" title="Modifier" aria-label="Modifier" data-ja-open-entity-form="person" data-ja-edit-title=<<currentTiddler>>>✎</button></div>
+  </$list>
+</div>
+</div>

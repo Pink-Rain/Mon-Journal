@@ -1,0 +1,215 @@
+title: $:/journalapp/ui/InventoryHeader
+
+\whitespace trim
+\define ja-inventory-controls()
+<$let
+	ja-search-state={{{ [<ja-state-prefix>addsuffix[/search]] }}}
+	ja-tag-state={{{ [<ja-state-prefix>addsuffix[/tag]] }}}
+	ja-kind-state={{{ [<ja-state-prefix>addsuffix[/kind]] }}}
+	ja-field-state={{{ [<ja-state-prefix>addsuffix[/field]] }}}
+	ja-field-value-state={{{ [<ja-state-prefix>addsuffix[/field-value]] }}}
+	ja-date-field-state={{{ [<ja-state-prefix>addsuffix[/date-field]] }}}
+	ja-date-mode-state={{{ [<ja-state-prefix>addsuffix[/date-mode]] }}}
+	ja-date-from-state={{{ [<ja-state-prefix>addsuffix[/date-from]] }}}
+	ja-date-to-state={{{ [<ja-state-prefix>addsuffix[/date-to]] }}}
+	ja-content-state={{{ [<ja-state-prefix>addsuffix[/content]] }}}
+	ja-tags-presence-state={{{ [<ja-state-prefix>addsuffix[/tags-presence]] }}}
+	ja-card-size-state={{{ [<ja-state-prefix>addsuffix[/card-size]] }}}
+	ja-sort-state={{{ [<ja-state-prefix>addsuffix[/sort]] }}}
+	ja-panel-state={{{ [<ja-state-prefix>addsuffix[/panel]] }}}
+	ja-date-mode={{{ [<ja-date-mode-state>get[text]] }}}
+>
+<div class="ja-inventory-header ja-inventory-header-compact">
+	<div class="ja-inventory-toolbar">
+		<div class="ja-inventory-search-wrap">
+			<span class="ja-inventory-search-icon">⌕</span>
+			<$edit-text tiddler=<<ja-search-state>> field="text" tag="input" type="search" class="ja-inventory-search" placeholder="Rechercher dans ces tiddlers…"/>
+		</div>
+
+		<span class="ja-inventory-count" title="Résultats affichés / tiddlers disponibles"><strong><$text text=<<ja-result-count>>/></strong>/<span><$text text=<<ja-total-count>>/></span></span>
+
+		<$reveal state=<<ja-panel-state>> type="match" text="open">
+			<$button setTitle=<<ja-panel-state>> setTo="" class="ja-inventory-filter-toggle ja-is-open" tooltip="Fermer les filtres">Filtres ▴</$button>
+		</$reveal>
+		<$reveal state=<<ja-panel-state>> type="nomatch" text="open">
+			<$button setTitle=<<ja-panel-state>> setTo="open" class="ja-inventory-filter-toggle" tooltip="Ouvrir les filtres">Filtres</$button>
+		</$reveal>
+
+		<label class="ja-inventory-sort-label" title="Trier les tiddlers">
+			<span class="ja-sort-symbol">↕</span>
+			<$select tiddler=<<ja-sort-state>> field="text" class="ja-inventory-select ja-sort-select">
+				<option value="">Sans tri</option>
+				<option value="modified-desc">Modification · récent → ancien</option>
+				<option value="modified-asc">Modification · ancien → récent</option>
+				<option value="created-desc">Création · récent → ancien</option>
+				<option value="created-asc">Création · ancien → récent</option>
+				<option value="title-asc">Titre · A → Z</option>
+				<option value="title-desc">Titre · Z → A</option>
+			</$select>
+		</label>
+
+		<div class="ja-inventory-details-actions">
+			<$button class="ja-inventory-icon-btn" data-ja-details-action="close" tooltip="Tout réduire" aria-label="Tout réduire">▸</$button>
+			<$button class="ja-inventory-icon-btn" data-ja-details-action="open" tooltip="Tout développer" aria-label="Tout développer">▾</$button>
+		</div>
+	</div>
+
+	<$reveal state=<<ja-panel-state>> type="match" text="open" class="ja-inventory-filter-reveal">
+		<div class="ja-inventory-filter-panel">
+			<div class="ja-inventory-chips">
+				<$list filter="[<ja-tag-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">tag · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-tag-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
+				</$list>
+				<$list filter="[<ja-kind-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">kind · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-kind-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
+				</$list>
+				<$list filter="[<ja-field-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">field · <$text text=<<ja-active-value>>/><$list filter="[<ja-field-value-state>get[text]!is[blank]]" variable="ja-field-chip-value">: <$text text=<<ja-field-chip-value>>/></$list> <$button class="ja-filter-chip-x"><$action-setfield $tiddler=<<ja-field-state>> text=""/><$action-setfield $tiddler=<<ja-field-value-state>> text=""/>×</$button></span>
+				</$list>
+				<$list filter="[<ja-date-mode-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">date · <$text text=<<ja-active-value>>/> <$button class="ja-filter-chip-x"><$action-setfield $tiddler=<<ja-date-mode-state>> text=""/><$action-setfield $tiddler=<<ja-date-from-state>> text=""/><$action-setfield $tiddler=<<ja-date-to-state>> text=""/>×</$button></span>
+				</$list>
+				<$list filter="[<ja-content-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">contenu · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-content-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
+				</$list>
+				<$list filter="[<ja-tags-presence-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">tags · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-tags-presence-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
+				</$list>
+				<$list filter="[<ja-card-size-state>get[text]!is[blank]]" variable="ja-active-value">
+					<span class="ja-filter-chip">taille · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-card-size-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
+				</$list>
+			</div>
+
+			<div class="ja-filter-grid">
+				<label class="ja-filter-control"><span>Tag</span>
+					<$select tiddler=<<ja-tag-state>> field="text" class="ja-inventory-select">
+						<option value="">Tous les tags</option>
+						<$list filter=<<ja-tag-options-filter>> variable="ja-filter-option"><option value=<<ja-filter-option>>><$text text=<<ja-filter-option>>/></option></$list>
+					</$select>
+				</label>
+
+				<label class="ja-filter-control"><span>Kind</span>
+					<$select tiddler=<<ja-kind-state>> field="text" class="ja-inventory-select">
+						<option value="">Tous les kinds</option>
+						<$list filter=<<ja-kind-options-filter>> variable="ja-filter-option"><option value=<<ja-filter-option>>><$text text=<<ja-filter-option>>/></option></$list>
+					</$select>
+				</label>
+
+				<label class="ja-filter-control"><span>Taille</span>
+					<$select tiddler=<<ja-card-size-state>> field="text" class="ja-inventory-select">
+						<option value="">Toutes</option>
+						<option value="small">Petite</option>
+						<option value="medium">Moyenne</option>
+						<option value="large">Grande</option>
+					</$select>
+				</label>
+
+				<label class="ja-filter-control"><span>Contenu</span>
+					<$select tiddler=<<ja-content-state>> field="text" class="ja-inventory-select">
+						<option value="">Tous</option>
+						<option value="with">Avec contenu</option>
+						<option value="without">Sans contenu</option>
+					</$select>
+				</label>
+
+				<label class="ja-filter-control"><span>Tags présents</span>
+					<$select tiddler=<<ja-tags-presence-state>> field="text" class="ja-inventory-select">
+						<option value="">Tous</option>
+						<option value="with">Avec tags</option>
+						<option value="without">Sans tag</option>
+					</$select>
+				</label>
+			</div>
+
+			<div class="ja-filter-section ja-filter-section-two">
+				<div>
+					<div class="ja-filter-section-title">Field personnalisé</div>
+					<div class="ja-filter-inline-fields">
+						<$edit-text tiddler=<<ja-field-state>> field="text" tag="input" type="text" class="ja-inventory-input" placeholder="Nom du field, ex. people"/>
+						<$edit-text tiddler=<<ja-field-value-state>> field="text" tag="input" type="text" class="ja-inventory-input" placeholder="Valeur (facultatif)"/>
+					</div>
+					<div class="ja-filter-help">Valeur vide = tous les tiddlers possédant ce field.</div>
+				</div>
+
+				<div>
+					<div class="ja-filter-section-title">Date</div>
+					<div class="ja-filter-date-row">
+						<$select tiddler=<<ja-date-field-state>> field="text" class="ja-inventory-select">
+							<option value="">Modification</option>
+							<option value="created">Création</option>
+						</$select>
+						<$select tiddler=<<ja-date-mode-state>> field="text" class="ja-inventory-select">
+							<option value="">Toutes les dates</option>
+							<option value="today">Aujourd’hui</option>
+							<option value="7d">7 derniers jours</option>
+							<option value="30d">30 derniers jours</option>
+							<option value="year">Cette année</option>
+							<option value="before">Avant une date</option>
+							<option value="after">Après une date</option>
+							<option value="between">Entre deux dates</option>
+						</$select>
+					</div>
+
+					<$reveal state=<<ja-date-mode-state>> type="match" text="before" class="ja-filter-date-custom">
+						<label>Avant / jusqu’au <$edit-text tiddler=<<ja-date-to-state>> field="text" tag="input" type="date" class="ja-inventory-input ja-date-input"/></label>
+					</$reveal>
+					<$reveal state=<<ja-date-mode-state>> type="match" text="after" class="ja-filter-date-custom">
+						<label>À partir du <$edit-text tiddler=<<ja-date-from-state>> field="text" tag="input" type="date" class="ja-inventory-input ja-date-input"/></label>
+					</$reveal>
+					<$reveal state=<<ja-date-mode-state>> type="match" text="between" class="ja-filter-date-custom">
+						<label>Du <$edit-text tiddler=<<ja-date-from-state>> field="text" tag="input" type="date" class="ja-inventory-input ja-date-input"/></label>
+						<label>au <$edit-text tiddler=<<ja-date-to-state>> field="text" tag="input" type="date" class="ja-inventory-input ja-date-input"/></label>
+					</$reveal>
+				</div>
+			</div>
+
+			<div class="ja-filter-panel-foot">
+				<$button class="ja-filter-reset">
+					<$action-setfield $tiddler=<<ja-search-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-tag-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-kind-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-field-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-field-value-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-date-field-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-date-mode-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-date-from-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-date-to-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-content-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-tags-presence-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-card-size-state>> text=""/>
+					<$action-setfield $tiddler=<<ja-sort-state>> text=""/>
+					Effacer recherche + filtres + tri
+				</$button>
+			</div>
+		</div>
+	</$reveal>
+</div>
+</$let>
+\end
+
+<$let ja-inventory-source={{{ [<ja-view>get[inventory-source]else[category]] }}}>
+<$list filter="[<ja-inventory-source>match[uncategorized]]">
+	<$let
+		ja-state-prefix="$:/temp/journalapp/inventory/uncategorized"
+		ja-total-count={{{ [all[tiddlers]!is[system]!has[draft.of]!tag[Accueil]!tag[Agenda]!tag[Journal]!tag[Relations]!tag[Lieux]!tag[Activité]!tag[Projet]!tag[Média]!tag[Sommeil]!tag[Settings]count[]] }}}
+		ja-result-count={{{ [all[tiddlers]!is[system]!has[draft.of]!tag[Accueil]!tag[Agenda]!tag[Journal]!tag[Relations]!tag[Lieux]!tag[Activité]!tag[Projet]!tag[Média]!tag[Sommeil]!tag[Settings]jainventory<ja-state-prefix>count[]] }}}
+		ja-tag-options-filter="[all[tiddlers]!is[system]!has[draft.of]!tag[Accueil]!tag[Agenda]!tag[Journal]!tag[Relations]!tag[Lieux]!tag[Activité]!tag[Projet]!tag[Média]!tag[Sommeil]!tag[Settings]tags[]sort[]unique[]]"
+		ja-kind-options-filter="[all[tiddlers]!is[system]!has[draft.of]!tag[Accueil]!tag[Agenda]!tag[Journal]!tag[Relations]!tag[Lieux]!tag[Activité]!tag[Projet]!tag[Média]!tag[Sommeil]!tag[Settings]get[kind]!is[blank]sort[]unique[]]"
+	>
+		<<ja-inventory-controls>>
+	</$let>
+<$list-empty>
+	<$let
+		ja-items-category={{{ [[$:/state/journalapp/category]get[text]else[$:/journalapp/categories/accueil]] }}}
+		ja-items-tag={{{ [<ja-items-category>get[category-tag]] }}}
+		ja-state-prefix={{{ [<ja-items-category>get[slug]else[category]addprefix[category-]addprefix[$:/temp/journalapp/inventory/]] }}}
+		ja-total-count={{{ [tag<ja-items-tag>!is[system]!has[draft.of]count[]] }}}
+		ja-result-count={{{ [tag<ja-items-tag>!is[system]!has[draft.of]jainventory<ja-state-prefix>count[]] }}}
+		ja-tag-options-filter="[tag<ja-items-tag>!is[system]!has[draft.of]tags[]!match<ja-items-tag>sort[]unique[]]"
+		ja-kind-options-filter="[tag<ja-items-tag>!is[system]!has[draft.of]get[kind]!is[blank]sort[]unique[]]"
+	>
+		<<ja-inventory-controls>>
+	</$let>
+</$list-empty>
+</$list>
+</$let>

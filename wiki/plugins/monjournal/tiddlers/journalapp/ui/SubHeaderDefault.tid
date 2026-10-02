@@ -1,0 +1,3 @@
+title: $:/journalapp/ui/SubHeaderDefault
+
+<div class="ja-subheader-default"><$text text=<<ja-view-caption>>/></div>

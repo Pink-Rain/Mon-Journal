@@ -1,0 +1,10 @@
+{
+	"title": "$:/plugins/pinkrain/monjournal",
+	"name": "Mon Journal",
+	"description": "Interface, vues et modules de Mon Journal",
+	"author": "Pink-Rain",
+	"version": "0.1.0",
+	"plugin-type": "plugin",
+	"plugin-priority": "100",
+	"list": "readme"
+}

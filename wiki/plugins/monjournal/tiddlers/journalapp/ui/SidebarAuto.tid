@@ -1,0 +1,32 @@
+title: $:/journalapp/ui/SidebarAuto
+
+<div class="ja-sidebar-block">
+<div class="ja-sidebar-title"><$text text=<<ja-category-caption>>/></div>
+
+<$list filter="[<ja-category>match[$:/journalapp/categories/relations]]">
+<button class="ja-view-btn ja-entity-sidebar-create" data-ja-open-entity-form="person">＋ Créer une relation</button>
+</$list>
+<$list filter="[<ja-category>match[$:/journalapp/categories/lieux]]">
+<button class="ja-view-btn ja-entity-sidebar-create" data-ja-open-entity-form="place">＋ Créer un lieu</button>
+</$list>
+<$list filter="[<ja-category>match[$:/journalapp/categories/activite]]">
+<button class="ja-view-btn ja-entity-sidebar-create" data-ja-open-entity-form="activity">＋ Créer une activité</button>
+</$list>
+<$list filter="[<ja-category>match[$:/journalapp/categories/projet]]">
+<button class="ja-view-btn ja-entity-sidebar-create" data-ja-open-entity-form="project">＋ Créer un projet</button>
+</$list>
+<$list filter="[<ja-category>match[$:/journalapp/categories/media]]">
+<button class="ja-view-btn ja-entity-sidebar-create" data-ja-open-entity-form="media">＋ Créer un média</button>
+</$list>
+
+<div class="ja-sidebar-label">Vues</div>
+<div class="ja-view-list">
+<$list filter="[all[shadows+tiddlers]tag<ja-category>tag[$:/tags/JournalApp/View]] [all[shadows+tiddlers]tag[$:/tags/JournalApp/View]field:category<ja-category>] +[nsort[order]]">
+<$button class={{{ [<currentTiddler>match<ja-view>then[ja-view-btn ja-active]else[ja-view-btn]] }}}>
+<$action-setfield $tiddler="$:/state/journalapp/view" $field="text" $value=<<currentTiddler>> $timestamp="no"/>
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-left" $field="text" $value="closed" $timestamp="no"/>
+<$text text={{!!caption}}/>
+</$button>
+</$list>
+</div>
+</div>

@@ -1,0 +1,10 @@
+title: $:/journalapp/categories/settings
+all-tiddlers-label: Voir tous les tiddlers de Settings
+caption: Settings
+category-tag: Settings
+icon-text: ⚙️
+landing-view: $:/journalapp/views/settings/home
+slug: settings
+tags: $:/tags/JournalApp/Category
+
+Configuration interne de la catégorie Settings de Mon Journal.

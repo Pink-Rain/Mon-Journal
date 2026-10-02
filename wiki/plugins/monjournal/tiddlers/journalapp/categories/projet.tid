@@ -1,0 +1,10 @@
+title: $:/journalapp/categories/projet
+all-tiddlers-label: Voir tous les tiddlers du Projet
+caption: Projet
+category-tag: Projet
+icon-text: 🧩
+landing-view: $:/journalapp/views/projet/home
+slug: projet
+tags: $:/tags/JournalApp/Category
+
+Configuration interne de la catégorie Projet.

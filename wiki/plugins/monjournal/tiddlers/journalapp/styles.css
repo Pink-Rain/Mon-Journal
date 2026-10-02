@@ -1,0 +1,2779 @@
+/* MON JOURNAL — STYLE CANONIQUE, SOCLE
+   Source active pour le socle visuel et les règles chargées avant
+   la neutralisation conditionnelle de la page hôte. */
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles
+   ===================================================================== */
+/* =========================================================
+   MON JOURNAL — coquille applicative
+   Règle de survie : chaque colonne fixe SA PROPRE hauteur en
+   unités de viewport. Aucune dépendance à une chaîne de
+   height:100% ni à position:fixed, qu'un thème peut casser.
+   ========================================================= */
+
+:root {
+	--ja-bg: #17191f;
+	--ja-panel: #20232b;
+	--ja-panel-2: #272a33;
+	--ja-border: #3e424d;
+	--ja-text: #ece8f0;
+	--ja-muted: #9fa4b0;
+	--ja-soft: #737986;
+	--ja-accent: #c58bd8;
+	--ja-accent-soft: rgba(197,139,216,.18);
+	--ja-shadow: 0 18px 60px rgba(0,0,0,.34);
+	--ja-left-open-w: 300px;
+	--ja-left-closed-w: 60px;
+	--ja-right-open-w: 300px;
+	--ja-right-closed-w: 40px;
+	--ja-mobile-header-h: 54px;
+	--ja-radius: 12px;
+}
+
+/* Identité colorée par catégorie */
+.ja-cat-accueil   { --ja-accent: #c58bd8; --ja-accent-soft: rgba(197,139,216,.18); }
+.ja-cat-agenda    { --ja-accent: #c17bd4; --ja-accent-soft: rgba(193,123,212,.18); }
+.ja-cat-journal   { --ja-accent: #d5ae68; --ja-accent-soft: rgba(213,174,104,.17); }
+.ja-cat-relations { --ja-accent: #d882a7; --ja-accent-soft: rgba(216,130,167,.17); }
+.ja-cat-lieux     { --ja-accent: #79b79a; --ja-accent-soft: rgba(121,183,154,.17); }
+.ja-cat-activite  { --ja-accent: #e0916f; --ja-accent-soft: rgba(224,145,111,.17); }
+.ja-cat-projet    { --ja-accent: #77a8d9; --ja-accent-soft: rgba(119,168,217,.17); }
+.ja-cat-sommeil   { --ja-accent: #8e8fd7; --ja-accent-soft: rgba(142,143,215,.17); }
+
+.ja-container {
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	height: 100vh !important;
+	height: 100dvh !important;
+	overflow: hidden !important;
+}
+
+/* ---------- COQUILLE ---------- */
+.ja-app {
+	--ja-left-w: var(--ja-left-open-w);
+	--ja-right-w: var(--ja-right-open-w);
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	align-items: stretch !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	height: 100vh !important;
+	height: 100dvh !important;
+	max-height: 100vh !important;
+	max-height: 100dvh !important;
+	overflow: hidden !important;
+	background: var(--ja-bg);
+	color: var(--ja-text);
+	line-height: 1.5;
+}
+
+.ja-app *,
+.ja-app *::before,
+.ja-app *::after { box-sizing: border-box; }
+
+.ja-app.ja-is-left-closed  { --ja-left-w: var(--ja-left-closed-w); }
+.ja-app.ja-is-right-closed { --ja-right-w: var(--ja-right-closed-w); }
+
+/* Les trois colonnes : hauteur imposée en unités de viewport.
+   Même si tout le reste échoue, chacune scrolle chez elle. */
+.ja-left,
+.ja-center,
+.ja-right {
+	height: 100vh !important;
+	height: 100svh !important;
+	height: 100dvh !important;
+	min-height: 100vh !important;
+	min-height: 100svh !important;
+	min-height: 100dvh !important;
+	max-height: 100vh !important;
+	max-height: 100dvh !important;
+	min-width: 0;
+	display: flex !important;
+	flex-direction: column !important;
+	overflow: visible;
+}
+
+.ja-left {
+	order: 1;
+	flex: 0 0 var(--ja-left-w);
+	width: var(--ja-left-w);
+	background: var(--ja-panel);
+	border-right: 1px solid var(--ja-border);
+}
+
+.ja-center {
+	order: 2;
+	flex: 1 1 0%;
+	min-width: 0 !important;
+	background: var(--ja-bg);
+}
+
+.ja-right {
+	order: 3;
+	flex: 0 0 var(--ja-right-w);
+	width: var(--ja-right-w);
+	background: var(--ja-panel);
+	border-left: 1px solid var(--ja-border);
+}
+
+/* ---------- LES TROIS SCROLLS INDÉPENDANTS ---------- */
+.ja-page-scroll,
+.ja-left-body,
+.ja-right-body {
+	flex: 1 1 0% !important;
+	min-height: 0 !important;
+	height: auto !important;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	overscroll-behavior: contain;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: var(--ja-border) transparent;
+}
+
+.ja-page-scroll::-webkit-scrollbar,
+.ja-left-body::-webkit-scrollbar,
+.ja-right-body::-webkit-scrollbar,
+.ja-story-scroll::-webkit-scrollbar { width: 11px; height: 11px; }
+
+.ja-page-scroll::-webkit-scrollbar-thumb,
+.ja-left-body::-webkit-scrollbar-thumb,
+.ja-right-body::-webkit-scrollbar-thumb,
+.ja-story-scroll::-webkit-scrollbar-thumb {
+	background: var(--ja-border);
+	border-radius: 8px;
+}
+
+.ja-page-scroll::-webkit-scrollbar-thumb:hover,
+.ja-left-body::-webkit-scrollbar-thumb:hover,
+.ja-right-body::-webkit-scrollbar-thumb:hover { background: var(--ja-soft); }
+
+.ja-page-scroll::-webkit-scrollbar-track,
+.ja-left-body::-webkit-scrollbar-track,
+.ja-right-body::-webkit-scrollbar-track,
+.ja-story-scroll::-webkit-scrollbar-track { background: transparent; }
+
+.ja-page-scroll { padding: 26px; }
+.ja-left-body { padding: 16px 12px 22px; }
+.ja-right-body { padding: 14px; }
+
+/* ---------- FILET : neutraliser les <p> que TiddlyWiki peut insérer
+   autour des éléments de structure. Sans ça, le <p> devient l'enfant
+   flex à la place de nos colonnes et plus rien ne grandit ni ne scrolle. */
+.ja-container > p,
+.ja-app > p,
+.ja-left > p,
+.ja-center > p,
+.ja-right > p,
+.ja-right-panel > p,
+.ja-left-body > p,
+.ja-subheader-body > p {
+	display: contents !important;
+}
+
+/* ---------- NAV PRINCIPALE ---------- */
+.ja-left-nav {
+	flex: 0 0 auto !important;
+	padding: 8px;
+	border-bottom: 1px solid var(--ja-border);
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: none;
+}
+
+.ja-left-nav::-webkit-scrollbar { display: none; }
+
+.ja-nav {
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+	width: max-content;
+	min-width: 100%;
+}
+
+.ja-nav-btn,
+.ja-view-btn,
+.ja-icon-btn,
+.ja-collapse,
+.ja-drawer-toggle,
+.ja-story-close {
+	appearance: none;
+	border: 0 !important;
+	box-shadow: none !important;
+	background: transparent;
+	color: var(--ja-muted);
+	cursor: pointer;
+	font-family: inherit;
+}
+
+.ja-nav-btn {
+	flex: 1 1 0;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	min-width: 32px;
+	height: 38px;
+	padding: 0 !important;
+	margin: 0 !important;
+	border-radius: 8px !important;
+	font-size: 17px;
+	line-height: 1;
+}
+
+.ja-nav-btn:hover,
+.ja-nav-btn.ja-active { color: var(--ja-text); background: var(--ja-accent-soft); }
+.ja-nav-btn.ja-active { box-shadow: inset 0 -2px 0 var(--ja-accent) !important; }
+.ja-nav-icon { pointer-events: none; }
+
+/* ---------- CONTENU SIDEBAR GAUCHE ---------- */
+.ja-sidebar-title {
+	margin-bottom: 16px;
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: var(--ja-accent);
+	letter-spacing: .02em;
+}
+
+.ja-sidebar-label {
+	margin: 0 6px 8px;
+	font-size: .7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .13em;
+	color: var(--ja-soft);
+}
+
+.ja-view-list { display: flex; flex-direction: column; gap: 4px; }
+
+.ja-view-btn {
+	display: block !important;
+	width: 100%;
+	margin: 0 !important;
+	padding: 9px 10px !important;
+	border-radius: 8px !important;
+	text-align: left;
+	font-size: .9rem;
+	line-height: 1.3;
+}
+
+.ja-view-btn:hover { color: var(--ja-text); background: rgba(255,255,255,.05); }
+
+.ja-view-btn.ja-active {
+	color: var(--ja-text);
+	background: var(--ja-accent-soft);
+	box-shadow: inset 2px 0 0 var(--ja-accent) !important;
+}
+
+/* ---------- DOCK BAS DE SIDEBAR (fixe) ---------- */
+.ja-left-foot {
+	flex: 0 0 auto !important;
+	margin-top: auto !important;
+	align-self: stretch;
+	z-index: 2;
+	padding: 8px;
+	border-top: 1px solid var(--ja-border);
+	background: rgba(0,0,0,.10);
+}
+
+.ja-dock {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+}
+
+.ja-core-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 8px;
+}
+
+.ja-core-btn:hover { background: rgba(255,255,255,.06); }
+
+.ja-core-btn button,
+.ja-core-btn .tc-btn-invisible {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+	background: transparent !important;
+	color: var(--ja-muted) !important;
+	fill: var(--ja-muted) !important;
+}
+
+.ja-core-btn button:hover { color: var(--ja-text) !important; fill: var(--ja-text) !important; }
+.ja-core-btn svg { width: 19px !important; height: 19px !important; fill: inherit; }
+
+.ja-collapse-row { display: flex; justify-content: flex-end; margin-top: 4px; }
+
+.ja-collapse {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	margin: 0 !important;
+	padding: 0 !important;
+	border-radius: 7px !important;
+	font-size: 20px;
+	line-height: 1;
+}
+
+.ja-collapse:hover,
+.ja-icon-btn:hover,
+.ja-drawer-toggle:hover { color: var(--ja-text); background: var(--ja-accent-soft); }
+
+/* états barre gauche */
+.ja-is-left-open  .ja-do-open  { display: none !important; }
+.ja-is-left-closed .ja-do-close { display: none !important; }
+.ja-is-left-closed .ja-left-nav { padding: 8px 6px; }
+.ja-is-left-closed .ja-nav { flex-direction: column; width: auto; }
+.ja-is-left-closed .ja-nav-btn { flex: 0 0 auto; width: 100%; }
+.ja-is-left-closed .ja-left-body { display: none !important; }
+.ja-is-left-closed .ja-dock { flex-direction: column; }
+.ja-is-left-closed .ja-collapse-row { justify-content: center; }
+
+/* ---------- CENTRE ---------- */
+.ja-subheader {
+	flex: 0 0 auto !important;
+	display: flex;
+	align-items: center;
+	min-height: 52px;
+	padding: 0 16px;
+	border-bottom: 1px solid var(--ja-border);
+	background: var(--ja-panel);
+}
+
+.ja-subheader-body { flex: 1 1 auto; min-width: 0; }
+
+.ja-subheader-default {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 50px;
+	font-weight: 700;
+	letter-spacing: .025em;
+	color: var(--ja-text);
+}
+
+.ja-drawer-toggle { display: none !important; }
+
+.ja-page {
+	width: 100%;
+	max-width: 100%;
+	margin: 0 auto;
+	min-width: 0;
+}
+
+.ja-page.ja-w-reading { max-width: min(860px, 100%); }
+.ja-page.ja-w-wide    { max-width: min(1320px, 100%); }
+.ja-page.ja-w-full    { max-width: 100%; }
+
+.ja-footer {
+	flex: 0 0 auto !important;
+	border-top: 1px solid var(--ja-border);
+	background: var(--ja-panel);
+	padding: 10px 16px;
+}
+
+/* ---------- SIDEBAR DROITE ---------- */
+.ja-right-panel {
+	flex: 1 1 0% !important;
+	min-height: 0 !important;
+	display: flex;
+	flex-direction: column;
+	overflow: visible;
+}
+
+.ja-right-head {
+	flex: 0 0 auto !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 52px;
+	padding: 0 8px 0 16px;
+	border-bottom: 1px solid var(--ja-border);
+	color: var(--ja-muted);
+	font-size: .74rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .12em;
+}
+
+.ja-right-empty {
+	padding: 14px;
+	border: 1px dashed var(--ja-border);
+	border-radius: 10px;
+	color: var(--ja-soft);
+	font-size: .84rem;
+	text-align: center;
+}
+
+.ja-right-rail {
+	display: none;
+	flex: 1 1 0%;
+	align-items: center;
+	justify-content: center;
+}
+
+.ja-is-right-closed .ja-right-panel { display: none !important; }
+.ja-is-right-closed .ja-right-rail { display: flex !important; }
+
+/* ---------- ÉLÉMENTS MOBILES (masqués en desktop) ---------- */
+.ja-mobile-top,
+.ja-drawer-head,
+.ja-backdrop { display: none !important; }
+
+/* ---------- BLOCS GÉNÉRIQUES ---------- */
+.ja-empty,
+.ja-placeholder {
+	padding: 26px;
+	border: 1px solid var(--ja-border);
+	border-radius: var(--ja-radius);
+	background: var(--ja-panel);
+}
+
+.ja-placeholder { text-align: center; color: var(--ja-muted); }
+.ja-placeholder h1 { margin: 6px 0 8px; color: var(--ja-text); }
+.ja-placeholder-icon { font-size: 2.2rem; }
+
+/* ---------- OVERLAY TIDDLYWIKI NATIF ---------- */
+.ja-story-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 500;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 26px;
+	background: rgba(8,9,12,.72);
+}
+
+.ja-story-panel {
+	width: min(1120px, 96vw);
+	max-height: 92vh;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--ja-border);
+	border-radius: 14px;
+	overflow: hidden;
+	background: var(--ja-bg);
+	box-shadow: var(--ja-shadow);
+}
+
+.ja-story-top {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 14px;
+	border-bottom: 1px solid var(--ja-border);
+	background: var(--ja-panel);
+	color: var(--ja-muted);
+	font-size: .8rem;
+	font-weight: 700;
+}
+
+.ja-story-close { padding: 6px 10px !important; border-radius: 7px !important; }
+.ja-story-close:hover { color: var(--ja-text); background: var(--ja-accent-soft); }
+
+.ja-story-scroll {
+	flex: 1 1 0%;
+	min-height: 0;
+	overflow-y: auto;
+	padding: 18px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--ja-border) transparent;
+}
+
+.ja-story-panel .tc-tiddler-frame { max-width: none !important; margin: 0 0 18px !important; }
+
+/* ---------- DROPDOWNS NATIFS ---------- */
+.ja-app .tc-drop-down {
+	z-index: 600;
+	min-width: 230px;
+	max-height: 70vh;
+	overflow-y: auto;
+	padding: 6px;
+	border: 1px solid var(--ja-border);
+	border-radius: 10px;
+	background: var(--ja-panel-2);
+	box-shadow: var(--ja-shadow);
+	color: var(--ja-text);
+}
+
+.ja-app .tc-drop-down a,
+.ja-app .tc-drop-down button,
+.ja-app .tc-drop-down .tc-btn-invisible {
+	color: var(--ja-text) !important;
+	fill: var(--ja-muted) !important;
+	border-radius: 7px;
+}
+
+.ja-app .tc-drop-down a:hover,
+.ja-app .tc-drop-down button:hover {
+	background: var(--ja-accent-soft) !important;
+	fill: var(--ja-text) !important;
+}
+
+.ja-app .tc-drop-down-item {
+	color: var(--ja-soft);
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	font-size: .7rem;
+}
+
+.ja-app .tc-drop-down hr { border-color: var(--ja-border); }
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 820px) {
+	.ja-app { flex-direction: column !important; }
+
+	.ja-mobile-top {
+		order: 0;
+		display: flex !important;
+		flex: 0 0 var(--ja-mobile-header-h) !important;
+		height: var(--ja-mobile-header-h);
+		width: 100%;
+		align-items: stretch;
+		min-width: 0;
+		border-bottom: 1px solid var(--ja-border);
+		background: var(--ja-panel);
+		z-index: 60;
+	}
+
+	.ja-mobile-nav-scroll {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scrollbar-width: none;
+	}
+
+	.ja-mobile-nav-scroll::-webkit-scrollbar { display: none; }
+
+	.ja-mobile-top .ja-nav { height: 100%; align-items: center; gap: 3px; padding: 7px 8px; }
+	.ja-mobile-top .ja-nav-btn { flex: 0 0 40px; width: 40px; height: 40px; }
+
+	.ja-mobile-set {
+		flex: 0 0 46px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-left: 1px solid var(--ja-border);
+	}
+
+	.ja-mobile-set button {
+		margin: 0 !important;
+		padding: 8px !important;
+		border: 0 !important;
+		background: transparent !important;
+		color: var(--ja-muted) !important;
+		fill: var(--ja-muted) !important;
+	}
+
+	.ja-mobile-set svg { width: 21px !important; height: 21px !important; fill: inherit; }
+
+	.ja-center {
+		order: 1;
+		flex: 1 1 0% !important;
+		width: 100%;
+		height: auto !important;
+		max-height: none !important;
+		min-height: 0 !important;
+	}
+
+	.ja-left,
+	.ja-right { min-height: 0 !important; }
+
+	.ja-subheader { padding: 0 4px; min-height: 48px; }
+	.ja-subheader-default { min-height: 46px; font-size: .9rem; }
+
+	.ja-drawer-toggle {
+		display: flex !important;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 38px;
+		width: 38px;
+		height: 38px;
+		margin: 0 !important;
+		padding: 0 !important;
+		border-radius: 8px !important;
+		font-size: 16px;
+	}
+
+	.ja-page-scroll { padding: 16px 12px 22px; }
+
+	.ja-left,
+	.ja-right {
+		position: fixed;
+		top: var(--ja-mobile-header-h);
+		bottom: 0;
+		height: auto !important;
+		max-height: none !important;
+		z-index: 80;
+		flex: 0 0 auto;
+		width: min(88vw, 340px);
+		border: 1px solid var(--ja-border);
+		background: var(--ja-panel);
+		box-shadow: var(--ja-shadow);
+		transition: transform .18s ease;
+	}
+
+	.ja-left  { left: 0; right: auto; }
+	.ja-right { right: 0; left: auto; }
+
+	.ja-is-mobleft-closed  .ja-left  { transform: translateX(-105%); pointer-events: none; }
+	.ja-is-mobleft-open    .ja-left  { transform: translateX(0); pointer-events: auto; }
+	.ja-is-mobright-closed .ja-right { transform: translateX(105%); pointer-events: none; }
+	.ja-is-mobright-open   .ja-right { transform: translateX(0); pointer-events: auto; }
+
+	.ja-left-nav,
+	.ja-collapse-row,
+	.ja-right-head,
+	.ja-right-rail { display: none !important; }
+
+	.ja-drawer-head {
+		display: flex !important;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 52px;
+		padding: 0 8px 0 16px;
+		border-bottom: 1px solid var(--ja-border);
+		color: var(--ja-accent);
+	}
+
+	.ja-drawer-head-right { color: var(--ja-text); }
+
+	.ja-icon-btn {
+		display: flex !important;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		margin: 0 !important;
+		padding: 0 !important;
+		border-radius: 8px !important;
+		font-size: 22px;
+		line-height: 1;
+	}
+
+	.ja-is-left-closed .ja-left-body { display: block !important; }
+	.ja-is-right-closed .ja-right-panel { display: flex !important; }
+
+	.ja-backdrop {
+		position: fixed;
+		top: var(--ja-mobile-header-h);
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 70;
+		width: auto !important;
+		height: auto !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		border: 0 !important;
+		border-radius: 0 !important;
+		background: rgba(5,6,9,.62) !important;
+	}
+
+	.ja-is-mobleft-open .ja-backdrop,
+	.ja-is-mobright-open .ja-backdrop { display: block !important; }
+
+	.ja-story-backdrop { padding: 8px; }
+	.ja-story-panel { width: 100%; max-height: 96vh; border-radius: 10px; }
+	.ja-story-scroll { padding: 8px; }
+}
+
+/* ---------- GUIDE / DOC ---------- */
+.ja-guide { --guide-line: rgba(255,255,255,.08); color: var(--ja-text, #ece8f0); max-width: 100%; }
+
+.ja-guide-hero {
+	position: relative;
+	overflow: hidden;
+	padding: 26px 28px;
+	margin-bottom: 16px;
+	border: 1px solid var(--ja-border, #3e424d);
+	border-radius: 14px;
+	background:
+		radial-gradient(circle at 90% 5%, var(--ja-accent-soft, rgba(197,139,216,.18)), transparent 38%),
+		var(--ja-panel, #20232b);
+}
+
+.ja-guide-hero::after {
+	content: "\2726";
+	position: absolute;
+	right: 26px;
+	bottom: -16px;
+	font-size: 92px;
+	color: var(--ja-accent, #c58bd8);
+	opacity: .09;
+	pointer-events: none;
+}
+
+.ja-guide-kicker {
+	font-size: .68rem;
+	font-weight: 800;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+	color: var(--ja-accent, #c58bd8);
+}
+
+.ja-guide-hero h1 { margin: 6px 0 8px; font-size: clamp(1.5rem, 2.6vw, 2.2rem); }
+.ja-guide-hero p { max-width: 760px; margin: 0; color: var(--ja-muted, #9fa4b0); }
+
+.ja-guide-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 14px;
+	margin-bottom: 14px;
+	max-width: 100%;
+}
+
+.ja-guide-card,
+.ja-guide-wide {
+	min-width: 0;
+	max-width: 100%;
+	padding: 18px 20px;
+	border: 1px solid var(--ja-border, #3e424d);
+	border-radius: 12px;
+	background: var(--ja-panel, #20232b);
+	overflow-wrap: anywhere;
+}
+
+.ja-guide-wide { margin-bottom: 14px; overflow-x: auto; }
+
+.ja-guide-card h2,
+.ja-guide-card h3,
+.ja-guide-wide h2 { margin-top: 0; color: var(--ja-text, #ece8f0); }
+
+.ja-guide code {
+	padding: 2px 6px;
+	border-radius: 5px;
+	background: rgba(255,255,255,.06);
+	color: var(--ja-accent, #c58bd8);
+}
+
+.ja-guide pre {
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: rgba(0,0,0,.28);
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+.ja-guide pre code { background: transparent; padding: 0; color: var(--ja-text, #ece8f0); }
+
+.ja-guide table { border-collapse: collapse; width: 100%; margin: 6px 0; }
+.ja-guide th, .ja-guide td { padding: 7px 9px; border: 1px solid var(--guide-line); text-align: left; vertical-align: top; }
+.ja-guide th { color: var(--ja-accent, #c58bd8); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.ja-guide td { font-size: .9rem; }
+.ja-guide a { color: var(--ja-accent, #c58bd8); }
+
+.ja-guide-warning {
+	margin-top: 14px;
+	padding: 14px 16px;
+	border-left: 3px solid var(--ja-accent, #c58bd8);
+	border-radius: 0 8px 8px 0;
+	background: var(--ja-accent-soft, rgba(197,139,216,.18));
+}
+
+.ja-guide-small { color: var(--ja-muted, #9fa4b0); font-size: .86rem; }
+
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles/agenda-core
+   ===================================================================== */
+/* Mon Journal — Agenda core v1. Réutilise l'accent et les marqueurs du Journal. */
+.ja-agenda-root{width:100%;min-width:0;display:flex;flex-direction:column;gap:14px}
+.ja-agenda-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ja-agenda-nav,.ja-agenda-actions{display:flex;align-items:center;gap:6px;min-width:0}
+.ja-agenda-iconbtn,.ja-agenda-datebtn,.ja-agenda-add,.ja-agenda-smallbtn,.ja-agenda-close,.ja-agenda-secondary,.ja-agenda-primary,.ja-agenda-marker-btn,.ja-agenda-weekday{font:inherit;border:1px solid var(--ja-border);background:var(--ja-panel,#fff);color:inherit;border-radius:999px;cursor:pointer}
+.ja-agenda-iconbtn{width:36px;height:36px;padding:0;font-size:1.2rem}.ja-agenda-datebtn{padding:8px 14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ja-agenda-add{padding:8px 14px;background:var(--ja-accent);color:#fff;border-color:transparent}.ja-agenda-add-todo{background:color-mix(in srgb,var(--ja-accent) 76%,#343434)}
+.ja-agenda-section-head{padding:4px 2px}.ja-agenda-kicker{font-size:.72rem;text-transform:uppercase;letter-spacing:.11em;opacity:.58}.ja-agenda-title{margin:.15rem 0 0;font-size:clamp(1.45rem,4vw,2.15rem)}
+.ja-agenda-vac-banner{padding:8px 12px;border-radius:12px;border-left:4px solid var(--ja-vac-color,var(--ja-accent));background:color-mix(in srgb,var(--ja-vac-color,var(--ja-accent)) 12%,transparent)}
+.ja-agenda-list{display:flex;flex-direction:column;gap:9px}.ja-agenda-card{--ja-item-color:var(--ja-accent);position:relative;min-width:0;padding:11px 13px;border:1px solid var(--ja-border);border-left:4px solid var(--ja-item-color);border-radius:13px;background:var(--ja-panel,#fff);overflow:hidden}
+.ja-agenda-card.is-slot{border-style:dashed;border-left-style:solid;background:color-mix(in srgb,var(--ja-item-color) 7%,var(--ja-panel,#fff))}.ja-agenda-card.is-done{opacity:.62}.ja-agenda-card.is-cancelled{opacity:.5}.ja-agenda-card-title.is-done{text-decoration:line-through}
+.ja-agenda-card-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}.ja-agenda-card-icon,.ja-agenda-marker,.ja-agenda-mini-badge{flex:0 0 auto}.ja-agenda-card-title{min-width:0;overflow-wrap:anywhere}.ja-agenda-card-time{margin-left:auto;font-size:.8rem;opacity:.65;white-space:nowrap}
+.ja-agenda-card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.ja-agenda-chip{max-width:100%;padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--ja-item-color) 10%,transparent);border:1px solid color-mix(in srgb,var(--ja-item-color) 25%,var(--ja-border));font-size:.74rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ja-agenda-card-note{margin-top:8px;line-height:1.45;opacity:.86;overflow-wrap:anywhere}.ja-agenda-card-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}.ja-agenda-smallbtn{padding:4px 10px}.ja-agenda-linked-count{font-size:.73rem;opacity:.55}
+.ja-agenda-daygroup{display:flex;flex-direction:column;gap:7px}.ja-agenda-daygroup-title{font-size:1rem;margin:8px 0 0;opacity:.72}.ja-agenda-empty{padding:24px 14px;text-align:center;border:1px dashed var(--ja-border);border-radius:13px;opacity:.62}
+.ja-agenda-modal-overlay{position:fixed;inset:0;z-index:10020;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;padding:18px}.ja-agenda-modal{width:min(620px,100%);max-height:min(88dvh,820px);display:flex;flex-direction:column;background:var(--ja-bg,#fff);color:inherit;border:1px solid var(--ja-border);border-radius:18px;box-shadow:0 22px 70px rgba(0,0,0,.32);overflow:hidden}
+.ja-agenda-modal-head,.ja-agenda-modal-actions{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid var(--ja-border)}.ja-agenda-modal-head h2{margin:0;flex:1}.ja-agenda-close{width:34px;height:34px}.ja-agenda-form{padding:14px 16px;overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:11px;min-height:0}.ja-agenda-field{display:flex;flex-direction:column;gap:4px;min-width:0}.ja-agenda-field:has(textarea),.ja-agenda-field:has(.ja-agenda-marker-picker),.ja-agenda-checkrow,.ja-agenda-recurrence{grid-column:1/-1}.ja-agenda-field-label{font-size:.76rem;opacity:.62}.ja-agenda-input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--ja-border);background:var(--ja-panel,#fff);color:inherit;border-radius:9px;padding:8px 10px;font:inherit}.ja-agenda-field textarea.ja-agenda-input{min-height:82px;resize:vertical}
+.ja-agenda-marker-picker,.ja-agenda-weekdays{display:flex;gap:6px;flex-wrap:wrap}.ja-agenda-marker-btn,.ja-agenda-weekday{padding:6px 10px}.ja-agenda-marker-btn.is-selected,.ja-agenda-weekday.is-selected{border-color:var(--ja-accent);background:color-mix(in srgb,var(--ja-accent) 13%,transparent)}.ja-agenda-checkrow{display:flex;align-items:center;gap:7px}.ja-agenda-recurrence{display:grid;grid-template-columns:1fr 90px 1fr;gap:7px;padding:9px;border:1px dashed var(--ja-border);border-radius:10px}.ja-agenda-recurrence .ja-agenda-weekdays{grid-column:1/-1}.ja-agenda-recurrence.is-hidden{display:none}.ja-agenda-modal-actions{border-top:1px solid var(--ja-border);border-bottom:0;justify-content:flex-end}.ja-agenda-secondary,.ja-agenda-primary{padding:8px 14px}.ja-agenda-primary{background:var(--ja-accent);color:#fff;border-color:transparent}
+/* Cartes Agenda insérées dans la timeline Journal */
+.ja-jtl-agenda-card{border-left-color:var(--ja-agenda-item,var(--ja-accent))!important}.ja-jtl-agenda-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.ja-jtl-agenda-kind{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;opacity:.55}.ja-jtl-agenda-title{font-weight:650;min-width:0;overflow-wrap:anywhere}.ja-jtl-agenda-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.ja-jtl-agenda-chip{padding:2px 8px;border:1px solid var(--ja-border);border-radius:999px;font-size:.72rem;opacity:.78}.ja-jtl-agenda-note{margin-top:8px;opacity:.82;overflow-wrap:anywhere}.ja-jtl-agenda-linked{margin-left:auto;font-size:.72rem;opacity:.56}
+@media(max-width:620px){.ja-agenda-toolbar{align-items:stretch}.ja-agenda-nav{flex:1 1 100%}.ja-agenda-datebtn{flex:1}.ja-agenda-actions{flex:1 1 100%}.ja-agenda-add{flex:1;min-height:44px}.ja-agenda-card-time{width:100%;margin-left:27px}.ja-agenda-modal-overlay{padding:0;align-items:flex-end}.ja-agenda-modal{width:100%;max-height:94dvh;border-radius:18px 18px 0 0;padding-bottom:env(safe-area-inset-bottom)}.ja-agenda-form{grid-template-columns:1fr}.ja-agenda-field,.ja-agenda-checkrow,.ja-agenda-recurrence{grid-column:1}.ja-agenda-recurrence{grid-template-columns:1fr}.ja-agenda-recurrence .ja-agenda-weekdays{grid-column:1}.ja-agenda-input{font-size:16px}.ja-agenda-modal-actions button{min-height:44px}.ja-jtl-agenda-linked{margin-left:0;width:100%}}
+
+
+/* Agenda V2 — créneaux conteneurs */
+.ja-agenda-slot-container{--ja-item-color:var(--ja-accent);position:relative;border:1px solid color-mix(in srgb,var(--ja-item-color) 46%,var(--ja-border));border-left:4px solid var(--ja-item-color);border-radius:14px;background:color-mix(in srgb,var(--ja-item-color) 5%,var(--ja-panel,#fff));overflow:hidden}
+.ja-agenda-slot-head{display:flex;align-items:center;gap:7px;padding:9px 12px;background:color-mix(in srgb,var(--ja-item-color) 10%,transparent);min-width:0}.ja-agenda-slot-icon{color:var(--ja-item-color);font-weight:700}.ja-agenda-slot-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ja-agenda-slot-time{margin-left:auto;font-size:.78rem;opacity:.7;white-space:nowrap}.ja-agenda-slot-count{min-width:20px;height:20px;padding:0 6px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:var(--ja-item-color);color:#fff;font-size:.7rem}.ja-agenda-slot-note{padding:7px 12px 0;font-size:.84rem;opacity:.74}.ja-agenda-slot-body{display:flex;flex-direction:column;gap:5px;padding:7px}.ja-agenda-slot-empty{padding:5px 7px;font-size:.78rem;opacity:.52;font-style:italic}.ja-agenda-card.is-nested{border-left-width:3px;border-radius:10px;background:color-mix(in srgb,var(--ja-item-color) 5%,var(--ja-panel,#fff))}
+
+/* Agenda V2 — vue mois */
+.ja-agenda-month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;min-width:0}.ja-agenda-month-dow{text-align:center;padding:2px 4px 5px;font-size:.73rem;text-transform:uppercase;letter-spacing:.08em;opacity:.52}.ja-agenda-month-cell{position:relative;min-width:0;height:122px;padding:5px;border:1px solid transparent;border-radius:11px;background:var(--ja-panel,#fff);overflow:hidden;cursor:pointer;transition:border-color .14s ease,background .14s ease}.ja-agenda-month-cell:hover{border-color:color-mix(in srgb,var(--ja-accent) 45%,var(--ja-border))}.ja-agenda-month-cell.is-out{opacity:.42}.ja-agenda-month-cell.is-selected{border-color:var(--ja-accent);box-shadow:inset 0 0 0 1px var(--ja-accent)}.ja-agenda-month-cell.is-vacation:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--ja-vac-color,var(--ja-accent))}.ja-agenda-month-vac{position:absolute;left:6px;right:6px;top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.55rem;color:var(--ja-vac-color,var(--ja-accent));opacity:.8}.ja-agenda-month-cell.is-vacation .ja-agenda-month-cell-head{padding-top:7px}.ja-agenda-month-cell-head{display:flex;align-items:center;justify-content:space-between;min-height:22px}.ja-agenda-month-num{width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:.82rem}.ja-agenda-month-cell.is-today .ja-agenda-month-num{background:var(--ja-accent);color:#fff;font-weight:700}.ja-agenda-month-count{font-size:.6rem;padding:1px 6px;border-radius:999px;background:color-mix(in srgb,var(--ja-accent) 8%,transparent);opacity:.62}.ja-agenda-month-items{display:flex;flex-direction:column;gap:2px;min-height:0;overflow:hidden;margin-top:2px}.ja-agenda-month-item,.ja-agenda-month-slot-head{--ja-item-color:var(--ja-accent);display:flex;align-items:center;gap:3px;min-width:0;padding:2px 5px;border-radius:5px;background:color-mix(in srgb,var(--ja-item-color) 14%,transparent);border-left:2px solid var(--ja-item-color);font-size:.66rem;line-height:1.25}.ja-agenda-month-item.is-done{opacity:.48;text-decoration:line-through}.ja-agenda-month-item.is-nested{margin-left:4px;background:color-mix(in srgb,var(--ja-item-color) 7%,transparent)}.ja-agenda-month-icon,.ja-agenda-month-marker,.ja-agenda-month-time{flex:0 0 auto}.ja-agenda-month-time{opacity:.58;font-variant-numeric:tabular-nums}.ja-agenda-month-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ja-agenda-month-marker{margin-left:auto}.ja-agenda-month-slot{--ja-item-color:var(--ja-accent);border-radius:6px;border:1px solid color-mix(in srgb,var(--ja-item-color) 25%,transparent);overflow:hidden}.ja-agenda-month-slot-head{border-left-width:3px;border-radius:0;background:color-mix(in srgb,var(--ja-item-color) 18%,transparent)}.ja-agenda-month-slot-count{margin-left:auto;flex:0 0 auto;font-size:.58rem}.ja-agenda-month-slot-inside{display:flex;flex-direction:column;gap:1px;padding:1px 2px 2px}.ja-agenda-month-more{font-size:.6rem;opacity:.52;padding:1px 5px}.ja-agenda-month-detail,.ja-agenda-week-detail{margin-top:10px;padding-top:12px;border-top:1px solid var(--ja-border)}.ja-agenda-month-detail-head h2{margin:.15rem 0 .65rem;font-size:1.15rem}
+
+/* Agenda V2 — vue semaine */
+.ja-agenda-week-scroll{width:100%;overflow-x:auto;overscroll-behavior-inline:contain;padding-bottom:4px}.ja-agenda-week-frame{min-width:760px}.ja-agenda-week-head,.ja-agenda-week-allday,.ja-agenda-week-body{display:grid;grid-template-columns:52px repeat(7,minmax(0,1fr));gap:4px}.ja-agenda-week-corner{min-height:48px}.ja-agenda-week-day{font:inherit;border:1px solid transparent;background:transparent;color:inherit;border-radius:10px;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer}.ja-agenda-week-day:hover{background:color-mix(in srgb,var(--ja-accent) 7%,transparent)}.ja-agenda-week-day.is-selected{border-color:var(--ja-accent)}.ja-agenda-week-day.is-vacation{border-bottom-color:var(--ja-vac-color,var(--ja-accent))}.ja-agenda-week-dow{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;opacity:.52}.ja-agenda-week-num{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.98rem}.ja-agenda-week-day.is-today .ja-agenda-week-num{background:var(--ja-accent);color:#fff;font-weight:700}.ja-agenda-week-allday{align-items:stretch;margin:4px 0 6px}.ja-agenda-week-allday-label{font-size:.6rem;opacity:.46;text-align:right;padding:5px 4px 0 0}.ja-agenda-week-allday-cell{min-height:30px;padding:2px;border-radius:7px;background:color-mix(in srgb,var(--ja-accent) 3%,transparent);display:flex;flex-direction:column;gap:2px}.ja-agenda-week-allday-pill{--ja-item-color:var(--ja-accent);display:flex;align-items:center;gap:4px;min-width:0;padding:3px 5px;border-radius:5px;background:color-mix(in srgb,var(--ja-item-color) 13%,transparent);border-left:2px solid var(--ja-item-color);font-size:.66rem;cursor:pointer}.ja-agenda-week-allday-pill.is-done{opacity:.5;text-decoration:line-through}.ja-agenda-week-allday-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ja-agenda-week-check,.ja-agenda-week-block-check{font:inherit;border:0;background:transparent;color:inherit;padding:0;line-height:1;cursor:pointer;flex:0 0 auto}.ja-agenda-week-hours{position:relative}.ja-agenda-week-hour{height:52px;text-align:right;padding-right:5px;font-size:.62rem;opacity:.48;transform:translateY(-6px);font-variant-numeric:tabular-nums}.ja-agenda-week-col{position:relative;min-width:0;border-radius:9px;background:var(--ja-panel,#fff);overflow:hidden;cursor:pointer}.ja-agenda-week-col.is-today{background:color-mix(in srgb,var(--ja-accent) 4%,var(--ja-panel,#fff))}.ja-agenda-week-line{position:absolute;left:0;right:0;border-top:1px solid color-mix(in srgb,var(--ja-border) 65%,transparent);pointer-events:none}.ja-agenda-week-now{position:absolute;left:0;right:0;border-top:1.5px solid #d9534f;z-index:8;pointer-events:none}.ja-agenda-week-now:before{content:"";position:absolute;left:-3px;top:-4px;width:7px;height:7px;border-radius:50%;background:#d9534f}.ja-agenda-week-slot-zone{--ja-item-color:var(--ja-accent);position:absolute;left:1px;right:1px;z-index:1;border:1px dashed color-mix(in srgb,var(--ja-item-color) 52%,transparent);border-left:3px solid var(--ja-item-color);border-radius:7px;background:color-mix(in srgb,var(--ja-item-color) 7%,transparent);overflow:hidden;pointer-events:auto}.ja-agenda-week-slot-label{display:flex;align-items:center;gap:3px;padding:2px 4px;font-size:.6rem;color:color-mix(in srgb,var(--ja-item-color) 75%,currentColor);background:color-mix(in srgb,var(--ja-item-color) 9%,transparent);min-width:0}.ja-agenda-week-slot-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ja-agenda-week-slot-count{margin-left:auto;flex:0 0 auto}.ja-agenda-week-block{--ja-item-color:var(--ja-accent);position:absolute;z-index:3;min-width:0;padding:3px 5px;border-radius:6px;background:color-mix(in srgb,var(--ja-item-color) 25%,var(--ja-panel,#fff));border-left:3px solid var(--ja-item-color);overflow:hidden;cursor:pointer;font-size:.68rem;line-height:1.2}.ja-agenda-week-block:hover{filter:brightness(1.06);z-index:6}.ja-agenda-week-block.is-done{opacity:.5;text-decoration:line-through}.ja-agenda-week-block-title{display:flex;align-items:center;gap:3px;font-weight:650;min-width:0}.ja-agenda-week-block-title>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ja-agenda-week-block-time{font-size:.62rem;opacity:.58;font-variant-numeric:tabular-nums;margin-top:2px}.ja-agenda-week-block-marker{position:absolute;right:3px;bottom:2px;font-size:.72rem}
+
+@media(max-width:620px){.ja-agenda-month-grid{gap:3px}.ja-agenda-month-cell{height:78px;padding:3px;border-radius:8px}.ja-agenda-month-dow{font-size:.6rem}.ja-agenda-month-vac{display:none}.ja-agenda-month-cell.is-vacation .ja-agenda-month-cell-head{padding-top:0}.ja-agenda-month-num{width:19px;height:19px;font-size:.72rem}.ja-agenda-month-count{font-size:.52rem;padding:0 4px}.ja-agenda-month-items{gap:2px}.ja-agenda-month-item,.ja-agenda-month-slot-head{height:4px;min-height:4px;padding:0;border:0;border-radius:2px;background:var(--ja-item-color);font-size:0}.ja-agenda-month-item>* ,.ja-agenda-month-slot-head>*{display:none}.ja-agenda-month-slot{border:0;overflow:visible}.ja-agenda-month-slot-inside{padding:1px 0;gap:2px}.ja-agenda-month-more{display:none}.ja-agenda-week-frame{min-width:820px}.ja-agenda-week-head,.ja-agenda-week-allday,.ja-agenda-week-body{grid-template-columns:42px repeat(7,minmax(105px,1fr));gap:3px}.ja-agenda-week-hour{height:52px}.ja-agenda-slot-time{width:100%;margin-left:24px}.ja-agenda-slot-head{flex-wrap:wrap}}
+
+/* Agenda V3 — calendrier annuel 12 mois */
+.ja-agenda-year-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;min-width:0}
+.ja-agenda-year-month{min-width:0;padding:10px;border:1px solid var(--ja-border);border-radius:14px;background:var(--ja-panel,#fff)}
+.ja-agenda-year-month-title{display:block;width:100%;padding:2px 5px 8px;border:0;background:transparent;color:inherit;font:inherit;font-weight:700;text-transform:capitalize;cursor:pointer;text-align:center}
+.ja-agenda-year-month-title:hover{color:var(--ja-accent)}
+.ja-agenda-year-dows,.ja-agenda-year-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.ja-agenda-year-dows span{text-align:center;font-size:.58rem;opacity:.42;padding-bottom:2px}
+.ja-agenda-year-day{position:relative;aspect-ratio:1.05;min-width:0;padding:0;border:1px solid transparent;border-radius:5px;background:transparent;color:inherit;font:inherit;font-size:.66rem;cursor:pointer;font-variant-numeric:tabular-nums;overflow:hidden}
+.ja-agenda-year-day:hover{background:color-mix(in srgb,var(--ja-accent) 9%,transparent)}
+.ja-agenda-year-day.is-out{opacity:0;pointer-events:none}.ja-agenda-year-day.has-content{background:color-mix(in srgb,var(--ja-day-color,var(--ja-accent)) calc(var(--ja-density,1) * 5%),transparent)}
+.ja-agenda-year-day.is-selected{border-color:var(--ja-accent)}.ja-agenda-year-day.is-today{outline:1px solid var(--ja-accent);outline-offset:-2px;font-weight:800;color:var(--ja-accent)}
+.ja-agenda-year-marks{position:absolute;left:1px;right:1px;bottom:1px;height:2px;display:flex;gap:1px}.ja-agenda-year-mark{display:block;flex:1 1 0;min-width:1px;border-radius:2px}
+.ja-agenda-year-detail{margin-top:12px;padding-top:12px;border-top:1px solid var(--ja-border)}
+
+/* Agenda V3 — menu + et clic droit */
+.ja-agenda-popover,.ja-agenda-context{position:fixed;z-index:10080;width:220px;padding:5px;border:1px solid var(--ja-border);border-radius:12px;background:var(--ja-panel,#fff);box-shadow:0 14px 42px rgba(0,0,0,.24);display:flex;flex-direction:column;gap:2px}
+.ja-agenda-popover-item,.ja-agenda-context-item{width:100%;padding:8px 10px;border:0;border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}.ja-agenda-popover-item:hover,.ja-agenda-context-item:hover{background:color-mix(in srgb,var(--ja-accent) 10%,transparent)}.ja-agenda-context-item.is-danger:hover{color:#c94b4b;background:color-mix(in srgb,#c94b4b 10%,transparent)}
+.ja-agenda-add-more{flex:0 0 auto;min-width:38px;padding-inline:11px}
+
+/* Agenda V3 — mêmes formulaires que le Daily, avec sections Agenda */
+.ja-agenda-shared-form{width:min(760px,94vw)}
+.ja-agenda-form-heading{min-width:0;flex:1 1 auto}.ja-agenda-form-kicker{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;opacity:.52;margin-bottom:2px}
+.ja-agenda-form-body{display:flex!important;flex-direction:column;gap:10px}
+.ja-agenda-form-field{display:flex;flex-direction:column;gap:4px;min-width:0}.ja-agenda-form-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;opacity:.52}.ja-agenda-form-input{width:100%;min-width:0;box-sizing:border-box}
+.ja-agenda-form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;align-items:end;min-width:0}.ja-agenda-form-check{display:flex;align-items:center;gap:7px;min-height:34px;font-size:.88rem}.ja-agenda-form-check input{flex:0 0 auto}
+.ja-agenda-form-section{margin:0}.ja-agenda-section-badge{display:none;margin-left:auto;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--ja-accent);color:#fff;font-size:.64rem;align-items:center;justify-content:center}.ja-agenda-section-badge.is-on{display:inline-flex}
+.ja-agenda-form-hint{font-size:.76rem;opacity:.55;font-style:italic}.ja-agenda-recurrence-editor{display:flex;flex-direction:column;gap:8px}.ja-agenda-recurrence-editor.is-hidden{display:none}.ja-agenda-weekdays{display:flex;gap:4px;flex-wrap:wrap}.ja-agenda-weekday{min-width:34px;padding:5px 8px}
+.ja-agenda-checkedit,.ja-agenda-progressedit,.ja-agenda-subtasks{display:flex;flex-direction:column;gap:5px}.ja-agenda-checkedit-row{grid-template-columns:auto minmax(0,1fr) auto;align-items:center}.ja-agenda-progressedit>.ja-agenda-form-row{grid-template-columns:130px minmax(0,1fr) auto}
+.ja-agenda-mediaedit{display:flex;flex-direction:column;gap:8px}.ja-agenda-mediaedit-row{grid-template-columns:54px minmax(0,1fr) auto auto auto;align-items:center}.ja-agenda-mediaedit-thumb{width:48px;height:48px;object-fit:cover;border-radius:8px;background:var(--ja-panel,#fff)}.ja-agenda-mediaedit-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.8rem}.ja-agenda-mediafit{width:90px}.ja-agenda-shared-form .ja-jtoken-menu{z-index:12}
+
+/* Fonds Agenda, stockés par le même jmedia.js que le Journal */
+.ja-agenda-card.has-backdrop,.ja-agenda-slot-container.has-backdrop,.ja-agenda-week-block.has-backdrop{isolation:isolate}
+.ja-agenda-card.has-backdrop:before,.ja-agenda-slot-container.has-backdrop:before,.ja-agenda-week-block.has-backdrop:before{content:"";position:absolute;inset:0;background-image:var(--ja-agenda-backdrop);background-size:cover;background-position:var(--ja-agenda-backdrop-pos,50% 50%);opacity:var(--ja-agenda-backdrop-opacity,.3);z-index:-1;pointer-events:none}
+.ja-agenda-card.has-backdrop:after,.ja-agenda-slot-container.has-backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,var(--ja-panel,#fff) 5%,color-mix(in srgb,var(--ja-panel,#fff) 78%,transparent) 48%,transparent);z-index:-1;pointer-events:none}
+.ja-agenda-week-block.has-backdrop:before{opacity:min(var(--ja-agenda-backdrop-opacity,.3),.32)}
+.ja-agenda-week-allday-pill.is-habit,.ja-agenda-week-block.is-habit{border-left-style:dashed}
+
+@media(max-width:980px){.ja-agenda-year-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.ja-agenda-year-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ja-agenda-year-month{padding:7px}.ja-agenda-year-day{font-size:.6rem}.ja-agenda-shared-form{width:100%;max-width:none}.ja-agenda-mediaedit-row{grid-template-columns:46px minmax(0,1fr) auto}.ja-agenda-mediaedit-row>.ja-agenda-form-check,.ja-agenda-mediafit{grid-column:2}.ja-agenda-form-row{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.ja-agenda-year-grid{grid-template-columns:1fr 1fr;gap:5px}.ja-agenda-year-month{padding:5px;border-radius:10px}.ja-agenda-year-month-title{font-size:.78rem;padding-bottom:5px}.ja-agenda-year-dows span{font-size:.48rem}.ja-agenda-year-day{font-size:.54rem;border-radius:3px}.ja-agenda-form-row{grid-template-columns:1fr}.ja-agenda-progressedit>.ja-agenda-form-row,.ja-agenda-checkedit-row{grid-template-columns:auto minmax(0,1fr) auto}.ja-agenda-actions{display:grid;grid-template-columns:1fr 1fr auto;width:100%}.ja-agenda-add{min-width:0;padding-inline:8px}}
+.ja-agenda-card-checklist{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.74rem;opacity:.74}.ja-agenda-card-progress{position:relative;flex:1 1 auto;height:4px;border-radius:999px;background:color-mix(in srgb,var(--ja-border) 70%,transparent);overflow:hidden}.ja-agenda-card-progress>i{display:block;height:100%;background:var(--ja-item-color);border-radius:inherit}.ja-agenda-card-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:5px;margin-top:8px;max-height:150px;overflow:hidden}.ja-agenda-card-gallery-img{width:100%;height:84px;border-radius:8px;cursor:zoom-in;background:color-mix(in srgb,var(--ja-border) 40%,transparent)}.ja-agenda-card-audios{display:flex;flex-direction:column;gap:4px;margin-top:8px}.ja-agenda-card-audio{width:100%;height:32px}.ja-agenda-card-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.ja-agenda-card-link{max-width:100%;padding:3px 9px;border:1px solid var(--ja-border);border-radius:999px;font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none;color:var(--ja-accent)}
+
+
+/* ============================ V4 · filtres ============================ */
+.ja-agenda-filter-toggle{border:1px solid var(--ja-border);background:var(--ja-panel-2);color:var(--ja-muted);border-radius:999px;padding:7px 12px;cursor:pointer;white-space:nowrap}.ja-agenda-filter-toggle.is-active{border-color:var(--ja-accent);color:var(--ja-text);background:var(--ja-accent-soft)}
+.ja-agenda-filter-panel{display:flex;flex-direction:column;gap:7px;padding:10px 12px;border:1px solid var(--ja-border);border-radius:14px;background:color-mix(in srgb,var(--ja-panel) 92%,transparent);box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.ja-agenda-filter-group{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.ja-agenda-filter-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ja-faint);min-width:72px}.ja-agenda-filter-pill{border:1px solid color-mix(in srgb,var(--ja-filter-color,var(--ja-border)) 45%,var(--ja-border));background:transparent;color:var(--ja-muted);border-radius:999px;padding:4px 9px;cursor:pointer;font-size:.78rem}.ja-agenda-filter-pill:hover,.ja-agenda-filter-pill.is-on{border-color:var(--ja-filter-color,var(--ja-accent));color:var(--ja-text);background:color-mix(in srgb,var(--ja-filter-color,var(--ja-accent)) 16%,transparent)}.ja-agenda-filter-reset{align-self:flex-start;border:0;background:transparent;color:var(--ja-accent);cursor:pointer;padding:4px 0}
+
+/* ============================ V4 · Organisation ============================ */
+.ja-agenda-organisation{display:flex;flex-direction:column;gap:10px}.ja-agenda-org-section{border:1px solid var(--ja-border);border-radius:15px;overflow:hidden;background:var(--ja-panel)}.ja-agenda-org-head{display:flex;align-items:center;gap:8px;padding:11px 13px;cursor:pointer;position:sticky;top:0;z-index:2;background:color-mix(in srgb,var(--ja-panel) 96%,transparent)}.ja-agenda-org-head:hover{background:var(--ja-panel-2)}.ja-agenda-org-chevron{width:15px;color:var(--ja-faint)}.ja-agenda-org-icon{font-size:1rem}.ja-agenda-org-title{font-size:1rem;margin:0}.ja-agenda-org-add{border:1px solid var(--ja-border);background:transparent;color:var(--ja-muted);border-radius:999px;padding:4px 9px;cursor:pointer}.ja-agenda-org-add:hover{color:var(--ja-accent);border-color:var(--ja-accent)}.ja-agenda-org-body{display:flex;flex-direction:column;gap:6px;padding:9px 12px 13px;border-top:1px solid var(--ja-border)}
+.ja-agenda-org-todo{display:flex;align-items:center;gap:6px;padding:5px 7px 5px calc(7px + var(--ja-depth,0)*18px);border-radius:8px}.ja-agenda-org-todo:hover{background:var(--ja-panel-2)}.ja-agenda-org-todo.is-done{opacity:.58}.ja-agenda-org-todo.is-done .ja-agenda-org-todo-title{text-decoration:line-through}.ja-agenda-org-check,.ja-agenda-org-todo-title,.ja-agenda-org-project-title,.ja-agenda-org-simple-title{border:0;background:transparent;color:inherit;box-shadow:none;cursor:pointer;padding:2px}.ja-agenda-org-check{width:24px;flex:0 0 24px}.ja-agenda-org-todo-title,.ja-agenda-org-simple-title{font-weight:600;text-align:left;min-width:0;overflow:hidden;text-overflow:ellipsis}.ja-agenda-org-projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}.ja-agenda-org-project{border-left:3px solid var(--ja-item-color,var(--ja-accent));background:var(--ja-panel-2);border-radius:10px;padding:9px;display:flex;flex-direction:column;gap:7px}.ja-agenda-org-project-head{display:flex;align-items:center;gap:6px}.ja-agenda-org-project-title{font-weight:700;text-align:left}.ja-agenda-org-project-meta{display:flex;gap:4px;flex-wrap:wrap}.ja-agenda-org-simple{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:9px;background:var(--ja-panel-2);min-width:0}.ja-agenda-vac-dot{flex:0 0 auto}
+.ja-agenda-card.is-birthday{border-left-color:var(--ja-item-color,#d9b96b)}
+
+/* ============================ V4 · Settings Agenda ============================ */
+.ja-agenda-settings{margin-top:18px;padding-top:18px;border-top:1px solid var(--ja-border);display:flex;flex-direction:column;gap:10px}.ja-agenda-settings-hero{padding:16px 18px;border:1px solid var(--ja-border);border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--ja-accent) 10%,transparent),var(--ja-panel))}.ja-agenda-settings-hero h2{margin:2px 0 6px;font-size:1.35rem}.ja-agenda-settings-hero p{margin:0;color:var(--ja-muted);max-width:760px}.ja-agenda-settings-types{display:flex;flex-direction:column;gap:6px}.ja-agenda-settings-type{display:grid;grid-template-columns:70px minmax(120px,1fr) 44px 28px;gap:6px;align-items:center}
+@media(max-width:620px){.ja-agenda-filter-label{min-width:100%;margin-top:3px}.ja-agenda-org-projects{grid-template-columns:1fr}.ja-agenda-settings-type{grid-template-columns:58px minmax(0,1fr) 40px 28px}.ja-agenda-org-todo{padding-left:calc(5px + min(var(--ja-depth,0),5)*12px)}}
+
+
+/* ==========================================================================\n   AGENDA V5 — finition : résumé, projet, tri, rappels\n   ========================================================================== */
+.ja-agenda-summary{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:7px 10px;border:1px solid var(--ja-border);border-radius:999px;background:color-mix(in srgb,var(--ja-panel) 86%,transparent);margin:0 0 10px}
+.ja-agenda-summary-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:var(--ja-panel-2,var(--ja-panel));border:1px solid color-mix(in srgb,var(--ja-border) 72%,transparent);font-size:.78rem;color:var(--ja-muted)}
+.ja-agenda-summary-chip strong{color:var(--ja-text);font-variant-numeric:tabular-nums}.ja-agenda-summary-chip.is-overdue{border-color:color-mix(in srgb,#c96b61 55%,var(--ja-border));color:#c96b61}
+.ja-agenda-linked-dailies{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:7px}.ja-agenda-linked-label{font-size:.72rem;color:var(--ja-muted)}
+.ja-agenda-daily-chip{border:1px solid var(--ja-border);background:color-mix(in srgb,var(--ja-accent) 8%,var(--ja-panel));color:var(--ja-text);border-radius:999px;padding:3px 8px;font-size:.72rem;cursor:pointer}.ja-agenda-daily-chip:hover{border-color:var(--ja-accent)}
+.ja-agenda-org-tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.ja-agenda-smallbtn.is-active{border-color:var(--ja-accent);background:color-mix(in srgb,var(--ja-accent) 14%,transparent)}
+.ja-agenda-org-done{margin-top:12px;border-top:1px dashed var(--ja-border);padding-top:8px}.ja-agenda-org-done>summary{cursor:pointer;color:var(--ja-muted);font-size:.8rem}.ja-agenda-org-done-body{margin-top:7px;opacity:.72}.ja-agenda-chip.is-overdue{border-color:color-mix(in srgb,#c96b61 50%,var(--ja-border));color:#c96b61}
+.ja-agenda-project-detail-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 12px}.ja-agenda-project-bigicon{font-size:1.2rem}.ja-agenda-project-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+.ja-agenda-project-progress{height:5px;border-radius:999px;overflow:hidden;background:var(--ja-border);margin:0 0 12px}.ja-agenda-project-progress>i{display:block;height:100%;background:var(--ja-accent);border-radius:inherit}
+.ja-agenda-project-actions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.ja-agenda-project-section{border:1px solid var(--ja-border);border-radius:12px;background:color-mix(in srgb,var(--ja-panel) 88%,transparent);overflow:hidden;margin-bottom:10px}.ja-agenda-project-section-head{display:flex;align-items:center;gap:7px;padding:8px 11px;border-bottom:1px solid var(--ja-border)}.ja-agenda-project-section-head h2{font-size:.9rem;margin:0}.ja-agenda-project-section-body{padding:8px;display:flex;flex-direction:column;gap:5px}
+.ja-agenda-reminder-stack{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;flex-direction:column;gap:8px;width:min(360px,calc(100vw - 24px));pointer-events:none}.ja-agenda-reminder-toast{pointer-events:auto;border:1px solid color-mix(in srgb,var(--ja-accent) 50%,var(--ja-border));background:color-mix(in srgb,var(--ja-panel) 95%,transparent);box-shadow:0 12px 36px rgba(0,0,0,.28);border-radius:13px;padding:10px 11px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;backdrop-filter:blur(12px)}.ja-agenda-reminder-icon{font-size:1.15rem}.ja-agenda-reminder-main{min-width:0}.ja-agenda-reminder-title{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ja-agenda-reminder-meta{font-size:.74rem;color:var(--ja-muted)}.ja-agenda-reminder-close{border:0;background:transparent;color:var(--ja-muted);font-size:1rem;cursor:pointer}.ja-agenda-reminder-toast.is-leaving{opacity:0;transform:translateY(6px);transition:.2s ease}
+@media(max-width:620px){.ja-agenda-summary{border-radius:12px}.ja-agenda-summary-chip{font-size:.72rem}.ja-agenda-project-detail-head .ja-agenda-title{flex:1 1 100%;order:-1}.ja-agenda-reminder-stack{right:8px;bottom:max(8px,env(safe-area-inset-bottom));width:calc(100vw - 16px)}}
+
+
+/* Effort récursif des to-dos */
+.ja-agenda-effort-input{display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:6px}.ja-agenda-effort-unit{width:74px}.ja-agenda-effort-field.is-derived{opacity:.78}.ja-agenda-effort-derived{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:7px 9px;margin-bottom:7px;border-radius:9px;background:color-mix(in srgb,var(--ja-accent) 8%,transparent);font-size:.78rem;color:var(--ja-muted)}.ja-agenda-effort-derived strong{color:var(--ja-text)}.ja-agenda-effort-chip{font-variant-numeric:tabular-nums}
+
+
+/* =========================================================
+   V7 — Agenda aligné SUR la DA du Journal
+   ========================================================= */
+/* Comme Journal/home : le sous-header desktop disparaît réellement. */
+.ja-cat-agenda .ja-subheader{min-height:0;padding:0;background:transparent;border-bottom:none;}
+.ja-cat-agenda .ja-subheader-body{display:none;}
+.ja-cat-agenda .ja-page-scroll{padding:0;}
+.ja-cat-agenda .ja-page{padding:0 22px 30px;}
+
+.ja-agenda-root{gap:10px;font-family:"IM Fell Double Pica",Georgia,serif;}
+.ja-agenda-root button,.ja-agenda-root input,.ja-agenda-root select,.ja-agenda-root textarea{font-family:inherit;}
+
+/* Un seul vrai haut de page : même langage que la barre du Journal. */
+.ja-agenda-toolbar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin:10px 0 6px;padding:13px 14px 10px;
+  border:0;border-radius:16px 16px 10px 10px;box-shadow:none;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ja-accent) 15%,transparent) 0%,color-mix(in srgb,var(--ja-accent) 4%,transparent) 62%,transparent 100%);
+}
+.ja-agenda-nav{display:flex;align-items:center;gap:8px;min-width:0;}
+.ja-agenda-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:auto;}
+.ja-agenda-iconbtn.ja-jday-arrow{width:24px;height:24px;padding:0!important;border:0!important;background:transparent!important;color:var(--ja-muted)!important;box-shadow:none!important;}
+.ja-agenda-datebtn{
+  appearance:none;border:0!important;background:transparent!important;box-shadow:none!important;color:var(--ja-text)!important;
+  padding:2px 4px!important;min-width:0;font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif!important;
+  font-size:1.12rem!important;font-weight:600!important;letter-spacing:.015em;cursor:pointer;
+}
+.ja-agenda-datebtn:hover{color:var(--ja-accent)!important;}
+.ja-agenda-actions .ja-journal-add{
+  min-height:0!important;padding:4px 12px!important;border:1px solid color-mix(in srgb,var(--ja-border) 86%,transparent)!important;
+  border-radius:999px!important;background:color-mix(in srgb,var(--ja-panel) 55%,transparent)!important;color:var(--ja-muted)!important;
+  box-shadow:none!important;font-size:.73rem!important;backdrop-filter:blur(6px);
+}
+.ja-agenda-actions .ja-journal-add:hover{color:var(--ja-text)!important;border-color:color-mix(in srgb,var(--ja-accent) 55%,var(--ja-border))!important;background:var(--ja-accent-soft)!important;transform:none!important;}
+.ja-agenda-actions .ja-agenda-add-more{width:28px;height:28px;padding:0!important;justify-content:center;font-size:1rem!important;}
+.ja-agenda-filter-toggle.is-active{color:var(--ja-text)!important;border-color:var(--ja-accent)!important;background:var(--ja-accent-soft)!important;}
+
+/* Le résumé est du texte secondaire, pas une rangée de badges. */
+.ja-agenda-summary{flex:1 0 100%;display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:0;padding:1px 0 0;color:var(--ja-soft);font-size:.63rem;letter-spacing:.02em;}
+.ja-agenda-summary-bit{display:inline-flex;align-items:baseline;gap:3px;padding:0;border:0;background:transparent;color:inherit;}
+.ja-agenda-summary-bit strong{color:var(--ja-muted);font-size:.68rem;font-weight:650;}
+.ja-agenda-summary-bit + .ja-agenda-summary-bit:before{content:"·";margin-right:6px;color:var(--ja-border);}
+.ja-agenda-summary-bit.is-overdue,.ja-agenda-summary-bit.is-overdue strong{color:#d98a91;}
+
+/* La période est déjà dans la barre. Pas de deuxième gros titre en dessous. */
+.ja-agenda-mode-overview .ja-agenda-section-head,
+.ja-agenda-mode-day .ja-agenda-section-head,
+.ja-agenda-mode-month .ja-agenda-section-head,
+.ja-agenda-mode-week .ja-agenda-section-head,
+.ja-agenda-mode-year .ja-agenda-section-head{display:none;}
+.ja-agenda-mode-upcoming .ja-agenda-section-head{padding:3px 2px 2px;}
+.ja-agenda-mode-upcoming .ja-agenda-kicker{display:none;}
+.ja-agenda-mode-upcoming .ja-agenda-title{margin:0;font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-size:1rem;font-weight:500;color:var(--ja-muted);}
+
+/* Filtres : le popover/accordéon du Journal, sans pilules massives. */
+.ja-agenda-filter-panel{flex:1 0 100%;display:flex;flex-direction:column;gap:6px;margin-top:4px;padding:8px 10px;border:1px solid var(--ja-border);border-radius:11px;background:color-mix(in srgb,var(--ja-panel) 72%,transparent);box-shadow:none;}
+.ja-agenda-filter-label{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-size:.62rem;letter-spacing:.1em;color:var(--ja-soft);}
+.ja-agenda-filter-pill{padding:2px 8px;border:1px solid color-mix(in srgb,var(--ja-border) 82%,transparent);border-radius:999px;background:transparent;color:var(--ja-muted);font-size:.66rem;}
+.ja-agenda-filter-pill.is-on{border-color:color-mix(in srgb,var(--ja-accent) 55%,var(--ja-border));background:var(--ja-accent-soft);color:var(--ja-text);}
+
+/* Cartes : vocabulaire de la timeline Journal. Contours rares, pas de grosses boîtes. */
+.ja-agenda-list{gap:8px;}
+.ja-agenda-card{padding:10px 12px;border:0;border-left:2px solid var(--ja-item-color);border-radius:9px;background:rgba(255,255,255,.022);box-shadow:none;}
+.ja-agenda-card.is-nested{background:rgba(255,255,255,.015);}
+.ja-agenda-card-title,.ja-agenda-slot-title,.ja-agenda-daygroup-title,.ja-agenda-org-title,.ja-agenda-org-project-title{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-weight:500;}
+.ja-agenda-card-meta{gap:5px;margin-top:6px;}
+.ja-agenda-chip{padding:2px 7px;border:1px solid color-mix(in srgb,var(--ja-border) 86%,transparent);border-radius:999px;background:rgba(255,255,255,.022);color:var(--ja-muted);font-size:.65rem;box-shadow:none;}
+.ja-agenda-card-time{font-size:.68rem;color:var(--ja-muted);}
+.ja-agenda-smallbtn{padding:3px 9px!important;border:1px solid var(--ja-border)!important;border-radius:999px!important;background:transparent!important;color:var(--ja-muted)!important;font-size:.68rem!important;box-shadow:none!important;}
+.ja-agenda-smallbtn:hover{border-color:var(--ja-accent)!important;color:var(--ja-text)!important;}
+.ja-agenda-slot-container{padding:9px 11px;border:1px dashed color-mix(in srgb,var(--ja-item-color) 36%,var(--ja-border));border-left:2px solid var(--ja-item-color);border-radius:10px;background:color-mix(in srgb,var(--ja-item-color) 4%,transparent);box-shadow:none;}
+
+/* Mois : cases respirantes, sans quadrillage blanc. */
+.ja-agenda-month-grid{gap:5px;}
+.ja-agenda-month-dow{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-size:.64rem;color:var(--ja-soft);letter-spacing:.08em;}
+.ja-agenda-month-cell{height:118px;padding:6px;border:0;border-radius:9px;background:rgba(255,255,255,.018);box-shadow:none;}
+.ja-agenda-month-cell:hover{background:color-mix(in srgb,var(--ja-accent) 6%,transparent);}
+.ja-agenda-month-cell.is-selected{border:0;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ja-accent) 65%,transparent);}
+.ja-agenda-month-num{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;}
+.ja-agenda-month-item{border-radius:5px;background:color-mix(in srgb,var(--ja-item-col,var(--ja-accent)) 14%,transparent);}
+
+/* Année : 12 mini-calendriers comme un ensemble, pas 12 cartes. */
+.ja-agenda-year-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 26px;}
+.ja-agenda-year-month{padding:4px 5px 8px;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.ja-agenda-year-month-title{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-weight:500;font-size:1rem;letter-spacing:.03em;}
+.ja-agenda-year-dows span{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-size:.55rem;color:var(--ja-soft);}
+.ja-agenda-year-day{border:0;border-radius:6px;background:transparent;font-size:.67rem;}
+.ja-agenda-year-day:hover{background:var(--ja-accent-soft);}
+.ja-agenda-year-day.has-content{background:color-mix(in srgb,var(--ja-day-color,var(--ja-accent)) 10%,transparent);}
+.ja-agenda-year-detail{margin-top:12px;padding:0;border:0;background:transparent;box-shadow:none;}
+
+/* Organisation : même finesse. */
+.ja-agenda-org-section,.ja-agenda-org-project,.ja-agenda-org-simple{border-color:color-mix(in srgb,var(--ja-border) 82%,transparent);box-shadow:none;background:rgba(255,255,255,.018);}
+
+/* Formulaires Agenda = formulaire Daily, sans surcouche qui casse les accordéons. */
+.ja-agenda-shared-form{position:relative;width:min(720px,100%);max-height:min(88dvh,860px);overflow:hidden;border-radius:18px;}
+.ja-agenda-form-heading{flex:1 1 auto;min-width:0;}
+.ja-agenda-form-kicker{display:none;}
+.ja-agenda-form-body{display:flex!important;flex-direction:column;gap:10px;padding:0 16px 78px!important;overflow-y:auto!important;overflow-x:visible!important;}
+.ja-agenda-form-core{display:flex;flex-direction:column;gap:8px;padding:0 0 4px;}
+.ja-agenda-form-field{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.ja-agenda-form-label{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ja-muted);}
+.ja-agenda-form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:7px;align-items:end;}
+.ja-agenda-form-input{width:100%;min-width:0;box-sizing:border-box;}
+.ja-agenda-form-body > .ja-agenda-form-field:first-child .ja-agenda-form-label{display:none;}
+.ja-agenda-form-body > .ja-agenda-form-field:first-child .ja-agenda-form-input{font-size:.95rem;padding:8px 10px;}
+.ja-agenda-form-hint{font-size:.68rem;color:var(--ja-soft);font-style:italic;line-height:1.35;}
+.ja-agenda-extras{display:flex;flex-direction:column;gap:8px;overflow:visible;}
+.ja-agenda-shared-form .ja-jextra{overflow:visible!important;}
+.ja-agenda-shared-form .ja-jextra-body{overflow:visible!important;}
+.ja-agenda-shared-form .ja-jtoken-menu{z-index:30;}
+.ja-agenda-form-pop{z-index:10100!important;}
+
+/* Les chips du formulaire utilisent exactement celles du Daily. */
+.ja-agenda-shared-form .ja-jtoken-chip{border:1px solid color-mix(in srgb,var(--ja-accent) 30%,var(--ja-border))!important;border-radius:999px!important;background:color-mix(in srgb,var(--ja-accent) 12%,var(--ja-panel))!important;box-shadow:none!important;}
+
+/* Settings Agenda continue le Journal, avec ses mêmes bandes et accordéons. */
+.ja-agenda-settings{margin-top:6px;gap:6px;}
+.ja-agenda-settings .ja-agenda-type-row{padding:2px 0;}
+.ja-agenda-settings .ja-agenda-type-row .ja-jset-rowctl{width:100%;}
+
+@media(max-width:900px){
+  .ja-cat-agenda .ja-subheader{min-height:42px;padding:0 4px;background:var(--ja-panel);border-bottom:1px solid var(--ja-border);}
+  .ja-cat-agenda .ja-page{padding:0 12px 22px;}
+  .ja-agenda-toolbar{margin-top:6px;padding:10px 8px 8px;}
+  .ja-agenda-nav{flex:1 1 100%;justify-content:center;}
+  .ja-agenda-actions{flex:1 1 100%;justify-content:center;margin-left:0;}
+  .ja-agenda-year-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;}
+}
+@media(max-width:620px){.ja-agenda-year-grid{grid-template-columns:1fr;}.ja-agenda-form-row{grid-template-columns:1fr;}}
+
+
+/* --- V8 : calendriers fluides selon la taille réelle de l'écran --- */
+.ja-agenda-mode-month .ja-agenda-month-grid{
+  gap:clamp(3px,.42vw,6px);
+}
+.ja-agenda-mode-month .ja-agenda-month-cell{
+  height:clamp(72px,calc((100dvh - 270px)/6),112px);
+  padding:clamp(3px,.38vw,6px);
+  border-radius:clamp(8px,.75vw,12px);
+}
+.ja-agenda-mode-month .ja-agenda-month-cell-head{min-height:clamp(18px,2.5vh,22px)}
+.ja-agenda-mode-month .ja-agenda-month-num{
+  width:clamp(18px,2.3vh,22px);height:clamp(18px,2.3vh,22px);
+  font-size:clamp(.7rem,1.45vh,.82rem);
+}
+.ja-agenda-mode-month .ja-agenda-month-pill{
+  padding:1px clamp(3px,.35vw,6px);
+  font-size:clamp(.56rem,1.15vh,.68rem);
+  line-height:1.22;
+}
+.ja-agenda-mode-month .ja-agenda-month-items{gap:2px;margin-top:2px}
+.ja-agenda-mode-month .ja-agenda-month-dow{padding-bottom:3px;font-size:clamp(.62rem,1.2vh,.72rem)}
+
+.ja-agenda-mode-year .ja-agenda-year-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(7px,.8vw,12px);
+}
+.ja-agenda-mode-year .ja-agenda-year-month{
+  padding:clamp(5px,.55vw,8px);
+  border-radius:12px;
+}
+.ja-agenda-mode-year .ja-agenda-year-month-title{
+  padding:1px 3px 5px;
+  font-size:clamp(.78rem,1.55vh,.96rem);
+}
+.ja-agenda-mode-year .ja-agenda-year-dows,
+.ja-agenda-mode-year .ja-agenda-year-days{gap:1px}
+.ja-agenda-mode-year .ja-agenda-year-dows span{
+  font-size:clamp(.45rem,.92vh,.56rem);
+  padding-bottom:1px;
+}
+.ja-agenda-mode-year .ja-agenda-year-day{
+  aspect-ratio:auto;
+  height:clamp(17px,2.25vh,25px);
+  min-height:0;
+  border-radius:5px;
+  font-size:clamp(.52rem,1.08vh,.66rem);
+}
+.ja-agenda-mode-year .ja-agenda-year-marks{bottom:1px;height:2px}
+.ja-agenda-mode-year .ja-agenda-year-detail{margin-top:8px}
+
+.ja-agenda-mode-week .ja-agenda-week-frame{
+  min-width:min(700px,100%);
+  width:100%;
+}
+.ja-agenda-mode-week .ja-agenda-week-head,
+.ja-agenda-mode-week .ja-agenda-week-allday,
+.ja-agenda-mode-week .ja-agenda-week-body{
+  grid-template-columns:clamp(38px,3.6vw,48px) repeat(7,minmax(0,1fr));
+  gap:clamp(2px,.28vw,4px);
+}
+.ja-agenda-mode-week .ja-agenda-week-corner,
+.ja-agenda-mode-week .ja-agenda-week-day{min-height:clamp(38px,5.4vh,46px)}
+.ja-agenda-mode-week .ja-agenda-week-dow{font-size:clamp(.55rem,1.1vh,.66rem)}
+.ja-agenda-mode-week .ja-agenda-week-num{
+  width:clamp(20px,2.7vh,24px);height:clamp(20px,2.7vh,24px);
+  font-size:clamp(.78rem,1.55vh,.94rem);
+}
+.ja-agenda-mode-week .ja-agenda-week-hour{
+  height:var(--ja-week-hour-px,38px);
+  font-size:clamp(.54rem,1vh,.61rem);
+}
+.ja-agenda-mode-week .ja-agenda-week-block{font-size:clamp(.56rem,1.05vh,.68rem);padding:2px 4px}
+.ja-agenda-mode-week .ja-agenda-week-slot-label{font-size:clamp(.5rem,.95vh,.59rem)}
+.ja-agenda-mode-week .ja-agenda-week-allday-cell{min-height:24px}
+.ja-agenda-mode-week .ja-agenda-week-allday-pill{font-size:clamp(.54rem,1vh,.64rem);padding:2px 4px}
+
+@media (max-width:1180px){
+  .ja-agenda-mode-year .ja-agenda-year-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ja-agenda-mode-year .ja-agenda-year-day{height:clamp(16px,2vh,22px)}
+}
+@media (max-width:900px){
+  .ja-agenda-mode-year .ja-agenda-year-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ja-agenda-mode-month .ja-agenda-month-cell{height:clamp(66px,calc((100dvh - 250px)/6),96px)}
+  .ja-agenda-mode-week .ja-agenda-week-frame{min-width:660px}
+}
+@media (max-width:620px){
+  .ja-agenda-mode-month .ja-agenda-month-cell{height:clamp(58px,10.5vh,78px)}
+  .ja-agenda-mode-year .ja-agenda-year-grid{grid-template-columns:1fr 1fr}
+  .ja-agenda-mode-year .ja-agenda-year-day{height:20px}
+  .ja-agenda-mode-week .ja-agenda-week-frame{min-width:620px}
+}
+
+
+/* =========================================================
+   V10 — verrouillage DA Agenda après V8
+   Le shell et les titres ne peuvent plus revenir via un breakpoint.
+   ========================================================= */
+
+/* Agenda possède sa propre barre sur desktop.
+   Sur téléphone, on laisse le shell commun afficher ses contrôles existants
+   (sidebar gauche · sauvegarde native · sidebar droite), comme les autres pages. */
+@media (min-width:821px){
+  body .ja-app.ja-cat-agenda .ja-center > .ja-subheader{
+    display:none!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+}
+body .ja-app.ja-cat-agenda .ja-center > .ja-page-scroll{
+  padding-top:0!important;
+}
+body .ja-app.ja-cat-agenda .ja-center > .ja-page-scroll > .ja-page{
+  padding-top:0!important;
+}
+
+/* Pas de période répétée dans le contenu, même si un vieux widget la produit encore. */
+.ja-agenda-mode-overview > .ja-agenda-section-head,
+.ja-agenda-mode-day > .ja-agenda-section-head,
+.ja-agenda-mode-month > .ja-agenda-section-head,
+.ja-agenda-mode-week > .ja-agenda-section-head,
+.ja-agenda-mode-year > .ja-agenda-section-head{
+  display:none!important;
+}
+
+/* Barre unique, légère, vocabulaire Journal. */
+.ja-agenda-root > .ja-agenda-toolbar{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  flex-wrap:wrap!important;
+  margin:0 0 8px!important;
+  padding:8px 6px 6px!important;
+  min-height:42px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ja-accent) 10%,transparent),transparent)!important;
+  box-shadow:none!important;
+}
+.ja-agenda-toolbar .ja-agenda-nav{display:flex!important;align-items:center!important;gap:4px!important;}
+.ja-agenda-toolbar .ja-agenda-actions{display:flex!important;align-items:center!important;gap:5px!important;margin-left:auto!important;}
+.ja-agenda-toolbar .ja-agenda-iconbtn.ja-jday-arrow{
+  width:24px!important;height:24px!important;min-width:24px!important;min-height:24px!important;
+  padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;
+  color:var(--ja-muted)!important;font-size:.95rem!important;
+}
+.ja-agenda-toolbar .ja-agenda-datebtn{
+  min-width:0!important;min-height:0!important;padding:1px 8px!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;
+  color:var(--ja-text)!important;font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif!important;
+  font-size:.93rem!important;font-weight:600!important;letter-spacing:.035em!important;
+}
+.ja-agenda-toolbar .ja-agenda-actions .ja-journal-add{
+  min-width:0!important;min-height:26px!important;height:26px!important;
+  padding:2px 9px!important;margin:0!important;
+  border:1px solid color-mix(in srgb,var(--ja-border) 82%,transparent)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.018)!important;
+  color:var(--ja-muted)!important;
+  box-shadow:none!important;
+  font-size:.65rem!important;
+  line-height:1!important;
+}
+.ja-agenda-toolbar .ja-agenda-actions .ja-journal-add:hover{
+  color:var(--ja-text)!important;
+  border-color:color-mix(in srgb,var(--ja-accent) 55%,var(--ja-border))!important;
+  background:var(--ja-accent-soft)!important;
+}
+.ja-agenda-toolbar .ja-agenda-actions .ja-agenda-add-more{
+  width:26px!important;min-width:26px!important;padding:0!important;font-size:.9rem!important;
+}
+
+/* Le résumé appartient à la barre, très secondaire. */
+.ja-agenda-toolbar > .ja-agenda-summary{
+  order:10!important;
+  flex:1 0 100%!important;
+  display:flex!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:0!important;
+  padding:0 31px 1px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--ja-soft)!important;
+  font-size:.57rem!important;
+  line-height:1.25!important;
+}
+.ja-agenda-summary-bit{
+  display:inline-flex!important;align-items:baseline!important;gap:3px!important;
+  padding:0!important;border:0!important;background:transparent!important;
+  color:inherit!important;font-size:inherit!important;
+}
+.ja-agenda-summary-bit strong{font-size:.6rem!important;color:var(--ja-muted)!important;font-weight:600!important;}
+.ja-agenda-summary-bit + .ja-agenda-summary-bit:before{content:"·"!important;margin-right:4px!important;color:var(--ja-border)!important;}
+
+/* Si un vieux rendu V5 traîne, neutraliser ses anciennes summary chips. */
+.ja-agenda-toolbar > .ja-agenda-summary .ja-agenda-summary-chip{
+  padding:0!important;border:0!important;background:transparent!important;border-radius:0!important;
+  color:inherit!important;font-size:.57rem!important;
+}
+
+/* Les mini-calendriers gardent la finesse V7 tandis que V8 gère leurs dimensions. */
+.ja-agenda-mode-year .ja-agenda-year-month{
+  border:0!important;background:transparent!important;box-shadow:none!important;
+}
+.ja-agenda-mode-year .ja-agenda-year-month-title{
+  border:0!important;background:transparent!important;box-shadow:none!important;
+  color:var(--ja-text)!important;font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif!important;
+  font-weight:500!important;
+}
+.ja-agenda-mode-year .ja-agenda-year-day{
+  border:0!important;background:transparent;box-shadow:none!important;
+}
+.ja-agenda-mode-month .ja-agenda-month-cell{
+  border:0!important;background:rgba(255,255,255,.018)!important;box-shadow:none!important;
+}
+
+@media(max-width:620px){
+  .ja-agenda-toolbar .ja-agenda-nav{flex:1 1 100%!important;justify-content:center!important;}
+  .ja-agenda-toolbar .ja-agenda-actions{flex:1 1 100%!important;justify-content:center!important;margin-left:0!important;}
+  .ja-agenda-toolbar > .ja-agenda-summary{justify-content:center!important;padding:0!important;}
+}
+
+
+/* ============================================================
+   Sous-tâches — composant partagé, hiérarchie réelle
+   ============================================================ */
+.ja-agenda-subtasks.ja-todo-subtree{display:flex;flex-direction:column;gap:4px;margin-top:9px;padding-top:8px;border-top:1px solid color-mix(in srgb,var(--ja-border) 62%,transparent);}
+.ja-agenda-subtasks-head{display:flex;align-items:center;gap:7px;color:var(--ja-muted);font-size:.67rem;margin-bottom:1px;}
+.ja-agenda-subtasks-count{margin-left:auto;opacity:.58;font-size:.6rem;}
+.ja-todo-subtree-root{display:flex;flex-direction:column;gap:2px;}
+.ja-todo-subnode{position:relative;min-width:0;}
+.ja-todo-subrow{position:relative;display:flex;align-items:center;gap:6px;min-height:24px;padding:2px 4px 2px 0;border-radius:6px;min-width:0;}
+.ja-todo-subrow:hover{background:color-mix(in srgb,var(--ja-hover) 48%,transparent);}
+.ja-todo-subbranch{width:11px;flex:0 0 11px;text-align:center;color:var(--ja-soft);opacity:.6;font-size:.62rem;line-height:1;}
+button.ja-agenda-subtask-check{appearance:none!important;box-sizing:border-box!important;width:17px!important;min-width:17px!important;max-width:17px!important;height:17px!important;min-height:17px!important;max-height:17px!important;flex:0 0 17px!important;padding:0!important;margin:0!important;border:1px solid color-mix(in srgb,var(--ja-item-color,var(--ja-accent)) 45%,var(--ja-border))!important;border-radius:4px!important;background:rgba(255,255,255,.015)!important;color:var(--ja-text)!important;display:grid!important;place-items:center!important;font:inherit!important;font-size:.59rem!important;line-height:1!important;box-shadow:none!important;cursor:pointer!important;}
+button.ja-agenda-subtask-check:hover{background:color-mix(in srgb,var(--ja-item-color,var(--ja-accent)) 12%,transparent)!important;border-color:color-mix(in srgb,var(--ja-item-color,var(--ja-accent)) 68%,var(--ja-border))!important;}
+.ja-agenda-subtask-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.75rem;color:var(--ja-text);}
+.ja-todo-subnode.is-done>.ja-todo-subrow .ja-agenda-subtask-title{text-decoration:line-through;opacity:.5;}
+.ja-agenda-subtask-effort,.ja-todo-subcount{flex:0 0 auto;white-space:nowrap;border-radius:999px;padding:1px 6px;font-size:.61rem;color:var(--ja-muted);background:rgba(255,255,255,.035);}
+.ja-todo-subcount{color:color-mix(in srgb,var(--ja-item-color,var(--ja-accent)) 55%,var(--ja-text));background:color-mix(in srgb,var(--ja-item-color,var(--ja-accent)) 10%,transparent);}
+.ja-todo-subchildren{position:relative;margin-left:19px;padding-left:13px;display:flex;flex-direction:column;gap:2px;}
+.ja-todo-subchildren::before{content:"";position:absolute;left:2px;top:0;bottom:9px;border-left:1px dotted color-mix(in srgb,var(--ja-border) 78%,transparent);}
+.ja-todo-subchildren>.ja-todo-subnode>.ja-todo-subrow::before{content:"";position:absolute;left:-11px;top:50%;width:9px;border-top:1px dotted color-mix(in srgb,var(--ja-border) 78%,transparent);}
+
+/* Outils d’une entrée : lien Daily + modifier, même grammaire et même taille. */
+.ja-agenda-inline-tools{margin-left:auto;display:inline-flex;align-items:center;flex:0 0 auto;gap:0;border-radius:7px;overflow:hidden;}
+.ja-agenda-inline-tools.is-mini{border-radius:5px;}
+.ja-agenda-inline-tools .ja-agenda-inline-daily,.ja-agenda-inline-tools .ja-agenda-inline-edit{appearance:none!important;width:24px!important;height:24px!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;border-radius:0!important;background:transparent!important;color:var(--ja-soft)!important;display:inline-grid!important;place-items:center!important;font:inherit!important;font-size:.72rem!important;line-height:1!important;opacity:.58!important;cursor:pointer!important;}
+.ja-agenda-inline-tools.is-mini .ja-agenda-inline-daily,.ja-agenda-inline-tools.is-mini .ja-agenda-inline-edit{width:19px!important;height:19px!important;font-size:.61rem!important;}
+.ja-agenda-inline-tools .ja-agenda-inline-daily:hover,.ja-agenda-inline-tools .ja-agenda-inline-edit:hover{opacity:1!important;color:var(--ja-text)!important;background:color-mix(in srgb,var(--ja-accent) 11%,transparent)!important;}
+.ja-agenda-inline-tools .ja-agenda-inline-daily + .ja-agenda-inline-edit{border-left:1px solid color-mix(in srgb,var(--ja-border) 46%,transparent)!important;}
+
+/* Jour : les entrées réellement journée entière restent au-dessus de l’axe. */
+.ja-agenda-day-allday{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:start;margin:7px 0 8px;padding:7px 0 8px;border-bottom:1px solid color-mix(in srgb,var(--ja-border) 72%,transparent);}
+.ja-agenda-day-allday-label{padding-top:4px;text-align:right;font-family:"IM Fell Double Pica SC","IM Fell Double Pica",Georgia,serif;font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ja-soft);opacity:.78;}
+.ja-agenda-day-allday-items{display:flex;flex-wrap:wrap;gap:5px;min-width:0;}
+.ja-agenda-day-allday-items .ja-agenda-week-allday-pill{min-width:150px;max-width:100%;}
+.ja-agenda-daydetail-head{display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:3;background:var(--ja-panel);padding:2px 0 8px;}
+.ja-agenda-daydetail-hour{font-size:.68rem;font-weight:700;color:var(--ja-muted);font-variant-numeric:tabular-nums;margin:10px 0 4px;padding-bottom:3px;border-bottom:1px solid var(--ja-border);}
+.ja-agenda-daydetail-hour.is-allday{color:var(--ja-text);border-bottom-color:color-mix(in srgb,var(--ja-accent) 30%,var(--ja-border));}
+@media(max-width:820px){.ja-agenda-day-allday{grid-template-columns:58px minmax(0,1fr);gap:8px;}.ja-agenda-subtask-title{white-space:normal;}}
+
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles/agenda-event-form-obsi
+   ===================================================================== */
+/* MON JOURNAL — Formulaire Événement réorganisé */
+
+.ja-agenda-form-event .ja-agenda-form-body{
+	gap:8px!important;
+}
+
+/* Type / Statut / Titre / Marqueurs */
+.ja-ae-topline{
+	display:grid;
+	grid-template-columns:38px auto minmax(0,1fr) auto;
+	align-items:center;
+	gap:7px;
+	margin:0 0 4px;
+}
+
+.ja-ae-typebtn{
+	appearance:none;
+	width:38px;
+	height:38px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	border-radius:50%;
+	border:1px solid color-mix(in srgb,var(--ja-ae-type-col,var(--ja-accent)) 38%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-ae-type-col,var(--ja-accent)) 15%,var(--ja-panel));
+	color:var(--ja-text);
+	font-size:1rem;
+	line-height:1;
+	cursor:pointer;
+	padding:0;
+}
+
+.ja-ae-typebtn:hover{
+	background:color-mix(in srgb,var(--ja-ae-type-col,var(--ja-accent)) 23%,var(--ja-panel));
+}
+
+.ja-ae-statuschip{
+	appearance:none;
+	min-height:30px;
+	max-width:105px;
+	padding:4px 9px;
+	border-radius:999px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 60%,transparent);
+	background:color-mix(in srgb,var(--ja-panel-2) 82%,transparent);
+	color:var(--ja-soft);
+	font:inherit;
+	font-size:.68rem;
+	line-height:1;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	cursor:pointer;
+}
+
+.ja-ae-statuschip:hover{
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 28%,var(--ja-border));
+}
+
+.ja-ae-statuschip[data-status="fait"]{
+	color:#a9c9a6;
+	background:color-mix(in srgb,#7fa97c 13%,var(--ja-panel-2));
+}
+.ja-ae-statuschip[data-status="annule"]{
+	color:#d8a0a4;
+	background:color-mix(in srgb,#c86f73 13%,var(--ja-panel-2));
+}
+.ja-ae-statuschip[data-status="reporte"]{
+	color:#d6b58d;
+	background:color-mix(in srgb,#bd8d59 13%,var(--ja-panel-2));
+}
+.ja-ae-statuschip[data-status="avance"]{
+	color:#9fb9d5;
+	background:color-mix(in srgb,#6f91b5 13%,var(--ja-panel-2));
+}
+
+.ja-ae-title{
+	height:38px;
+	min-width:0;
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif!important;
+	font-size:1.03rem!important;
+	padding:7px 10px!important;
+}
+
+.ja-ae-marker-wrap{
+	display:block!important;
+	margin:0!important;
+}
+.ja-ae-marker-wrap .ja-jmarkers{
+	display:flex;
+	align-items:center;
+	gap:2px;
+	margin:0!important;
+	flex-wrap:nowrap;
+}
+.ja-ae-marker-wrap .ja-jmarker{
+	width:26px;
+	height:26px;
+	min-height:26px;
+	padding:0;
+}
+
+/* Ligne Journée/Horaires + checkboxes */
+.ja-ae-timing{
+	display:flex;
+	flex-direction:column;
+	gap:8px;
+	margin:2px 0 0;
+}
+
+.ja-ae-modebar{
+	display:flex;
+	align-items:center;
+	flex-wrap:wrap;
+	gap:7px 11px;
+}
+
+.ja-ae-modebar > .ja-af-seg-field{
+	margin:0;
+	flex:0 0 auto;
+}
+
+.ja-ae-modebar > .ja-af-seg-field > .ja-af-seg{
+	display:inline-flex;
+	padding:2px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 52%,transparent);
+	border-radius:999px;
+	background:color-mix(in srgb,var(--ja-panel-2) 74%,transparent);
+}
+
+.ja-ae-modebar > .ja-af-seg-field .ja-af-seg-item{
+	border-radius:999px;
+	padding:5px 12px;
+	font-size:.76rem;
+}
+
+.ja-ae-modebar > .ja-af-seg-field .ja-af-seg-item.is-on{
+	background:color-mix(in srgb,var(--ja-accent) 28%,var(--ja-panel));
+}
+
+.ja-ae-inlinecheck{
+	display:inline-flex!important;
+	align-items:center;
+	gap:5px;
+	min-height:28px;
+	margin:0!important;
+	padding:3px 7px 3px 5px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 42%,transparent);
+	border-radius:999px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+	color:var(--ja-soft);
+	font-size:.66rem;
+	line-height:1;
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+.ja-ae-inlinecheck input{
+	width:13px;
+	height:13px;
+	margin:0;
+	accent-color:var(--ja-accent);
+}
+
+.ja-ae-inlinecheck:has(input:checked){
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 32%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 9%,var(--ja-panel-2));
+}
+
+/* Dates / heures */
+.ja-ae-dategrid,
+.ja-ae-timerow{
+	display:grid;
+	grid-template-columns:repeat(2,minmax(0,1fr));
+	gap:10px;
+	align-items:end;
+}
+
+.ja-ae-datefield,
+.ja-ae-timefield,
+.ja-ae-endfield{
+	display:flex;
+	flex-direction:column;
+	min-width:0;
+}
+
+.ja-ae-endctl{
+	min-height:36px;
+	display:flex;
+	align-items:center;
+	gap:5px;
+}
+
+.ja-ae-multiday,
+.ja-ae-clearend{
+	appearance:none;
+	flex:0 0 auto;
+	border:1px solid color-mix(in srgb,var(--ja-border) 62%,transparent);
+	background:color-mix(in srgb,var(--ja-panel-2) 78%,transparent);
+	color:var(--ja-text);
+	border-radius:8px;
+	cursor:pointer;
+}
+
+.ja-ae-multiday{
+	width:32px;
+	height:32px;
+	font-size:1rem;
+}
+
+.ja-ae-clearend{
+	width:28px;
+	height:28px;
+	font-size:.8rem;
+}
+
+.ja-ae-multiday-text{
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif;
+	font-size:.72rem;
+	font-style:italic;
+	color:var(--ja-soft);
+	opacity:.65;
+}
+
+.ja-ae-timerow.is-hidden{display:none!important;}
+
+/* Répétition : box activée par checkbox et rétractable */
+.ja-ae-repeatbox{
+	margin:2px 0 3px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 45%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+	overflow:hidden;
+}
+
+.ja-ae-repeatbox.is-hidden{display:none!important;}
+
+.ja-ae-repeathead{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:10px;
+	width:100%;
+	min-height:34px;
+	padding:6px 10px;
+	border:0;
+	background:transparent;
+	color:var(--ja-text);
+	font:inherit;
+	cursor:pointer;
+	text-align:left;
+}
+
+.ja-ae-repeat-title{
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-repeat-arrow{
+	color:var(--ja-soft);
+	font-size:.8rem;
+}
+
+.ja-ae-repeatbody{
+	padding:2px 10px 10px;
+	border-top:1px solid color-mix(in srgb,var(--ja-border) 30%,transparent);
+}
+
+.ja-ae-repeatbody.is-hidden{display:none!important;}
+
+.ja-ae-repeatbox .ja-agenda-recurrence-editor{
+	margin:0;
+	padding:5px 0 0;
+}
+
+/* Note toujours présente, mais repliable */
+.ja-ae-note{
+	margin-top:5px;
+	padding-top:5px;
+	border-top:1px solid color-mix(in srgb,var(--ja-border) 34%,transparent);
+}
+
+.ja-ae-note-head{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:10px;
+	width:100%;
+	min-height:32px;
+	margin:0;
+	padding:4px 2px 5px;
+	border:0;
+	background:transparent;
+	color:var(--ja-text);
+	font:inherit;
+	cursor:pointer;
+	text-align:left;
+}
+
+.ja-ae-note-title{
+	margin:0;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.09em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-note-arrow{
+	color:var(--ja-soft);
+	font-size:.8rem;
+}
+
+.ja-ae-note-body{
+	padding-top:3px;
+}
+
+.ja-ae-note-body.is-hidden{display:none!important;}
+.ja-ae-note .ja-note{margin:0;}
+.ja-ae-note-fallback{min-height:90px;resize:vertical;}
+
+/* Mobile */
+@media(max-width:620px){
+	.ja-ae-topline{
+		grid-template-columns:36px auto minmax(0,1fr);
+		gap:6px;
+	}
+
+	.ja-ae-typebtn{
+		width:36px;
+		height:36px;
+	}
+
+	.ja-ae-statuschip{
+		max-width:88px;
+		min-height:30px;
+		padding-left:7px;
+		padding-right:7px;
+		font-size:.62rem;
+	}
+
+	.ja-ae-marker-wrap{
+		grid-column:1/-1;
+	}
+
+	.ja-ae-marker-wrap .ja-jmarkers{
+		justify-content:flex-end;
+	}
+
+	.ja-ae-marker-wrap .ja-jmarker{
+		width:32px;
+		height:32px;
+		min-height:32px!important;
+	}
+
+	.ja-ae-modebar{
+		gap:6px;
+	}
+
+	.ja-ae-modebar > .ja-af-seg-field{
+		flex:1 1 100%;
+	}
+
+	.ja-ae-modebar > .ja-af-seg-field > .ja-af-seg{
+		width:100%;
+		display:grid;
+		grid-template-columns:1fr 1fr;
+	}
+
+	.ja-ae-modebar > .ja-af-seg-field .ja-af-seg-item{
+		width:100%;
+		padding:6px 5px;
+	}
+
+	.ja-ae-inlinecheck{
+		flex:1 1 auto;
+		justify-content:center;
+		min-height:32px;
+		padding:4px 7px;
+	}
+
+	.ja-ae-dategrid,
+	.ja-ae-timerow{
+		grid-template-columns:1fr 1fr;
+		gap:7px;
+	}
+
+	.ja-ae-repeatbody{
+		padding-left:8px;
+		padding-right:8px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-topline{
+		grid-template-columns:34px auto minmax(0,1fr);
+	}
+
+	.ja-ae-statuschip{
+		max-width:74px;
+		font-size:.58rem;
+	}
+
+	.ja-ae-dategrid,
+	.ja-ae-timerow{
+		grid-template-columns:1fr;
+	}
+
+	.ja-ae-inlinecheck{
+		font-size:.61rem;
+	}
+
+	.ja-ae-endctl{min-height:34px;}
+}
+
+/* ============================================================
+   Correctifs de hauteur / scroll
+   ============================================================ */
+
+.ja-agenda-form-event{
+	max-height:min(92dvh,900px)!important;
+	min-height:0!important;
+}
+
+.ja-agenda-form-event .ja-agenda-form-body{
+	flex:1 1 auto!important;
+	min-height:0!important;
+	overflow-y:auto!important;
+	overflow-x:hidden!important;
+	overscroll-behavior:contain;
+	scrollbar-gutter:stable;
+	-webkit-overflow-scrolling:touch;
+	padding-bottom:72px!important;
+}
+
+/* Même si la répétition devient très riche, elle ne peut plus sortir
+   de l'écran : son contenu possède son propre scroll. */
+.ja-ae-repeatbox{
+	flex:0 0 auto;
+	min-height:0;
+}
+
+.ja-ae-repeatbody{
+	max-height:none!important;
+	overflow-y:visible!important;
+	overflow-x:visible!important;
+}
+
+/* Préparation, pilotée par la troisième checkbox */
+.ja-ae-prepbox{
+	margin:2px 0 3px;
+	padding:8px 10px 10px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 45%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+}
+
+.ja-ae-prepbox.is-hidden{display:none!important;}
+
+.ja-ae-prep-title{
+	margin:0 0 7px;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-prepbody .ja-agenda-checkedit{
+	margin:0;
+}
+
+/* Le menu + ne doit jamais devenir plus haut que l'écran non plus. */
+.ja-agenda-form-pop{
+	max-height:min(68dvh,520px)!important;
+	overflow-y:auto!important;
+	overscroll-behavior:contain;
+	scrollbar-gutter:stable;
+}
+
+@media(max-width:620px){
+	.ja-agenda-form-event{
+		max-height:calc(100dvh - 18px)!important;
+	}
+
+	.ja-agenda-form-event .ja-agenda-form-body{
+		padding-bottom:84px!important;
+	}
+
+	.ja-ae-repeatbody{
+		max-height:none!important;
+	}
+
+	/* Trois petites options restent sur la même zone sans déborder. */
+	.ja-ae-inlinecheck{
+		flex:1 1 calc(33.333% - 6px);
+		min-width:92px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-inlinecheck{
+		flex:1 1 calc(50% - 4px);
+		min-width:0;
+		font-size:.58rem;
+	}
+}
+
+
+/* ============================================================
+   LANGAGE EVENT → TO-DO / HABITUDE / CRÉNEAU / VACANCES
+   ============================================================ */
+
+.ja-agenda-shared-form{
+	display:flex!important;
+	flex-direction:column!important;
+	max-height:min(92dvh,900px)!important;
+	min-height:0!important;
+	overflow:hidden!important;
+}
+
+.ja-agenda-shared-form .ja-agenda-form-body{
+	flex:1 1 auto!important;
+	min-height:0!important;
+	overflow-y:auto!important;
+	overflow-x:hidden!important;
+	overscroll-behavior:contain;
+	scrollbar-gutter:stable;
+	-webkit-overflow-scrolling:touch;
+	padding-bottom:76px!important;
+}
+
+.ja-ae-topline.is-no-status{
+	grid-template-columns:38px minmax(0,1fr) auto;
+}
+
+.ja-ae-typebtn.is-fixed{
+	cursor:default;
+	user-select:none;
+}
+
+.ja-ae-statuschip[data-status="a_faire"]{
+	color:var(--ja-soft);
+	background:color-mix(in srgb,var(--ja-panel-2) 82%,transparent);
+}
+.ja-ae-statuschip[data-status="en_cours"]{
+	color:#d8bd8e;
+	background:color-mix(in srgb,#bd9859 14%,var(--ja-panel-2));
+}
+
+.ja-ae-optionbar{
+	margin:1px 0 2px;
+	display:flex;
+	flex-wrap:wrap;
+	gap:7px;
+}
+
+/* Préparation : même architecture que Répétition, donc impossible
+   de sortir de la modale même avec une longue checklist. */
+.ja-ae-prepbox{
+	margin:2px 0 3px;
+	padding:0!important;
+	border:1px solid color-mix(in srgb,var(--ja-border) 45%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+	overflow:hidden!important;
+	min-height:0;
+}
+
+.ja-ae-prepbox.is-hidden{display:none!important;}
+
+.ja-ae-prephead{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:10px;
+	width:100%;
+	min-height:34px;
+	margin:0;
+	padding:6px 10px;
+	border:0;
+	background:transparent;
+	color:var(--ja-text);
+	font:inherit;
+	cursor:pointer;
+	text-align:left;
+}
+
+.ja-ae-prep-title{
+	margin:0;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-prep-arrow{
+	color:var(--ja-soft);
+	font-size:.8rem;
+}
+
+.ja-ae-prepbody{
+	max-height:none;
+	min-height:0;
+	padding:7px 10px 10px;
+	border-top:1px solid color-mix(in srgb,var(--ja-border) 30%,transparent);
+	overflow-y:visible!important;
+	overflow-x:visible!important;
+}
+
+.ja-ae-prepbody.is-hidden{display:none!important;}
+
+.ja-ae-repeatbox{
+	flex:0 0 auto;
+	min-height:0;
+	overflow:hidden!important;
+}
+
+.ja-ae-repeatbody{
+	max-height:none!important;
+	min-height:0!important;
+	overflow-y:visible!important;
+	overflow-x:visible!important;
+}
+
+/* La note est désormais la fin normale de TOUS ces formulaires. */
+.ja-ae-note{
+	flex:0 0 auto;
+}
+
+@media(max-width:620px){
+	.ja-agenda-shared-form{
+		max-height:calc(100dvh - 18px)!important;
+		width:min(100%,96vw)!important;
+	}
+
+	.ja-agenda-shared-form .ja-agenda-form-body{
+		padding-bottom:86px!important;
+	}
+
+	.ja-ae-topline.is-no-status{
+		grid-template-columns:36px minmax(0,1fr);
+	}
+
+	.ja-ae-topline.is-no-status .ja-ae-marker-wrap{
+		grid-column:1/-1;
+	}
+
+	.ja-ae-optionbar .ja-ae-inlinecheck{
+		flex:1 1 auto;
+		min-width:96px;
+	}
+
+	.ja-ae-repeatbody{
+		max-height:none!important;
+	}
+
+	.ja-ae-prepbody{
+		max-height:none;
+		padding-left:8px;
+		padding-right:8px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-topline.is-no-status{
+		grid-template-columns:34px minmax(0,1fr);
+	}
+
+	.ja-ae-optionbar .ja-ae-inlinecheck{
+		min-width:0;
+		flex:1 1 calc(50% - 4px);
+		font-size:.58rem;
+	}
+
+	.ja-ae-prepbody{
+		max-height:none;
+	}
+}
+
+
+/* ============================================================
+   TO-DO — Effort + arbre de sous-tâches inline
+   ============================================================ */
+
+.ja-todo-datehost.is-hidden,
+.ja-todo-subtree-host.is-hidden{
+	display:none!important;
+}
+
+/* Ligne Effort compacte, inspirée de l'ancien formulaire Obsidian. */
+.ja-todo-effort{
+	display:grid;
+	grid-template-columns:auto minmax(150px,220px) minmax(0,1fr);
+	align-items:center;
+	gap:8px;
+	min-height:36px;
+	padding:5px 8px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 48%,transparent);
+	border-radius:9px;
+	background:color-mix(in srgb,var(--ja-panel-2) 48%,transparent);
+}
+
+.ja-todo-effort-label{
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.66rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+	white-space:nowrap;
+}
+
+.ja-todo-effort-ctl{
+	display:grid;
+	grid-template-columns:minmax(0,1fr) 56px;
+	gap:4px;
+	min-width:0;
+}
+
+.ja-todo-effort-ctl input,
+.ja-todo-effort-ctl select{
+	height:28px!important;
+	min-height:28px!important;
+	padding-top:3px!important;
+	padding-bottom:3px!important;
+	font-size:.7rem!important;
+}
+
+.ja-todo-effort-hint{
+	min-width:0;
+	text-align:right;
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif;
+	font-size:.65rem;
+	font-style:italic;
+	color:var(--ja-soft);
+	opacity:.72;
+}
+
+.ja-todo-effort.is-derived{
+	border-color:color-mix(in srgb,var(--ja-accent) 26%,var(--ja-border));
+}
+
+.ja-todo-effort.is-derived .ja-todo-effort-ctl{
+	opacity:.82;
+}
+
+/* Arbre */
+.ja-todo-subtree{
+	margin-top:5px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 42%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 42%,transparent);
+	overflow:hidden;
+}
+
+.ja-todo-subtree-head{
+	display:flex;
+	align-items:center;
+	min-height:31px;
+	padding:5px 9px;
+	border-bottom:1px solid color-mix(in srgb,var(--ja-border) 28%,transparent);
+}
+
+.ja-todo-subtree-title{
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.66rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-todo-subtree-body{
+	max-height:none;
+	min-height:0;
+	padding:7px;
+	overflow-y:visible;
+	overflow-x:visible;
+}
+
+.ja-todo-subempty{
+	padding:9px 6px;
+	text-align:center;
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif;
+	font-size:.7rem;
+	font-style:italic;
+	color:var(--ja-soft);
+	opacity:.65;
+}
+
+.ja-todo-subnode{
+	position:relative;
+	min-width:0;
+}
+
+.ja-todo-subchildren{
+	margin-left:17px;
+	padding-left:9px;
+	border-left:1px solid color-mix(in srgb,var(--ja-accent) 20%,var(--ja-border));
+}
+
+.ja-todo-subline{
+	display:grid;
+	grid-template-columns:20px minmax(90px,1fr) minmax(84px,112px) 30px 28px 28px;
+	align-items:center;
+	gap:5px;
+	min-width:0;
+	margin:2px 0;
+	padding:4px 4px;
+	border-radius:8px;
+	background:color-mix(in srgb,var(--ja-panel) 58%,transparent);
+	border:1px solid color-mix(in srgb,var(--ja-border) 22%,transparent);
+}
+
+.ja-todo-subcheck{
+	width:16px;
+	height:16px;
+	margin:0;
+	accent-color:var(--ja-accent);
+}
+
+.ja-todo-subtitle{
+	min-width:0!important;
+	height:29px!important;
+	min-height:29px!important;
+	padding:4px 7px!important;
+	font-size:.72rem!important;
+}
+
+.ja-todo-sub-effort{
+	display:grid;
+	grid-template-columns:minmax(42px,1fr) 43px;
+	gap:3px;
+	min-width:0;
+}
+
+.ja-todo-sub-effort input,
+.ja-todo-sub-effort select{
+	height:28px!important;
+	min-height:28px!important;
+	padding:3px 4px!important;
+	font-size:.64rem!important;
+}
+
+.ja-todo-sub-marker,
+.ja-todo-subadd,
+.ja-todo-subdel{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	width:28px;
+	height:28px;
+	min-width:28px;
+	padding:0;
+	border-radius:7px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 38%,transparent);
+	background:color-mix(in srgb,var(--ja-panel-2) 62%,transparent);
+	color:var(--ja-soft);
+	font:inherit;
+	cursor:pointer;
+}
+
+.ja-todo-sub-marker:hover,
+.ja-todo-subadd:hover{
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 30%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 9%,var(--ja-panel-2));
+}
+
+.ja-todo-subdel:hover{
+	color:#d98a91;
+	border-color:color-mix(in srgb,#c86f73 34%,var(--ja-border));
+}
+
+.ja-todo-subrootadd{
+	appearance:none;
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	min-height:30px;
+	margin-top:5px;
+	padding:5px 10px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 44%,transparent);
+	border-radius:999px;
+	background:color-mix(in srgb,var(--ja-panel-2) 64%,transparent);
+	color:var(--ja-text);
+	font:inherit;
+	font-size:.7rem;
+	cursor:pointer;
+}
+
+.ja-todo-subrootadd:hover{
+	border-color:color-mix(in srgb,var(--ja-accent) 34%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 9%,var(--ja-panel-2));
+}
+
+/* La checkbox Sous-tâches reste alignée avec Répétition / Préparation / Agenda. */
+.ja-ae-inlinecheck.is-subtasks{
+	flex:0 1 auto;
+}
+
+/* Téléphone */
+@media(max-width:620px){
+	.ja-todo-effort{
+		grid-template-columns:auto minmax(115px,1fr);
+		gap:6px;
+	}
+
+	.ja-todo-effort-hint{
+		grid-column:1/-1;
+		text-align:left;
+		font-size:.61rem;
+	}
+
+	.ja-todo-subtree-body{
+		max-height:none;
+		padding:5px;
+	}
+
+	.ja-todo-subline{
+		grid-template-columns:18px minmax(72px,1fr) 30px 28px 28px;
+		gap:4px;
+		padding:4px 3px;
+	}
+
+	/* Sur mobile, l'effort passe sur une petite seconde ligne dans le nœud. */
+	.ja-todo-sub-effort{
+		grid-column:2/-1;
+		grid-row:2;
+		width:min(150px,100%);
+	}
+
+	.ja-todo-subchildren{
+		margin-left:10px;
+		padding-left:6px;
+	}
+
+	.ja-ae-inlinecheck.is-subtasks{
+		flex:1 1 auto;
+		min-width:130px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-todo-effort{
+		grid-template-columns:1fr;
+	}
+
+	.ja-todo-effort-ctl{
+		grid-template-columns:minmax(0,1fr) 52px;
+	}
+
+	.ja-todo-subline{
+		grid-template-columns:18px minmax(60px,1fr) 27px 27px 27px;
+	}
+
+	.ja-todo-sub-marker,
+	.ja-todo-subadd,
+	.ja-todo-subdel{
+		width:27px;
+		height:27px;
+		min-width:27px;
+	}
+}
+
+
+/* ============================================================
+   RAPPEL — option de premier niveau
+   ============================================================ */
+
+.ja-ae-reminderline{
+	display:flex;
+	align-items:center;
+	gap:8px;
+	width:min(100%,280px);
+	min-height:34px;
+	margin:0;
+	padding:5px 8px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 42%,transparent);
+	border-radius:9px;
+	background:color-mix(in srgb,var(--ja-panel-2) 48%,transparent);
+	box-sizing:border-box;
+}
+
+.ja-ae-reminderline.is-hidden{
+	display:none!important;
+}
+
+.ja-ae-reminderlabel{
+	flex:1 1 auto;
+	min-width:0;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.64rem;
+	letter-spacing:.055em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+	white-space:nowrap;
+}
+
+.ja-ae-remindertime{
+	flex:0 0 104px;
+	width:104px!important;
+	min-width:104px!important;
+	height:28px!important;
+	min-height:28px!important;
+	padding:3px 6px!important;
+	font-size:.72rem!important;
+}
+
+.ja-ae-inlinecheck.is-reminder:has(input:checked){
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 34%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 10%,var(--ja-panel-2));
+}
+
+@media(max-width:620px){
+	.ja-ae-reminderline{
+		width:100%;
+		min-height:36px;
+	}
+
+	.ja-ae-remindertime{
+		flex:0 0 112px;
+		width:112px!important;
+		min-width:112px!important;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-reminderline{
+		gap:5px;
+		padding-left:6px;
+		padding-right:6px;
+	}
+
+	.ja-ae-reminderlabel{
+		font-size:.59rem;
+		letter-spacing:.035em;
+	}
+
+	.ja-ae-remindertime{
+		flex:0 0 98px;
+		width:98px!important;
+		min-width:98px!important;
+	}
+}
+
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles/agenda-overview-focus
+   ===================================================================== */
+/* MON JOURNAL — Aperçu Agenda : titres fixes + mini-dashboard téléphone */
+
+/* ─────────────────────────────────────────────────────────────
+   TITRES : toujours au-dessus, toujours visibles, jamais mobiles
+   ───────────────────────────────────────────────────────────── */
+.ja-agenda-ovnav {
+	display: grid;
+	grid-template-columns: repeat(3,minmax(0,1fr));
+	gap: 14px;
+	width: 100%;
+	margin: 0 0 8px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid color-mix(in srgb,var(--ja-border) 38%,transparent);
+	box-sizing: border-box;
+}
+
+.ja-agenda-ovnav .ja-agenda-ovtitle {
+	appearance: none;
+	display: block !important;
+	width: 100% !important;
+	min-width: 0;
+	margin: 0 !important;
+	padding: 2px 0 4px !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+
+	font-family: "IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size: .66rem;
+	line-height: 1.2;
+	letter-spacing: .13em;
+	text-transform: uppercase;
+	color: var(--ja-soft);
+
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: color .12s ease, opacity .12s ease;
+}
+
+.ja-agenda-ovnav .ja-agenda-ovtitle.is-left { text-align: left; }
+.ja-agenda-ovnav .ja-agenda-ovtitle.is-center { text-align: center; }
+.ja-agenda-ovnav .ja-agenda-ovtitle.is-right { text-align: right; }
+
+.ja-agenda-ovnav .ja-agenda-ovtitle:hover,
+.ja-agenda-ovnav .ja-agenda-ovtitle:focus-visible {
+	color: var(--ja-text);
+}
+
+.ja-agenda-ovnav .ja-agenda-ovtitle.is-active {
+	color: var(--ja-accent);
+}
+
+.ja-agenda-ovnav .ja-agenda-ovtitle:focus-visible {
+	outline: 1px solid color-mix(in srgb,var(--ja-accent) 55%,transparent);
+	outline-offset: 3px;
+	border-radius: 3px !important;
+}
+
+/* ── Desktop : on garde le contenu détaillé d'origine ── */
+.ja-agenda-ovcompact {
+	display: none;
+}
+
+.ja-agenda-ovfull {
+	display: block;
+	min-width: 0;
+}
+
+.ja-agenda-overview.is-focused {
+	grid-template-columns: minmax(0,1fr) !important;
+}
+
+.ja-agenda-overview.is-focused[data-ja-focus="day"]
+	.ja-agenda-ovcol:not([data-ja-overview="day"]),
+.ja-agenda-overview.is-focused[data-ja-focus="todo"]
+	.ja-agenda-ovcol:not([data-ja-overview="todo"]),
+.ja-agenda-overview.is-focused[data-ja-focus="upcoming"]
+	.ja-agenda-ovcol:not([data-ja-overview="upcoming"]) {
+	display: none !important;
+}
+
+.ja-agenda-overview.is-focused .ja-agenda-ovcol {
+	grid-column: 1;
+	width: 100%;
+	max-width: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TÉLÉPHONE : trois petites cartes côte à côte quand rien n'est
+   ouvert. Le détail complet revient quand une colonne est focus.
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+	.ja-agenda-ovnav {
+		grid-template-columns: repeat(3,minmax(0,1fr));
+		gap: 5px;
+		margin-bottom: 6px;
+		padding-bottom: 5px;
+	}
+
+	.ja-agenda-ovnav .ja-agenda-ovtitle {
+		font-size: clamp(.50rem,2.35vw,.61rem);
+		letter-spacing: .065em;
+		padding: 2px !important;
+		text-align: center !important;
+	}
+
+	/* Oui : TROIS colonnes côte à côte sur téléphone. */
+	.ja-agenda-overview:not(.is-focused) {
+		display: grid !important;
+		grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+		gap: 6px !important;
+		align-items: stretch;
+	}
+
+	.ja-agenda-overview:not(.is-focused) .ja-agenda-ovcol {
+		display: block !important;
+		min-width: 0 !important;
+		width: auto !important;
+		padding: 7px 5px !important;
+		border-radius: 10px;
+		overflow: hidden;
+	}
+
+	/* En mosaïque mobile, le gros contenu dort. */
+	.ja-agenda-overview:not(.is-focused) .ja-agenda-ovfull {
+		display: none !important;
+	}
+
+	.ja-agenda-overview:not(.is-focused) .ja-agenda-ovcompact {
+		display: flex !important;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 0;
+		height: 100%;
+	}
+
+	.ja-agenda-ovcompact-count {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 3px;
+		min-width: 0;
+		padding: 4px 2px 5px;
+		margin-bottom: 1px;
+		border-radius: 8px;
+		background: color-mix(in srgb,var(--ja-accent) 8%,transparent);
+	}
+
+	.ja-agenda-ovcompact-count strong {
+		font-size: .92rem;
+		line-height: 1;
+		font-weight: 650;
+		color: var(--ja-accent);
+	}
+
+	.ja-agenda-ovcompact-count span {
+		min-width: 0;
+		font-size: .49rem;
+		line-height: 1;
+		letter-spacing: .025em;
+		color: var(--ja-soft);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.ja-agenda-ovcompact-line {
+		display: grid;
+		grid-template-columns: auto minmax(0,1fr);
+		align-items: center;
+		gap: 3px;
+		min-width: 0;
+		padding: 3px 2px;
+		border-radius: 6px;
+		background: color-mix(in srgb,var(--ja-panel-2) 64%,transparent);
+	}
+
+	.ja-agenda-ovcompact-line.is-late {
+		background: color-mix(in srgb,var(--ja-danger,#c86f73) 10%,transparent);
+	}
+
+	.ja-agenda-ovcompact-meta {
+		font-size: .45rem;
+		line-height: 1.1;
+		color: var(--ja-accent);
+		white-space: nowrap;
+	}
+
+	.ja-agenda-ovcompact-label {
+		min-width: 0;
+		font-size: .51rem;
+		line-height: 1.15;
+		color: var(--ja-text);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.ja-agenda-ovcompact-line.is-more,
+	.ja-agenda-ovcompact-line.is-empty {
+		display: block;
+		text-align: center;
+		background: transparent;
+		padding-top: 2px;
+		padding-bottom: 1px;
+	}
+
+	.ja-agenda-ovcompact-line.is-more .ja-agenda-ovcompact-label,
+	.ja-agenda-ovcompact-line.is-empty .ja-agenda-ovcompact-label {
+		font-size: .46rem;
+		color: var(--ja-soft);
+	}
+
+	/* Une colonne ouverte : vraie vue détaillée, pleine largeur. */
+	.ja-agenda-overview.is-focused {
+		display: grid !important;
+		grid-template-columns: minmax(0,1fr) !important;
+		gap: 0 !important;
+	}
+
+	.ja-agenda-overview.is-focused .ja-agenda-ovcompact {
+		display: none !important;
+	}
+
+	.ja-agenda-overview.is-focused .ja-agenda-ovfull {
+		display: block !important;
+	}
+
+	.ja-agenda-overview.is-focused .ja-agenda-ovcol {
+		grid-column: 1 !important;
+		width: 100% !important;
+		min-width: 0 !important;
+	}
+
+	/* Un peu plus compact que desktop sans sacrifier le détail. */
+	.ja-agenda-overview.is-focused .ja-agenda-ovrow,
+	.ja-agenda-overview.is-focused .ja-agenda-month-item {
+		font-size: .78rem;
+	}
+}
+
+@media (max-width: 390px) {
+	.ja-agenda-ovnav {
+		gap: 2px;
+	}
+
+	.ja-agenda-ovnav .ja-agenda-ovtitle {
+		font-size: .48rem;
+		letter-spacing: .035em;
+	}
+
+	.ja-agenda-overview:not(.is-focused) {
+		gap: 4px !important;
+	}
+
+	.ja-agenda-overview:not(.is-focused) .ja-agenda-ovcol {
+		padding: 6px 3px !important;
+	}
+
+	.ja-agenda-ovcompact-count {
+		gap: 2px;
+		padding-left: 1px;
+		padding-right: 1px;
+	}
+
+	.ja-agenda-ovcompact-count strong {
+		font-size: .82rem;
+	}
+
+	.ja-agenda-ovcompact-count span,
+	.ja-agenda-ovcompact-label {
+		font-size: .45rem;
+	}
+
+	.ja-agenda-ovcompact-meta {
+		font-size: .41rem;
+	}
+}
+
+
+/* À traiter — cartes compactes, lisibles, hiérarchie intégrée. */
+.ja-agenda-todo-group{display:flex;flex-direction:column;gap:5px;margin:0 0 12px;}
+.ja-agenda-todo-group-title{margin:0 0 2px;padding:0 2px 5px;border-bottom:1px solid color-mix(in srgb,var(--ja-border) 48%,transparent);font-family:"IM Fell Double Pica SC","IM Fell Double Pica",Georgia,serif;font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ja-soft);}
+.ja-agenda-ovtodo{--ja-todo-state:var(--ja-accent);position:relative;padding:7px 9px 7px 10px;border-radius:9px;background:color-mix(in srgb,var(--ja-panel) 82%,transparent);border-left:2px solid color-mix(in srgb,var(--ja-todo-state) 70%,transparent);}
+.ja-agenda-todo-group.is-late .ja-agenda-ovtodo{--ja-todo-state:#d98a91;}
+.ja-agenda-todo-group.is-soon .ja-agenda-ovtodo{--ja-todo-state:#d6b57f;}
+.ja-agenda-todo-group.is-postponed .ja-agenda-ovtodo{--ja-todo-state:#c7a479;}
+.ja-agenda-ovtodo .ja-agenda-ovrow{padding:0;background:transparent!important;}
+.ja-agenda-ovtodo .ja-agenda-ovrow-title{font-size:.78rem;color:var(--ja-text);}
+.ja-agenda-ovtodo .ja-agenda-ovrow-when{grid-column:2 / -1;text-align:left!important;margin-top:2px;white-space:normal!important;font-size:.57rem!important;color:var(--ja-soft);opacity:.72;}
+.ja-agenda-ovtodo .ja-agenda-subtasks{margin:6px 0 0 22px;padding-top:5px;border-top:0;}
+.ja-agenda-ovtodo .ja-agenda-subtasks-head{font-size:.61rem;margin-bottom:2px;}
+.ja-agenda-ovtodo .ja-todo-subrow{min-height:21px;}
+.ja-agenda-ovtodo .ja-agenda-subtask-title{font-size:.69rem;}
+.ja-agenda-ovtodo .ja-agenda-subtask-effort,.ja-agenda-ovtodo .ja-todo-subcount{font-size:.56rem;padding:1px 5px;}
+
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles/category-media
+   ===================================================================== */
+/* MON JOURNAL — identité visuelle de la catégorie Média */
+.ja-cat-media { --ja-accent: #68b8c8; --ja-accent-soft: rgba(104,184,200,.17); }
+
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles/entity-pages
+   ===================================================================== */
+/* Petites fiches de test — 100% widgets natifs TiddlyWiki, aucun module JS */
+.ja-qe-root{max-width:980px;margin:0 auto;padding:28px 30px 60px;color:var(--ja-text)}
+.ja-qe-head{margin-bottom:22px}.ja-qe-head h1{margin:3px 0 5px;font-size:1.55rem}.ja-qe-head p{margin:0;color:var(--ja-muted);font-size:.85rem}.ja-qe-kicker{font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ja-accent);font-weight:700}
+.ja-qe-form{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;padding:14px;border:1px solid var(--ja-border);border-radius:14px;background:color-mix(in srgb,var(--ja-panel) 75%,transparent)}
+.ja-qe-input{min-width:260px;min-height:40px!important;padding:8px 11px!important;border:1px solid var(--ja-border)!important;border-radius:9px!important;background:var(--ja-bg)!important;color:var(--ja-text)!important;box-shadow:none!important}
+.ja-qe-add,.ja-qe-secondary{min-height:40px!important;border-radius:9px!important;padding:7px 14px!important;font-size:.78rem!important;font-weight:700!important;cursor:pointer}.ja-qe-add{border:1px solid color-mix(in srgb,var(--ja-accent) 65%,var(--ja-border))!important;background:color-mix(in srgb,var(--ja-accent) 18%,var(--ja-panel))!important;color:var(--ja-text)!important}.ja-qe-secondary{border:1px solid var(--ja-border)!important;background:transparent!important;color:var(--ja-muted)!important}
+.ja-qe-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:9px;margin-top:18px}.ja-qe-card{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid var(--ja-border);border-radius:11px;background:color-mix(in srgb,var(--ja-panel) 68%,transparent)}.ja-qe-icon{font-size:1rem}.ja-qe-card-title{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.86rem;font-weight:650}.ja-qe-card>.ja-qe-card-edit{margin-left:auto}.ja-qe-card-main{display:flex;flex-direction:column;min-width:0}.ja-qe-card-meta{margin-top:2px;color:var(--ja-muted);font-size:.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ja-qe-field{display:flex;flex-direction:column;gap:5px}.ja-qe-field>span{font-size:.66rem;color:var(--ja-muted);text-transform:uppercase;letter-spacing:.08em}.ja-qe-grow{flex:1 1 360px}.ja-qe-grow .ja-qe-input{width:100%}.ja-qe-place-form{align-items:flex-end}.ja-qe-place-actions{margin-top:10px}.ja-qe-geo-result{margin-top:6px}.ja-qe-geo-pick{width:100%;text-align:left!important;border:1px solid var(--ja-border)!important;border-radius:9px!important;background:color-mix(in srgb,var(--ja-panel) 62%,transparent)!important;color:var(--ja-text)!important;padding:8px 11px!important;font-size:.77rem!important}.ja-qe-geo-pick:hover{border-color:color-mix(in srgb,var(--ja-accent) 60%,var(--ja-border))!important}
+@media(max-width:700px){.ja-qe-root{padding:20px 16px 50px}.ja-qe-input{min-width:0;width:100%}.ja-qe-form{display:grid;grid-template-columns:1fr}.ja-qe-add,.ja-qe-secondary{width:100%}.ja-qe-list{grid-template-columns:1fr}}
+
+.ja-qe-status{min-height:1.4em;margin:8px 3px 0;font-size:.78rem;color:var(--ja-accent)}.ja-qe-status.is-error{color:#d98b8b}.ja-qe-form input[data-ja-entity-title],.ja-qe-form input[data-ja-entity-address]{font-family:inherit}
+
+/* Autocomplétion directe sur la page Lieux */
+.ja-qe-autocomplete-host { position: relative; }
+.ja-qe-autocomplete-menu {
+  display: none;
+  position: absolute;
+  z-index: 10020;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--ja-border);
+  border-radius: 12px;
+  background: var(--ja-panel);
+  box-shadow: 0 16px 38px rgba(0,0,0,.35);
+}
+.ja-qe-autocomplete-menu.is-open { display: block; }
+.ja-qe-autocomplete-item {
+  appearance: none !important;
+  width: 100% !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 9px 10px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: var(--ja-text) !important;
+  box-shadow: none !important;
+  text-align: left !important;
+  cursor: pointer;
+  font: inherit !important;
+}
+.ja-qe-autocomplete-item:hover { background: color-mix(in srgb,var(--ja-accent) 13%,transparent) !important; }
+
+
+/* =====================================================================
+   SOURCE FUSIONNÉE : $:/journalapp/styles/fonts-im-fell-double-pica
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+Double+Pica+SC&display=swap");
+
+.ja-app{font-family:"IM Fell Double Pica",Georgia,serif;}
+.ja-app button,.ja-app input,.ja-app select,.ja-app textarea{font-family:inherit;}
+.ja-app h1,.ja-app h2,.ja-app h3,.ja-app h4,.ja-sidebar-title,.ja-subheader-default,.ja-left-body strong,.ja-jhero-title,.ja-jextra-title,.ja-fold-title{font-family:"IM Fell Double Pica SC","IM Fell Double Pica",Georgia,serif;}
+
+/* ============================================================
+   AGENDA FORMS — flux vertical intrinsèque
+   Le body de la modale est l'unique zone scrollable.
+   Les sections ne doivent jamais être comprimées par flexbox.
+   ============================================================ */
+.ja-agenda-shared-form .ja-agenda-form-body > *,
+.ja-agenda-form-event .ja-agenda-form-body > *{
+  flex-shrink:0 !important;
+}
+
+.ja-agenda-shared-form .ja-ae-prepbox,
+.ja-agenda-form-event .ja-ae-prepbox,
+.ja-agenda-shared-form .ja-todo-subtasks-box,
+.ja-agenda-form-event .ja-todo-subtasks-box,
+.ja-agenda-shared-form .ja-ae-repeatbox,
+.ja-agenda-form-event .ja-ae-repeatbox{
+  flex:0 0 auto !important;
+  min-height:auto !important;
+}
+
+.ja-ae-prepbody,
+.ja-todo-subtree-host,
+.ja-todo-subtree,
+.ja-todo-subtree-body{
+  height:auto !important;
+  max-height:none !important;
+  min-height:max-content;
+}
+
+.ja-ae-prepbody,
+.ja-todo-subtree-body{
+  overflow:visible !important;
+}
+

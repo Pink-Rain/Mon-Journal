@@ -7,3 +7,12 @@ tiddlers.html
 *.p12
 *.jks
 *.keystore
+
+# Dépendances et sorties de build
+node_modules/
+build/tw/
+dist/
+android/app/build/
+android/.gradle/
+electron/oauth-config.json
+config/*.local.json

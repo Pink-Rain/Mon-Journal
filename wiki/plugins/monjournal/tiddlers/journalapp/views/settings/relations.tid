@@ -1,0 +1,17 @@
+title: $:/journalapp/views/settings/relations
+caption: Relations
+category: $:/journalapp/categories/settings
+order: 30
+page-width: wide
+slug: relations-settings
+tags: $:/tags/JournalApp/View $:/journalapp/categories/settings
+
+\whitespace trim
+<div class="ja-settings-page">
+<div class="ja-settings-hero">
+  <div class="ja-settings-kicker">RELATIONS · TYPES · COULEURS</div>
+  <h1>Relations</h1>
+  <p>Types de relation et identité visuelle utilisée jusque dans les anniversaires de l’Agenda.</p>
+</div>
+<$jaentitysettings mode="relations"/>
+</div>

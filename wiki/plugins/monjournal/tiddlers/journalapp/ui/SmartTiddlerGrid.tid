@@ -1,0 +1,30 @@
+title: $:/journalapp/ui/SmartTiddlerGrid
+
+\whitespace trim
+<div class="ja-category-items ja-smart-grid">
+<$list filter=<<ja-smart-filter>> variable="ja-item">
+	<$let
+		ja-item-chars={{{ [<ja-item>get[text]length[]] }}}
+		ja-manual-size={{{ [<ja-item>get[card-size]match[small]] [<ja-item>get[card-size]match[medium]] [<ja-item>get[card-size]match[large]] }}}
+		ja-auto-size={{{ [<ja-item-chars>compare:number:gt[1800]then[large]] :else[<ja-item-chars>compare:number:gt[650]then[medium]] :else[[small]] }}}
+		ja-card-size={{{ [<ja-manual-size>!is[blank]] :else[<ja-auto-size>] }}}
+		ja-card-class={{{ [[ja-category-item]addsuffix[ ja-card-]addsuffix<ja-card-size>] }}}
+	>
+		<details class=<<ja-card-class>> data-card-size=<<ja-card-size>> open="open">
+			<summary class="ja-category-item-head ja-category-item-summary">
+				<span class="ja-category-item-title"><$link to=<<ja-item>>><$text text=<<ja-item>>/></$link></span>
+				<span class="ja-category-item-meta">
+					<$list filter="[<ja-item>has[kind]]"><span class="ja-item-kind"><$view tiddler=<<ja-item>> field="kind"/></span></$list>
+					<$list filter="[<ja-item>has[modified]]"><span class="ja-item-date">mod. <$view tiddler=<<ja-item>> field="modified" format="date" template="DD/0MM/YYYY"/></span></$list>
+				</span>
+			</summary>
+			<div class="ja-category-item-body">
+				<$transclude $tiddler=<<ja-item>> $mode="block"/>
+			</div>
+		</details>
+	</$let>
+	<$list-empty>
+		<div class="ja-inventory-empty">Aucun tiddler ne correspond à ces critères. 🫥</div>
+	</$list-empty>
+</$list>
+</div>

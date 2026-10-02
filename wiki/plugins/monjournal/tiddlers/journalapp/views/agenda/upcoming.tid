@@ -1,0 +1,9 @@
+title: $:/journalapp/views/agenda/upcoming
+caption: À venir
+category: $:/journalapp/categories/agenda
+order: 20
+page-width: wide
+slug: upcoming
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="upcoming"/>

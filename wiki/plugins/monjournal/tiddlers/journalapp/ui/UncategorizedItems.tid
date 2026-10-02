@@ -1,0 +1,11 @@
+title: $:/journalapp/ui/UncategorizedItems
+
+\whitespace trim
+<$let
+	ja-state-prefix="$:/temp/journalapp/inventory/uncategorized"
+	ja-smart-filter="[all[tiddlers]!is[system]!has[draft.of]!tag[Accueil]!tag[Agenda]!tag[Journal]!tag[Relations]!tag[Lieux]!tag[Activité]!tag[Projet]!tag[Média]!tag[Sommeil]!tag[Settings]jainventory<ja-state-prefix>]"
+>
+<div class="ja-inventory ja-inventory-body">
+	<$transclude $tiddler="$:/journalapp/ui/SmartTiddlerGrid" $mode="block"/>
+</div>
+</$let>

@@ -1,0 +1,9 @@
+title: $:/journalapp/views/agenda/week
+caption: Semaine
+category: $:/journalapp/categories/agenda
+order: 50
+page-width: full
+slug: week
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="week"/>

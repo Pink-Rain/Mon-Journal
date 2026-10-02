@@ -1,0 +1,176 @@
+title: $:/journalapp/layout
+description: Layout applicatif responsive de Mon Journal
+name: Mon Journal
+tags: $:/tags/Layout
+
+\whitespace trim
+\import [subfilter{$:/core/config/GlobalImportFilter}]
+
+\define ja-nav()
+<div class="ja-nav">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/JournalApp/Category]]">
+<$button class={{{ [<currentTiddler>match<ja-category>then[ja-nav-btn ja-active]else[ja-nav-btn]] }}} tooltip={{!!caption}} aria-label={{!!caption}}>
+<$action-setfield $tiddler="$:/state/journalapp/category" $field="text" $value=<<currentTiddler>> $timestamp="no"/>
+<$action-setfield $tiddler="$:/state/journalapp/view" $field="text" $value={{!!landing-view}} $timestamp="no"/>
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-right" $field="text" $value="closed" $timestamp="no"/>
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-left" $field="text" $value="closed" $timestamp="no"/>
+<span class="ja-nav-icon"><$list filter="[<currentTiddler>get[slug]addprefix[$:/journalapp/icons/]has[type]]" variable="ja-nav-img" emptyMessage="""<$text text={{!!icon-text}}/>"""><$image source=<<ja-nav-img>>/></$list></span>
+</$button>
+</$list>
+</div>
+\end
+
+\define ja-dock()
+<div class="ja-dock">
+<span class="ja-core-btn" title="Nouveau tiddler">{{$:/core/ui/Buttons/new-tiddler}}</span>
+<span class="ja-core-btn" title="Paramètres">{{$:/core/ui/Buttons/control-panel}}</span>
+<span class="ja-core-btn" title="Sauvegarder">{{$:/plugins/pinkrain/monjournal/ui/SyncButton}}</span>
+<span class="ja-core-btn" title="Plus d'actions">{{$:/journalapp/ui/Buttons/more-global}}</span>
+</div>
+\end
+
+<$navigator
+	story="$:/temp/journalapp/story"
+	history="$:/temp/journalapp/history"
+	openLinkFromInsideRiver="above"
+	openLinkFromOutsideRiver="top"
+	relinkOnRename={{$:/config/RelinkOnRename}}
+>
+{{$:/core/ui/CommandPaletteTemplate}}
+<$let
+	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
+	tv-config-toolbar-text={{$:/config/Toolbar/Text}}
+	tv-config-toolbar-class={{$:/config/Toolbar/ButtonClass}}
+	tv-enable-drag-and-drop={{$:/config/DragAndDrop/Enable}}
+	tv-show-missing-links={{$:/config/MissingLinks}}
+	storyviewTitle={{$:/view}}
+	languageTitle={{{ [{$:/language}get[name]] }}}
+	ja-category={{{ [[$:/state/journalapp/category]get[text]else[$:/journalapp/categories/accueil]] }}}
+	ja-category-caption={{{ [<ja-category>get[caption]else[Accueil]] }}}
+	ja-category-slug={{{ [<ja-category>get[slug]else[accueil]] }}}
+	ja-category-landing={{{ [<ja-category>get[landing-view]else[$:/journalapp/views/accueil/home]] }}}
+	ja-category-accent={{{ [[$:/journalapp/settings/appearance]get<ja-category-slug>else[#c58bd8]] }}}
+	ja-app-style={{{ [<ja-category-accent>addprefix[--ja-accent:]addsuffix[;--ja-accent-soft:color-mix(in srgb,var(--ja-accent) 18%,transparent);]] }}}
+	ja-view={{{ [[$:/state/journalapp/view]get[text]else<ja-category-landing>] }}}
+	ja-view-slug={{{ [<ja-view>get[slug]else[home]] }}}
+	ja-view-caption={{{ [<ja-view>get[caption]else[Vue]] }}}
+	ja-width={{{ [<ja-view>get[page-width]else[wide]] }}}
+	ja-left={{{ [[$:/state/journalapp/left-sidebar]get[text]else[open]] }}}
+	ja-right={{{ [[$:/state/journalapp/right-sidebar]get[text]else[open]] }}}
+	ja-mobile-left={{{ [[$:/temp/journalapp/mobile-left]get[text]else[closed]] }}}
+	ja-mobile-right={{{ [[$:/temp/journalapp/mobile-right]get[text]else[closed]] }}}
+	ja-subheader={{{ [<ja-view>get[ui-subheader]else[$:/journalapp/ui/SubHeaderDefault]] }}}
+	ja-sidebar-tiddler={{{ [<ja-category>get[ui-sidebar]else[$:/journalapp/ui/SidebarAuto]] }}}
+	ja-right-content={{{ [<ja-view>get[ui-right]else[$:/journalapp/ui/RightEmpty]] }}}
+	ja-footer-content={{{ [<ja-view>get[ui-footer]else[$:/journalapp/ui/FooterEmpty]] }}}
+	ja-app-class={{{ [[ja-app]] [<ja-left>addprefix[ja-is-left-]] [<ja-right>addprefix[ja-is-right-]] [<ja-mobile-left>addprefix[ja-is-mobleft-]] [<ja-mobile-right>addprefix[ja-is-mobright-]] [<ja-category-slug>addprefix[ja-cat-]] [<ja-view-slug>addprefix[ja-v-]] +[join[ ]] }}}
+>
+<div class="ja-container">
+<div class=<<ja-app-class>> style=<<ja-app-style>>>
+<header class="ja-mobile-top">
+<div class="ja-mobile-nav-scroll"><<ja-nav>></div>
+<div class="ja-mobile-set">{{$:/core/ui/Buttons/control-panel}}</div>
+</header>
+<$button class="ja-backdrop" tooltip="Fermer les panneaux">
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-left" $field="text" $value="closed" $timestamp="no"/>
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-right" $field="text" $value="closed" $timestamp="no"/>
+</$button>
+<aside class="ja-left">
+<div class="ja-left-nav"><<ja-nav>></div>
+<div class="ja-drawer-head">
+<strong><$text text=<<ja-category-caption>>/></strong>
+<span class="ja-core-btn ja-mobile-save-native ja-mobile-save-drawer" title="Sauvegarder">{{$:/plugins/pinkrain/monjournal/ui/SyncButton}}</span>
+<$button class="ja-icon-btn" set="$:/temp/journalapp/mobile-left" setTo="closed" tooltip="Fermer">×</$button>
+</div>
+<div class="ja-left-body">
+<$transclude $tiddler=<<ja-sidebar-tiddler>> $mode="block"/>
+</div>
+
+<div class="ja-left-special">
+<$transclude $tiddler="$:/journalapp/ui/SidebarBottomViews" $mode="block"/>
+</div>
+
+<div class="ja-left-foot">
+<<ja-dock>>
+<div class="ja-collapse-row">
+<$button class="ja-collapse ja-do-close" set="$:/state/journalapp/left-sidebar" setTo="closed" tooltip="Rétracter la barre gauche">‹</$button>
+<$button class="ja-collapse ja-do-open" set="$:/state/journalapp/left-sidebar" setTo="open" tooltip="Ouvrir la barre gauche">›</$button>
+</div>
+</div>
+</aside>
+<section class="ja-center">
+<header class="ja-subheader">
+<$button class="ja-drawer-toggle ja-dt-left" tooltip="Navigation de la catégorie">
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-right" $field="text" $value="closed" $timestamp="no"/>
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-left" $field="text" $value="open" $timestamp="no"/>
+☰
+</$button>
+<span class="ja-core-btn ja-mobile-save-native ja-mobile-save-main" title="Sauvegarder">{{$:/plugins/pinkrain/monjournal/ui/SyncButton}}</span>
+<div class="ja-subheader-body">
+<$transclude $tiddler=<<ja-subheader>> $mode="block"/>
+</div>
+<$button class="ja-drawer-toggle ja-dt-right" tooltip="Widgets">
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-left" $field="text" $value="closed" $timestamp="no"/>
+<$action-setfield $tiddler="$:/temp/journalapp/mobile-right" $field="text" $value="open" $timestamp="no"/>
+◉
+</$button>
+</header>
+<main class="ja-page-scroll">
+<div class={{{ [<ja-width>addprefix[ja-page ja-w-]] }}}>
+<$transclude $tiddler=<<ja-view>> $mode="block"/>
+</div>
+</main>
+<$list filter="[<ja-view>has[ui-footer]]" variable="ja-has-footer">
+<footer class="ja-footer">
+<$transclude $tiddler=<<ja-footer-content>> $mode="block"/>
+</footer>
+</$list>
+</section>
+<aside class="ja-right">
+<div class="ja-right-panel">
+<div class="ja-right-head">
+<span>Widgets</span>
+<$button class="ja-icon-btn" set="$:/state/journalapp/right-sidebar" setTo="closed" tooltip="Rétracter les widgets">›</$button>
+</div>
+<div class="ja-right-body">
+<$transclude $tiddler=<<ja-right-content>> $mode="block"/>
+</div>
+</div>
+<div class="ja-right-rail">
+<$button class="ja-collapse" set="$:/state/journalapp/right-sidebar" setTo="open" tooltip="Ouvrir les widgets">‹</$button>
+</div>
+<div class="ja-drawer-head ja-drawer-head-right">
+<strong>Widgets</strong>
+<span class="ja-core-btn ja-mobile-save-native ja-mobile-save-drawer" title="Sauvegarder">{{$:/plugins/pinkrain/monjournal/ui/SyncButton}}</span>
+<$button class="ja-icon-btn" set="$:/temp/journalapp/mobile-right" setTo="closed" tooltip="Fermer">×</$button>
+</div>
+</aside>
+
+<$transclude $tiddler="$:/journalapp/ui/MoreGlobalOverlay" $mode="block"/>
+
+<$list filter="[list[$:/temp/journalapp/story]limit[1]]" variable="ja-story">
+<div class="ja-story-backdrop">
+<div class="ja-story-panel">
+<div class="ja-story-top">
+<span>Fenêtre TiddlyWiki</span>
+<$button class="ja-story-close">
+<$action-setfield $tiddler="$:/temp/journalapp/story" $field="list" $value="" $timestamp="no"/>
+× Fermer
+</$button>
+</div>
+<div class="ja-story-scroll">
+<$list
+	filter="[list[$:/temp/journalapp/story]]"
+	history="$:/temp/journalapp/history"
+	template={{$:/config/ui/ViewTemplate}}
+	editTemplate={{$:/config/ui/EditTemplate}}
+	storyview="classic"
+/>
+</div>
+</div>
+</div>
+</$list>
+</div>
+</div>
+</$let>
+</$navigator>

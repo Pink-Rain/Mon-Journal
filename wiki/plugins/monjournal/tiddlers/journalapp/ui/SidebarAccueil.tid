@@ -1,0 +1,80 @@
+title: $:/journalapp/ui/SidebarAccueil
+
+\whitespace trim
+<div class="ja-accueil-sidebar">
+
+<div class="ja-sidebar-title">Accueil</div>
+
+<div class="ja-view-list">
+	<$button
+		class={{{ [<ja-view>match[$:/journalapp/views/accueil/home]then[ja-view-btn ja-active]else[ja-view-btn]] }}}
+	>
+		<$action-setfield
+			$tiddler="$:/state/journalapp/view"
+			$field="text"
+			$value="$:/journalapp/views/accueil/home"
+			$timestamp="no"
+		/>
+		<$action-setfield
+			$tiddler="$:/temp/journalapp/mobile-left"
+			$field="text"
+			$value="closed"
+			$timestamp="no"
+		/>
+		Accueil
+	</$button>
+</div>
+
+<div class="ja-help-section">
+	<div class="ja-help-heading">Aide</div>
+
+	<div class="ja-help-grid">
+		<$list
+			filter="[tag[Accueil]field:kind[Aide]!has[draft.of]sort[title]]"
+			variable="ja-help"
+		>
+			<div class="ja-help-item">
+
+				<$button
+					class="ja-help-card"
+					tooltip=<<ja-help>>
+					aria-label=<<ja-help>>
+				>
+					<$action-setfield
+						$tiddler="$:/state/journalapp/content-tiddler"
+						$field="text"
+						$value=<<ja-help>>
+						$timestamp="no"
+					/>
+					<$action-setfield
+						$tiddler="$:/state/journalapp/view"
+						$field="text"
+						$value="$:/journalapp/views/shared/content-tiddler"
+						$timestamp="no"
+					/>
+					<$action-setfield
+						$tiddler="$:/temp/journalapp/mobile-left"
+						$field="text"
+						$value="closed"
+						$timestamp="no"
+					/>
+
+					<div class="ja-help-preview">
+						<div class="ja-help-preview-scale">
+							<$transclude $tiddler=<<ja-help>> $mode="block"/>
+						</div>
+					</div>
+
+					<div class="ja-help-shade"></div>
+				</$button>
+
+				<div class="ja-help-hover-title">
+					<$text text=<<ja-help>>/>
+				</div>
+
+			</div>
+		</$list>
+	</div>
+</div>
+
+</div>

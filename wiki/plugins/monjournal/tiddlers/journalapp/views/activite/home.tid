@@ -1,0 +1,17 @@
+title: $:/journalapp/views/activite/home
+caption: Activités
+order: 10
+page-width: wide
+slug: activite
+tags: $:/tags/JournalApp/View $:/journalapp/categories/activite
+
+\whitespace trim
+<div class="ja-qe-root">
+<div class="ja-qe-head"><div class="ja-qe-kicker">Aperçu</div><h1>🏃 Activités</h1><p>Tes activités enregistrées et liées au Journal.</p></div>
+<div class="ja-qe-page-actions"><button class="ja-qe-add ja-entity-page-create" data-ja-open-entity-form="activity">＋ Créer une activité</button></div>
+<div class="ja-qe-list">
+  <$list filter="[tag[Activité]!is[system]!is[draft]sort[title]]" emptyMessage="Aucune activité pour l’instant.">
+    <div class="ja-qe-card ja-qe-card-link" role="button" tabindex="0" data-ja-open-entity-detail="yes" data-ja-detail-title=<<currentTiddler>>><span class="ja-qe-icon">🏃</span><span class="ja-qe-card-title"><$text text=<<currentTiddler>>/></span><button class="ja-agenda-inline-edit is-mini ja-qe-card-edit" type="button" title="Modifier" aria-label="Modifier" data-ja-open-entity-form="activity" data-ja-edit-title=<<currentTiddler>>>✎</button></div>
+  </$list>
+</div>
+</div>

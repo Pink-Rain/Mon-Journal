@@ -1,0 +1,13 @@
+title: $:/journalapp/ui/CategoryItems
+
+\whitespace trim
+<$let
+	ja-items-category={{{ [[$:/state/journalapp/category]get[text]else[$:/journalapp/categories/accueil]] }}}
+	ja-items-tag={{{ [<ja-items-category>get[category-tag]] }}}
+	ja-state-prefix={{{ [<ja-items-category>get[slug]else[category]addprefix[category-]addprefix[$:/temp/journalapp/inventory/]] }}}
+	ja-smart-filter="[tag<ja-items-tag>!is[system]!has[draft.of]jainventory<ja-state-prefix>]"
+>
+<div class="ja-inventory ja-inventory-body">
+	<$transclude $tiddler="$:/journalapp/ui/SmartTiddlerGrid" $mode="block"/>
+</div>
+</$let>

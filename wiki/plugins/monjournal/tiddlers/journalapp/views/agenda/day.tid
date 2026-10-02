@@ -1,0 +1,9 @@
+title: $:/journalapp/views/agenda/day
+caption: Jour
+category: $:/journalapp/categories/agenda
+order: 60
+page-width: wide
+slug: day
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="day"/>

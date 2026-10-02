@@ -1,0 +1,8 @@
+title: $:/plugins/pinkrain/monjournal/ui/SyncButton
+
+\whitespace trim
+<$let mj-state={{{ [[$:/temp/monjournal/sync]get[text]else[idle]] }}} mj-label={{{ [[$:/temp/monjournal/sync]get[label]else[Compte et synchronisation]] }}}>
+<$button message="tm-monjournal-account" tooltip=<<mj-label>> aria-label=<<mj-label>> class={{{ [<tv-config-toolbar-class>] [[mj-sync-btn]] [<mj-state>addprefix[mj-sync-]] +[join[ ]] }}}>
+<svg class="tc-image-button mj-sync-icon" viewBox="0 0 24 24" width="22pt" height="22pt" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path class="mj-sync-cloud" d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path class="mj-sync-mark mj-sync-mark-ok" d="m9.5 14 2 2 3.5-4"/><path class="mj-sync-mark mj-sync-mark-busy" d="M9 14.5a3 3 0 0 0 5.6 1M15 13.5a3 3 0 0 0-5.6-1"/><path class="mj-sync-mark mj-sync-mark-off" d="M8 11l8 7"/><path class="mj-sync-mark mj-sync-mark-error" d="M12 11v3M12 16.5v.01"/></svg>
+</$button>
+</$let>

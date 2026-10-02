@@ -1,0 +1,5 @@
+title: $:/plugins/pinkrain/monjournal/rawmarkup
+tags: $:/tags/RawMarkup
+
+<script src="host.js"></script>
+<link rel="stylesheet" href="host.css">

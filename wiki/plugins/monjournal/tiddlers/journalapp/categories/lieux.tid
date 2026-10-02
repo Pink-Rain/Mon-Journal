@@ -1,0 +1,10 @@
+title: $:/journalapp/categories/lieux
+all-tiddlers-label: Voir tous les tiddlers des Lieux
+caption: Lieux
+category-tag: Lieux
+icon-text: 🗺️
+landing-view: $:/journalapp/views/lieux/home
+slug: lieux
+tags: $:/tags/JournalApp/Category
+
+Configuration interne de la catégorie Lieux.

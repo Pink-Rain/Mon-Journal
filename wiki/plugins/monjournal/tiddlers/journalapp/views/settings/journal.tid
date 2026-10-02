@@ -1,0 +1,13 @@
+title: $:/journalapp/views/settings/journal
+caption: Journal & Agenda
+category: $:/journalapp/categories/settings
+order: 20
+page-width: wide
+slug: journal-agenda-settings
+tags: $:/tags/JournalApp/View $:/journalapp/categories/settings
+
+\whitespace trim
+<div class="ja-settings-unified-pack">
+<$jajournalsettings/>
+<$jaagendasettings/>
+</div>

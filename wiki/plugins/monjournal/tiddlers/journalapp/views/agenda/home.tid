@@ -1,0 +1,8 @@
+title: $:/journalapp/views/agenda/home
+caption: Aperçu
+order: 10
+page-width: wide
+slug: home
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="overview"/>

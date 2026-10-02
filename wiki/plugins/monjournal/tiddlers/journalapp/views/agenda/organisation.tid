@@ -1,0 +1,9 @@
+title: $:/journalapp/views/agenda/organisation
+caption: Organisation
+category: $:/journalapp/categories/agenda
+order: 70
+page-width: full
+slug: organisation
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="organisation"/>

@@ -1,0 +1,8 @@
+title: $:/journalapp/views/accueil/home
+caption: Accueil
+category: $:/journalapp/categories/accueil
+order: 10
+page-width: wide
+slug: home
+tags: $:/tags/JournalApp/View $:/journalapp/categories/accueil
+

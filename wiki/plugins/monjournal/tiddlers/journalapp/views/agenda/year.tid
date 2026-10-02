@@ -1,0 +1,9 @@
+title: $:/journalapp/views/agenda/year
+caption: Année
+category: $:/journalapp/categories/agenda
+order: 30
+page-width: full
+slug: year
+tags: $:/tags/JournalApp/View $:/journalapp/categories/agenda
+
+<$jaagenda mode="year"/>

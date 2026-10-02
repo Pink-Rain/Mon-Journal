@@ -1,0 +1,6 @@
+title: $:/journalapp/views/shared/entity-detail
+caption: Fiche
+page-width: wide
+slug: entity-detail
+
+<div class="ja-entity-detail-view"><$jaentitydetail/></div>

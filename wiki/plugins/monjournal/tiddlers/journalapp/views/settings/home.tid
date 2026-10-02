@@ -1,0 +1,41 @@
+title: $:/journalapp/views/settings/home
+caption: Global
+category: $:/journalapp/categories/settings
+order: 10
+page-width: wide
+slug: home
+tags: $:/tags/JournalApp/View $:/journalapp/categories/settings
+
+\whitespace trim
+<div class="ja-settings-page">
+
+<div class="ja-settings-hero">
+	<div class="ja-settings-kicker">APPARENCE · MON JOURNAL</div>
+	<h1>Global</h1>
+	<p>Clique une icône pour la changer : emoji, fichier, adresse, wiki ou Lucide.</p>
+</div>
+
+<details class="ja-native-fold">
+<summary>Catégories<span class="ja-native-fold-sub">couleur et icône</span></summary>
+<div class="ja-native-fold-body">
+<$jacategories/>
+</div>
+</details>
+
+<details class="ja-native-fold">
+<summary>Bibliothèque d’images<span class="ja-native-fold-sub">tags, sélection, import</span></summary>
+<div class="ja-native-fold-body">
+<$jamedialibrary/>
+</div>
+</details>
+
+<details class="ja-native-fold">
+<summary>Où sont rangées les données<span class="ja-native-fold-sub">référence</span></summary>
+<div class="ja-native-fold-body">
+<div class="ja-settings-footnote">
+Couleurs dans <code>$:/journalapp/settings/appearance</code>, icônes dans <code>$:/journalapp/icons/…</code>, images importées dans <code>$:/journalapp/library/…</code>. Les tags manuels d’une image vivent dans son champ <code>media-tags</code>, et les tags automatiques masqués dans <code>media-tags-off</code>.
+</div>
+</div>
+</details>
+
+</div>

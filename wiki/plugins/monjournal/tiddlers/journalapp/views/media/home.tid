@@ -1,0 +1,17 @@
+title: $:/journalapp/views/media/home
+caption: Médias
+order: 10
+page-width: wide
+slug: media
+tags: $:/tags/JournalApp/View $:/journalapp/categories/media
+
+\whitespace trim
+<div class="ja-qe-root">
+<div class="ja-qe-head"><div class="ja-qe-kicker">Aperçu</div><h1>🎞️ Médias</h1><p>Livres, musiques, jeux, séries, films et autres médias.</p></div>
+<div class="ja-qe-page-actions"><button class="ja-qe-add ja-entity-page-create" data-ja-open-entity-form="media">＋ Créer un média</button></div>
+<div class="ja-qe-list">
+  <$list filter="[tag[Média]!is[system]!is[draft]sort[title]]" emptyMessage="Aucun média pour l’instant.">
+    <div class="ja-qe-card ja-qe-card-link" role="button" tabindex="0" data-ja-open-entity-detail="yes" data-ja-detail-title=<<currentTiddler>>><span class="ja-qe-icon">🎞️</span><span class="ja-qe-card-title"><$text text=<<currentTiddler>>/></span><button class="ja-agenda-inline-edit is-mini ja-qe-card-edit" type="button" title="Modifier" aria-label="Modifier" data-ja-open-entity-form="media" data-ja-edit-title=<<currentTiddler>>>✎</button></div>
+  </$list>
+</div>
+</div>

@@ -1,0 +1,16 @@
+title: $:/journalapp/views/journal/month
+caption: Mois
+category: $:/journalapp/categories/journal
+order: 30
+page-width: wide
+slug: month
+tags: $:/tags/JournalApp/View $:/journalapp/categories/journal
+
+\whitespace trim
+<div class="ja-settings-page">
+<div class="ja-settings-hero">
+	<div class="ja-settings-kicker">JOURNAL · MOIS</div>
+	<h1><$text text={{$:/state/journalapp/journal-month}}/></h1>
+	<p>Page à construire. Le repère sélectionné est conservé dans <code>$:/state/journalapp/journal-month</code>.</p>
+</div>
+</div>

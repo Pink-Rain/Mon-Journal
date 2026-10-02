@@ -1,0 +1,1086 @@
+/* MON JOURNAL — Formulaire Événement réorganisé */
+
+.ja-agenda-form-event .ja-agenda-form-body{
+	gap:8px!important;
+}
+
+/* Type / Statut / Titre / Marqueurs */
+.ja-ae-topline{
+	display:grid;
+	grid-template-columns:38px auto minmax(0,1fr) auto;
+	align-items:center;
+	gap:7px;
+	margin:0 0 4px;
+}
+
+.ja-ae-typebtn{
+	appearance:none;
+	width:38px;
+	height:38px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	border-radius:50%;
+	border:1px solid color-mix(in srgb,var(--ja-ae-type-col,var(--ja-accent)) 38%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-ae-type-col,var(--ja-accent)) 15%,var(--ja-panel));
+	color:var(--ja-text);
+	font-size:1rem;
+	line-height:1;
+	cursor:pointer;
+	padding:0;
+}
+
+.ja-ae-typebtn:hover{
+	background:color-mix(in srgb,var(--ja-ae-type-col,var(--ja-accent)) 23%,var(--ja-panel));
+}
+
+.ja-ae-statuschip{
+	appearance:none;
+	min-height:30px;
+	max-width:105px;
+	padding:4px 9px;
+	border-radius:999px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 60%,transparent);
+	background:color-mix(in srgb,var(--ja-panel-2) 82%,transparent);
+	color:var(--ja-soft);
+	font:inherit;
+	font-size:.68rem;
+	line-height:1;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	cursor:pointer;
+}
+
+.ja-ae-statuschip:hover{
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 28%,var(--ja-border));
+}
+
+.ja-ae-statuschip[data-status="fait"]{
+	color:#a9c9a6;
+	background:color-mix(in srgb,#7fa97c 13%,var(--ja-panel-2));
+}
+.ja-ae-statuschip[data-status="annule"]{
+	color:#d8a0a4;
+	background:color-mix(in srgb,#c86f73 13%,var(--ja-panel-2));
+}
+.ja-ae-statuschip[data-status="reporte"]{
+	color:#d6b58d;
+	background:color-mix(in srgb,#bd8d59 13%,var(--ja-panel-2));
+}
+.ja-ae-statuschip[data-status="avance"]{
+	color:#9fb9d5;
+	background:color-mix(in srgb,#6f91b5 13%,var(--ja-panel-2));
+}
+
+.ja-ae-title{
+	height:38px;
+	min-width:0;
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif!important;
+	font-size:1.03rem!important;
+	padding:7px 10px!important;
+}
+
+.ja-ae-marker-wrap{
+	display:block!important;
+	margin:0!important;
+}
+.ja-ae-marker-wrap .ja-jmarkers{
+	display:flex;
+	align-items:center;
+	gap:2px;
+	margin:0!important;
+	flex-wrap:nowrap;
+}
+.ja-ae-marker-wrap .ja-jmarker{
+	width:26px;
+	height:26px;
+	min-height:26px;
+	padding:0;
+}
+
+/* Ligne Journée/Horaires + checkboxes */
+.ja-ae-timing{
+	display:flex;
+	flex-direction:column;
+	gap:8px;
+	margin:2px 0 0;
+}
+
+.ja-ae-modebar{
+	display:flex;
+	align-items:center;
+	flex-wrap:wrap;
+	gap:7px 11px;
+}
+
+.ja-ae-modebar > .ja-af-seg-field{
+	margin:0;
+	flex:0 0 auto;
+}
+
+.ja-ae-modebar > .ja-af-seg-field > .ja-af-seg{
+	display:inline-flex;
+	padding:2px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 52%,transparent);
+	border-radius:999px;
+	background:color-mix(in srgb,var(--ja-panel-2) 74%,transparent);
+}
+
+.ja-ae-modebar > .ja-af-seg-field .ja-af-seg-item{
+	border-radius:999px;
+	padding:5px 12px;
+	font-size:.76rem;
+}
+
+.ja-ae-modebar > .ja-af-seg-field .ja-af-seg-item.is-on{
+	background:color-mix(in srgb,var(--ja-accent) 28%,var(--ja-panel));
+}
+
+.ja-ae-inlinecheck{
+	display:inline-flex!important;
+	align-items:center;
+	gap:5px;
+	min-height:28px;
+	margin:0!important;
+	padding:3px 7px 3px 5px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 42%,transparent);
+	border-radius:999px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+	color:var(--ja-soft);
+	font-size:.66rem;
+	line-height:1;
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+.ja-ae-inlinecheck input{
+	width:13px;
+	height:13px;
+	margin:0;
+	accent-color:var(--ja-accent);
+}
+
+.ja-ae-inlinecheck:has(input:checked){
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 32%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 9%,var(--ja-panel-2));
+}
+
+/* Dates / heures */
+.ja-ae-dategrid,
+.ja-ae-timerow{
+	display:grid;
+	grid-template-columns:repeat(2,minmax(0,1fr));
+	gap:10px;
+	align-items:end;
+}
+
+.ja-ae-datefield,
+.ja-ae-timefield,
+.ja-ae-endfield{
+	display:flex;
+	flex-direction:column;
+	min-width:0;
+}
+
+.ja-ae-endctl{
+	min-height:36px;
+	display:flex;
+	align-items:center;
+	gap:5px;
+}
+
+.ja-ae-multiday,
+.ja-ae-clearend{
+	appearance:none;
+	flex:0 0 auto;
+	border:1px solid color-mix(in srgb,var(--ja-border) 62%,transparent);
+	background:color-mix(in srgb,var(--ja-panel-2) 78%,transparent);
+	color:var(--ja-text);
+	border-radius:8px;
+	cursor:pointer;
+}
+
+.ja-ae-multiday{
+	width:32px;
+	height:32px;
+	font-size:1rem;
+}
+
+.ja-ae-clearend{
+	width:28px;
+	height:28px;
+	font-size:.8rem;
+}
+
+.ja-ae-multiday-text{
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif;
+	font-size:.72rem;
+	font-style:italic;
+	color:var(--ja-soft);
+	opacity:.65;
+}
+
+.ja-ae-timerow.is-hidden{display:none!important;}
+
+/* Répétition : box activée par checkbox et rétractable */
+.ja-ae-repeatbox{
+	margin:2px 0 3px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 45%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+	overflow:hidden;
+}
+
+.ja-ae-repeatbox.is-hidden{display:none!important;}
+
+.ja-ae-repeathead{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:10px;
+	width:100%;
+	min-height:34px;
+	padding:6px 10px;
+	border:0;
+	background:transparent;
+	color:var(--ja-text);
+	font:inherit;
+	cursor:pointer;
+	text-align:left;
+}
+
+.ja-ae-repeat-title{
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-repeat-arrow{
+	color:var(--ja-soft);
+	font-size:.8rem;
+}
+
+.ja-ae-repeatbody{
+	padding:2px 10px 10px;
+	border-top:1px solid color-mix(in srgb,var(--ja-border) 30%,transparent);
+}
+
+.ja-ae-repeatbody.is-hidden{display:none!important;}
+
+.ja-ae-repeatbox .ja-agenda-recurrence-editor{
+	margin:0;
+	padding:5px 0 0;
+}
+
+/* Note toujours présente, mais repliable */
+.ja-ae-note{
+	margin-top:5px;
+	padding-top:5px;
+	border-top:1px solid color-mix(in srgb,var(--ja-border) 34%,transparent);
+}
+
+.ja-ae-note-head{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:10px;
+	width:100%;
+	min-height:32px;
+	margin:0;
+	padding:4px 2px 5px;
+	border:0;
+	background:transparent;
+	color:var(--ja-text);
+	font:inherit;
+	cursor:pointer;
+	text-align:left;
+}
+
+.ja-ae-note-title{
+	margin:0;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.09em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-note-arrow{
+	color:var(--ja-soft);
+	font-size:.8rem;
+}
+
+.ja-ae-note-body{
+	padding-top:3px;
+}
+
+.ja-ae-note-body.is-hidden{display:none!important;}
+.ja-ae-note .ja-note{margin:0;}
+.ja-ae-note-fallback{min-height:90px;resize:vertical;}
+
+/* Mobile */
+@media(max-width:620px){
+	.ja-ae-topline{
+		grid-template-columns:36px auto minmax(0,1fr);
+		gap:6px;
+	}
+
+	.ja-ae-typebtn{
+		width:36px;
+		height:36px;
+	}
+
+	.ja-ae-statuschip{
+		max-width:88px;
+		min-height:30px;
+		padding-left:7px;
+		padding-right:7px;
+		font-size:.62rem;
+	}
+
+	.ja-ae-marker-wrap{
+		grid-column:1/-1;
+	}
+
+	.ja-ae-marker-wrap .ja-jmarkers{
+		justify-content:flex-end;
+	}
+
+	.ja-ae-marker-wrap .ja-jmarker{
+		width:32px;
+		height:32px;
+		min-height:32px!important;
+	}
+
+	.ja-ae-modebar{
+		gap:6px;
+	}
+
+	.ja-ae-modebar > .ja-af-seg-field{
+		flex:1 1 100%;
+	}
+
+	.ja-ae-modebar > .ja-af-seg-field > .ja-af-seg{
+		width:100%;
+		display:grid;
+		grid-template-columns:1fr 1fr;
+	}
+
+	.ja-ae-modebar > .ja-af-seg-field .ja-af-seg-item{
+		width:100%;
+		padding:6px 5px;
+	}
+
+	.ja-ae-inlinecheck{
+		flex:1 1 auto;
+		justify-content:center;
+		min-height:32px;
+		padding:4px 7px;
+	}
+
+	.ja-ae-dategrid,
+	.ja-ae-timerow{
+		grid-template-columns:1fr 1fr;
+		gap:7px;
+	}
+
+	.ja-ae-repeatbody{
+		padding-left:8px;
+		padding-right:8px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-topline{
+		grid-template-columns:34px auto minmax(0,1fr);
+	}
+
+	.ja-ae-statuschip{
+		max-width:74px;
+		font-size:.58rem;
+	}
+
+	.ja-ae-dategrid,
+	.ja-ae-timerow{
+		grid-template-columns:1fr;
+	}
+
+	.ja-ae-inlinecheck{
+		font-size:.61rem;
+	}
+
+	.ja-ae-endctl{min-height:34px;}
+}
+
+/* ============================================================
+   Correctifs de hauteur / scroll
+   ============================================================ */
+
+
+
+.ja-agenda-form-event .ja-agenda-form-body{
+	flex:1 1 auto!important;
+	min-height:0!important;
+	overflow-y:auto!important;
+	overflow-x:hidden!important;
+	overscroll-behavior:contain;
+	scrollbar-gutter:stable;
+	-webkit-overflow-scrolling:touch;
+	padding-bottom:72px!important;
+}
+
+/* Même si la répétition devient très riche, elle ne peut plus sortir
+   de l'écran : son contenu possède son propre scroll. */
+.ja-ae-repeatbox{
+	flex:0 0 auto;
+	min-height:0;
+}
+
+.ja-ae-repeatbody{
+	max-height: none !important;
+	overflow-y: visible !important;
+	overflow-x: visible !important;
+}
+
+/* Préparation, pilotée par la troisième checkbox */
+.ja-ae-prepbox{
+	margin:2px 0 3px;
+	padding:8px 10px 10px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 45%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+}
+
+.ja-ae-prepbox.is-hidden{display:none!important;}
+
+.ja-ae-prep-title{
+	margin:0 0 7px;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-prepbody .ja-agenda-checkedit{
+	margin:0;
+}
+
+/* Le menu + ne doit jamais devenir plus haut que l'écran non plus. */
+.ja-agenda-form-pop{
+	max-height:min(68dvh,520px)!important;
+	overflow-y:auto!important;
+	overscroll-behavior:contain;
+	scrollbar-gutter:stable;
+}
+
+@media(max-width:620px){
+	.ja-agenda-form-event{
+		max-height:calc(100dvh - 18px)!important;
+	}
+
+	.ja-agenda-form-event .ja-agenda-form-body{
+		padding-bottom:84px!important;
+	}
+
+	.ja-ae-repeatbody{
+		max-height: none !important;
+	}
+
+	/* Trois petites options restent sur la même zone sans déborder. */
+	.ja-ae-inlinecheck{
+		flex:1 1 calc(33.333% - 6px);
+		min-width:92px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-inlinecheck{
+		flex:1 1 calc(50% - 4px);
+		min-width:0;
+		font-size:.58rem;
+	}
+}
+
+
+/* ============================================================
+   LANGAGE EVENT → TO-DO / HABITUDE / CRÉNEAU / VACANCES
+   ============================================================ */
+
+.ja-agenda-shared-form{
+	display:flex!important;
+	flex-direction:column!important;
+	/* La hauteur vient volontairement de .ja-jform-modal : Agenda et Journal
+	   partagent désormais exactement le même shell de formulaire. */
+	overflow:hidden!important;
+}
+
+.ja-agenda-shared-form .ja-agenda-form-body{
+	flex:1 1 auto!important;
+	min-height:0!important;
+	overflow-y:auto!important;
+	overflow-x:hidden!important;
+	overscroll-behavior:contain;
+	scrollbar-gutter:stable;
+	-webkit-overflow-scrolling:touch;
+	padding-bottom:76px!important;
+}
+
+.ja-ae-topline.is-no-status{
+	grid-template-columns:38px minmax(0,1fr) auto;
+}
+
+.ja-ae-typebtn.is-fixed{
+	cursor:default;
+	user-select:none;
+}
+
+.ja-ae-statuschip[data-status="a_faire"]{
+	color:var(--ja-soft);
+	background:color-mix(in srgb,var(--ja-panel-2) 82%,transparent);
+}
+.ja-ae-statuschip[data-status="en_cours"]{
+	color:#d8bd8e;
+	background:color-mix(in srgb,#bd9859 14%,var(--ja-panel-2));
+}
+
+.ja-ae-optionbar{
+	margin:1px 0 2px;
+	display:flex;
+	flex-wrap:wrap;
+	gap:7px;
+}
+
+/* Préparation : même architecture que Répétition, donc impossible
+   de sortir de la modale même avec une longue checklist. */
+.ja-ae-prepbox{
+	margin:2px 0 3px;
+	padding:0!important;
+	border:1px solid color-mix(in srgb,var(--ja-border) 45%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 50%,transparent);
+	overflow:hidden!important;
+	min-height:0;
+}
+
+.ja-ae-prepbox.is-hidden{display:none!important;}
+
+.ja-ae-prephead{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:10px;
+	width:100%;
+	min-height:34px;
+	margin:0;
+	padding:6px 10px;
+	border:0;
+	background:transparent;
+	color:var(--ja-text);
+	font:inherit;
+	cursor:pointer;
+	text-align:left;
+}
+
+.ja-ae-prep-title{
+	margin:0;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.68rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-ae-prep-arrow{
+	color:var(--ja-soft);
+	font-size:.8rem;
+}
+
+.ja-ae-prepbody{
+	max-height: none;
+	min-height:0;
+	padding:7px 10px 10px;
+	border-top:1px solid color-mix(in srgb,var(--ja-border) 30%,transparent);
+	overflow-y: visible !important;
+	overflow-x: visible !important;
+}
+
+.ja-ae-prepbody.is-hidden{display:none!important;}
+
+.ja-ae-repeatbox{
+	flex:0 0 auto;
+	min-height:0;
+	overflow:hidden!important;
+}
+
+.ja-ae-repeatbody{
+	max-height: none !important;
+	min-height:0!important;
+	overflow-y: visible !important;
+	overflow-x: visible !important;
+}
+
+/* La note est désormais la fin normale de TOUS ces formulaires. */
+.ja-ae-note{
+	flex:0 0 auto;
+}
+
+@media(max-width:620px){
+	.ja-agenda-shared-form{
+		max-height:calc(100dvh - 18px)!important;
+		width:min(100%,96vw)!important;
+	}
+
+	.ja-agenda-shared-form .ja-agenda-form-body{
+		padding-bottom:86px!important;
+	}
+
+	.ja-ae-topline.is-no-status{
+		grid-template-columns:36px minmax(0,1fr);
+	}
+
+	.ja-ae-topline.is-no-status .ja-ae-marker-wrap{
+		grid-column:1/-1;
+	}
+
+	.ja-ae-optionbar .ja-ae-inlinecheck{
+		flex:1 1 auto;
+		min-width:96px;
+	}
+
+	.ja-ae-repeatbody{
+		max-height: none !important;
+	}
+
+	.ja-ae-prepbody{
+		max-height: none !important;
+		padding-left:8px;
+		padding-right:8px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-topline.is-no-status{
+		grid-template-columns:34px minmax(0,1fr);
+	}
+
+	.ja-ae-optionbar .ja-ae-inlinecheck{
+		min-width:0;
+		flex:1 1 calc(50% - 4px);
+		font-size:.58rem;
+	}
+
+	.ja-ae-prepbody{
+		max-height: none;
+	}
+}
+
+
+/* ============================================================
+   TO-DO — Effort + arbre de sous-tâches inline
+   ============================================================ */
+
+.ja-todo-datehost.is-hidden,
+.ja-todo-subtree-host.is-hidden{
+	display:none!important;
+}
+
+/* Ligne Effort compacte, inspirée de l'ancien formulaire Obsidian. */
+.ja-todo-effort{
+	display:grid;
+	grid-template-columns:auto minmax(150px,220px) minmax(0,1fr);
+	align-items:center;
+	gap:8px;
+	min-height:36px;
+	padding:5px 8px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 48%,transparent);
+	border-radius:9px;
+	background:color-mix(in srgb,var(--ja-panel-2) 48%,transparent);
+}
+
+.ja-todo-effort-label{
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.66rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+	white-space:nowrap;
+}
+
+.ja-todo-effort-ctl{
+	display:grid;
+	grid-template-columns:minmax(0,1fr) 56px;
+	gap:4px;
+	min-width:0;
+}
+
+.ja-todo-effort-ctl input,
+.ja-todo-effort-ctl select{
+	height:28px!important;
+	min-height:28px!important;
+	padding-top:3px!important;
+	padding-bottom:3px!important;
+	font-size:.7rem!important;
+}
+
+.ja-todo-effort-hint{
+	min-width:0;
+	text-align:right;
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif;
+	font-size:.65rem;
+	font-style:italic;
+	color:var(--ja-soft);
+	opacity:.72;
+}
+
+.ja-todo-effort.is-derived{
+	border-color:color-mix(in srgb,var(--ja-accent) 26%,var(--ja-border));
+}
+
+.ja-todo-effort.is-derived .ja-todo-effort-ctl{
+	opacity:.82;
+}
+
+/* Arbre */
+.ja-todo-subtree{
+	margin-top:5px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 42%,transparent);
+	border-radius:11px;
+	background:color-mix(in srgb,var(--ja-panel-2) 42%,transparent);
+	overflow:hidden;
+}
+
+.ja-todo-subtree-head{
+	display:flex;
+	align-items:center;
+	min-height:31px;
+	padding:5px 9px;
+	border-bottom:1px solid color-mix(in srgb,var(--ja-border) 28%,transparent);
+}
+
+.ja-todo-subtree-title{
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.66rem;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+}
+
+.ja-todo-subtree-body{
+	max-height: none;
+	min-height:0;
+	padding:7px;
+	overflow-y: visible;
+	overflow-x: visible;
+}
+
+.ja-todo-subempty{
+	padding:9px 6px;
+	text-align:center;
+	font-family:"IM Fell Double Pica","Iowan Old Style",Georgia,serif;
+	font-size:.7rem;
+	font-style:italic;
+	color:var(--ja-soft);
+	opacity:.65;
+}
+
+.ja-todo-subnode{
+	position:relative;
+	min-width:0;
+}
+
+.ja-todo-subchildren{
+	margin-left:17px;
+	padding-left:9px;
+	border-left:1px solid color-mix(in srgb,var(--ja-accent) 20%,var(--ja-border));
+}
+
+.ja-todo-subline{
+	display:grid;
+	grid-template-columns:20px minmax(90px,1fr) minmax(84px,112px) 30px 28px 28px;
+	align-items:center;
+	gap:5px;
+	min-width:0;
+	margin:2px 0;
+	padding:4px 4px;
+	border-radius:8px;
+	background:color-mix(in srgb,var(--ja-panel) 58%,transparent);
+	border:1px solid color-mix(in srgb,var(--ja-border) 22%,transparent);
+}
+
+.ja-todo-subcheck{
+	width:16px;
+	height:16px;
+	margin:0;
+	accent-color:var(--ja-accent);
+}
+
+.ja-todo-subtitle{
+	min-width:0!important;
+	height:29px!important;
+	min-height:29px!important;
+	padding:4px 7px!important;
+	font-size:.72rem!important;
+}
+
+.ja-todo-sub-effort{
+	display:grid;
+	grid-template-columns:minmax(42px,1fr) 43px;
+	gap:3px;
+	min-width:0;
+}
+
+.ja-todo-sub-effort input,
+.ja-todo-sub-effort select{
+	height:28px!important;
+	min-height:28px!important;
+	padding:3px 4px!important;
+	font-size:.64rem!important;
+}
+
+.ja-todo-sub-marker,
+.ja-todo-subadd,
+.ja-todo-subdel{
+	appearance:none;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	width:28px;
+	height:28px;
+	min-width:28px;
+	padding:0;
+	border-radius:7px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 38%,transparent);
+	background:color-mix(in srgb,var(--ja-panel-2) 62%,transparent);
+	color:var(--ja-soft);
+	font:inherit;
+	cursor:pointer;
+}
+
+.ja-todo-sub-marker:hover,
+.ja-todo-subadd:hover{
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 30%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 9%,var(--ja-panel-2));
+}
+
+.ja-todo-subdel:hover{
+	color:#d98a91;
+	border-color:color-mix(in srgb,#c86f73 34%,var(--ja-border));
+}
+
+.ja-todo-subrootadd{
+	appearance:none;
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	min-height:30px;
+	margin-top:5px;
+	padding:5px 10px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 44%,transparent);
+	border-radius:999px;
+	background:color-mix(in srgb,var(--ja-panel-2) 64%,transparent);
+	color:var(--ja-text);
+	font:inherit;
+	font-size:.7rem;
+	cursor:pointer;
+}
+
+.ja-todo-subrootadd:hover{
+	border-color:color-mix(in srgb,var(--ja-accent) 34%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 9%,var(--ja-panel-2));
+}
+
+/* La checkbox Sous-tâches reste alignée avec Répétition / Préparation / Agenda. */
+.ja-ae-inlinecheck.is-subtasks{
+	flex:0 1 auto;
+}
+
+/* Téléphone */
+@media(max-width:620px){
+	.ja-todo-effort{
+		grid-template-columns:auto minmax(115px,1fr);
+		gap:6px;
+	}
+
+	.ja-todo-effort-hint{
+		grid-column:1/-1;
+		text-align:left;
+		font-size:.61rem;
+	}
+
+	.ja-todo-subtree-body{
+		max-height: none;
+		padding:5px;
+	}
+
+	.ja-todo-subline{
+		grid-template-columns:18px minmax(72px,1fr) 30px 28px 28px;
+		gap:4px;
+		padding:4px 3px;
+	}
+
+	/* Sur mobile, l'effort passe sur une petite seconde ligne dans le nœud. */
+	.ja-todo-sub-effort{
+		grid-column:2/-1;
+		grid-row:2;
+		width:min(150px,100%);
+	}
+
+	.ja-todo-subchildren{
+		margin-left:10px;
+		padding-left:6px;
+	}
+
+	.ja-ae-inlinecheck.is-subtasks{
+		flex:1 1 auto;
+		min-width:130px;
+	}
+}
+
+@media(max-width:390px){
+	.ja-todo-effort{
+		grid-template-columns:1fr;
+	}
+
+	.ja-todo-effort-ctl{
+		grid-template-columns:minmax(0,1fr) 52px;
+	}
+
+	.ja-todo-subline{
+		grid-template-columns:18px minmax(60px,1fr) 27px 27px 27px;
+	}
+
+	.ja-todo-sub-marker,
+	.ja-todo-subadd,
+	.ja-todo-subdel{
+		width:27px;
+		height:27px;
+		min-width:27px;
+	}
+}
+
+
+/* ============================================================
+   RAPPEL — option de premier niveau
+   ============================================================ */
+
+.ja-ae-reminderline{
+	display:flex;
+	align-items:center;
+	gap:8px;
+	width:min(100%,280px);
+	min-height:34px;
+	margin:0;
+	padding:5px 8px;
+	border:1px solid color-mix(in srgb,var(--ja-border) 42%,transparent);
+	border-radius:9px;
+	background:color-mix(in srgb,var(--ja-panel-2) 48%,transparent);
+	box-sizing:border-box;
+}
+
+.ja-ae-reminderline.is-hidden{
+	display:none!important;
+}
+
+.ja-ae-reminderlabel{
+	flex:1 1 auto;
+	min-width:0;
+	font-family:"IM Fell Double Pica SC","IM Fell Double Pica",serif;
+	font-size:.64rem;
+	letter-spacing:.055em;
+	text-transform:uppercase;
+	color:var(--ja-soft);
+	white-space:nowrap;
+}
+
+.ja-ae-remindertime{
+	flex:0 0 104px;
+	width:104px!important;
+	min-width:104px!important;
+	height:28px!important;
+	min-height:28px!important;
+	padding:3px 6px!important;
+	font-size:.72rem!important;
+}
+
+.ja-ae-inlinecheck.is-reminder:has(input:checked){
+	color:var(--ja-text);
+	border-color:color-mix(in srgb,var(--ja-accent) 34%,var(--ja-border));
+	background:color-mix(in srgb,var(--ja-accent) 10%,var(--ja-panel-2));
+}
+
+@media(max-width:620px){
+	.ja-ae-reminderline{
+		width:100%;
+		min-height:36px;
+	}
+
+	.ja-ae-remindertime{
+		flex:0 0 112px;
+		width:112px!important;
+		min-width:112px!important;
+	}
+}
+
+@media(max-width:390px){
+	.ja-ae-reminderline{
+		gap:5px;
+		padding-left:6px;
+		padding-right:6px;
+	}
+
+	.ja-ae-reminderlabel{
+		font-size:.59rem;
+		letter-spacing:.035em;
+	}
+
+	.ja-ae-remindertime{
+		flex:0 0 98px;
+		width:98px!important;
+		min-width:98px!important;
+	}
+}
+
+/* ============================================================
+   AGENDA FORMS — flux vertical intrinsèque
+   Le body de la modale est l'unique zone scrollable.
+   Les sections ne doivent jamais être comprimées par flexbox.
+   ============================================================ */
+.ja-agenda-shared-form .ja-agenda-form-body > *,
+.ja-agenda-form-event .ja-agenda-form-body > *{
+  flex-shrink:0 !important;
+}
+
+.ja-agenda-shared-form .ja-ae-prepbox,
+.ja-agenda-form-event .ja-ae-prepbox,
+.ja-agenda-shared-form .ja-todo-subtasks-box,
+.ja-agenda-form-event .ja-todo-subtasks-box,
+.ja-agenda-shared-form .ja-ae-repeatbox,
+.ja-agenda-form-event .ja-ae-repeatbox{
+  flex:0 0 auto !important;
+  min-height:auto !important;
+}
+
+.ja-ae-prepbody,
+.ja-todo-subtree-host,
+.ja-todo-subtree,
+.ja-todo-subtree-body{
+  height:auto !important;
+  max-height:none !important;
+  min-height:max-content;
+}
+
+.ja-ae-prepbody,
+.ja-todo-subtree-body{
+  overflow:visible !important;
+}
+

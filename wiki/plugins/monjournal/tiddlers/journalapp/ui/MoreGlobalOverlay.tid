@@ -1,0 +1,60 @@
+title: $:/journalapp/ui/MoreGlobalOverlay
+
+\whitespace trim
+\define ja-more-config-title() $:/config/PageControlButtons/Visibility/$(listItem)$
+
+<$reveal
+	state="$:/state/journalapp/more-menu"
+	type="match"
+	text="open"
+>
+	<!-- Le backdrop ET le panneau sont des enfants directs du layout global.
+	     Ils ne vivent dans aucune sidebar. -->
+	<$button
+		class="ja-more-global-backdrop"
+		set="$:/state/journalapp/more-menu"
+		setTo="closed"
+		tooltip="Fermer le menu"
+		aria-label="Fermer le menu"
+	></$button>
+
+	<div class="ja-more-global-panel">
+		<div class="ja-more-global-head">
+			<span>Plus d’actions</span>
+			<$button
+				class="ja-more-global-close"
+				set="$:/state/journalapp/more-menu"
+				setTo="closed"
+				tooltip="Fermer"
+			>×</$button>
+		</div>
+
+		<div class="ja-more-global-scroll">
+			<$eventcatcher
+				selector="button,a"
+				$click="""<$action-setfield $tiddler="$:/state/journalapp/more-menu" $field="text" $value="closed" $timestamp="no"/>"""
+				stopPropagation="never"
+			>
+				<$let
+					tv-config-toolbar-icons="yes"
+					tv-config-toolbar-text="yes"
+					tv-config-toolbar-class="tc-btn-invisible"
+				>
+					<$list
+						filter="[all[shadows+tiddlers]tag[$:/tags/PageControls]!has[draft.of]] -[[$:/core/ui/Buttons/more-page-actions]]"
+						variable="listItem"
+					>
+						<$reveal type="match" state=<<ja-more-config-title>> text="hide">
+							<$set
+								name="tv-config-toolbar-class"
+								filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]"
+							>
+								<$transclude tiddler=<<listItem>> mode="inline"/>
+							</$set>
+						</$reveal>
+					</$list>
+				</$let>
+			</$eventcatcher>
+		</div>
+	</div>
+</$reveal>

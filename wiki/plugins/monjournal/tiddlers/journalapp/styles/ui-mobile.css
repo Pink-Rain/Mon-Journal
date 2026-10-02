@@ -1,0 +1,480 @@
+/* MON JOURNAL — RESPONSIVE MOBILE
+   Feuille canonique commune téléphone.
+   Les anciens correctifs mobile successifs ont été consolidés ici.
+*/
+.ja-app,
+.ja-app .ja-center,
+.ja-app .ja-page-scroll,
+.ja-app .ja-page-inner,
+.ja-app .ja-subheader-content,
+.ja-app .ja-category-item,
+.ja-app .ja-category-item-body,
+.ja-journal-day,
+.ja-jday-top,
+.ja-jtl-row,
+.ja-jtl-card,
+.ja-jform-modal,
+.ja-jform-body,
+.ja-jform-details-body,
+.ja-jform-smallfield,
+.ja-jform-location-field {
+  min-width: 0;
+  box-sizing: border-box;
+}
+.ja-app .ja-page-inner img,
+.ja-app .ja-page-inner video,
+.ja-app .ja-page-inner canvas,
+.ja-app .ja-category-item img,
+.ja-app .ja-category-item video {
+  max-width: 100%;
+  height: auto;
+}
+.ja-app .ja-page-inner iframe {
+  max-width: 100%;
+}
+.ja-app .ja-page-inner pre,
+.ja-app .ja-category-item pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ja-app .ja-page-inner code,
+.ja-app .ja-category-item-title,
+.ja-app .ja-category-item-body,
+.ja-jday-title,
+.ja-jtl-note,
+.ja-jtl-chip {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.ja-guide table,
+.ja-category-item table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 820px) {
+  .ja-app .ja-page-scroll {
+    padding-left: clamp(10px, 3.5vw, 16px) !important;
+    padding-right: clamp(10px, 3.5vw, 16px) !important;
+    padding-bottom: calc(22px + env(safe-area-inset-bottom)) !important;
+  }
+  .ja-app .ja-subheader {
+    min-width: 0;
+    padding-left: max(6px, env(safe-area-inset-left)) !important;
+    padding-right: max(6px, env(safe-area-inset-right)) !important;
+  }
+  .ja-app .ja-drawer-toggle,
+  .ja-app .ja-icon-button,
+  .ja-app .ja-collapse {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  .ja-app .ja-mobile-header {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  .ja-app .ja-left-sidebar,
+  .ja-app .ja-right-sidebar {
+    max-width: min(90vw, 360px);
+  }
+  .ja-app input,
+  .ja-app select,
+  .ja-app textarea,
+  .ja-app button {
+    max-width: 100%;
+  }
+  .ja-app .ja-category-item-summary,
+  .ja-app .ja-category-item-meta,
+  .ja-app .ja-inventory-toolbar,
+  .ja-app .ja-filter-inline-fields,
+  .ja-app .ja-filter-date-row {
+    min-width: 0;
+  }
+}
+@media (max-width: 620px) {
+  .ja-jform-overlay {
+    box-sizing: border-box;
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom)) !important;
+  }
+  .ja-jform-modal {
+    width: 100% !important;
+    max-width: none !important;
+    max-height: calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+  }
+  .ja-jform-body {
+    min-height: 0;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ja-jform-head,
+  .ja-jform-footer,
+  .ja-jmarkers,
+  .ja-jweather-data {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+  .ja-jform-details-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .ja-jform-smallfield,
+  .ja-jform-section,
+  .ja-jform-location-field {
+    width: 100%;
+    max-width: 100%;
+  }
+  .ja-jform-modal input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
+  .ja-jform-modal select,
+  .ja-jform-modal textarea {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 16px !important;
+    box-sizing: border-box;
+  }
+
+  .ja-jform-modal input[type="checkbox"],
+  .ja-jform-modal input[type="radio"],
+  .ja-jform-modal input[type="color"],
+  .ja-jform-modal input[type="range"] {
+    width: auto !important;
+    max-width: none !important;
+    flex: 0 0 auto;
+  }
+  .ja-jform-footer {
+    gap: 8px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+  .ja-jform-footer .ja-jform-secondary,
+  .ja-jform-footer .ja-jform-save {
+    flex: 1 1 140px;
+    min-height: 44px !important;
+  }
+  .ja-jform-close,
+  .ja-jmood-btn,
+  .ja-jnuance,
+  .ja-jscale-pip,
+  .ja-jweather-refresh,
+  .ja-jmarker,
+  .ja-jday-arrow,
+  .ja-journal-add {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  .ja-jform-modal .ja-jtokenfield,
+  .ja-jform-modal .ja-jplacefield {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .ja-jform-modal .ja-jtoken-label,
+  .ja-jform-modal .ja-jplace-label {
+    max-width: min(58vw, 180px) !important;
+  }
+  .ja-jform-modal .ja-jtoken-menu,
+  .ja-jform-modal .ja-jplace-menu {
+    max-height: min(230px, 38dvh) !important;
+    overscroll-behavior: contain;
+  }
+  .ja-jday-title {
+    font-size: clamp(1.15rem, 6vw, 1.7rem);
+    line-height: 1.16;
+  }
+  .ja-jtl-card,
+  .ja-jtl-note {
+    max-width: 100%;
+  }
+}
+@media (max-width: 390px) {
+  .ja-app .ja-page-scroll {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  .ja-jform-overlay {
+    padding: 0 !important;
+  }
+  .ja-jform-modal {
+    max-height: 100dvh !important;
+    min-height: 100dvh;
+    border-radius: 0 !important;
+  }
+  .ja-jform-modal .ja-jtoken-label,
+  .ja-jform-modal .ja-jplace-label {
+    max-width: 52vw !important;
+  }
+  .ja-jform-footer .ja-jform-secondary,
+  .ja-jform-footer .ja-jform-save {
+    flex-basis: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ja-app *,
+  .ja-jform-overlay *,
+  .ja-jform-modal * {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+.ja-mobile-save-anchor {
+  display: none !important;
+}
+.ja-mobile-save-native {
+  display: none !important;
+}
+@media (max-width: 820px) {
+  .ja-left-foot .ja-core-btn[title="Sauvegarder"] {
+    display: none !important;
+  }
+  body .ja-app .ja-center > .ja-subheader {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0 max(4px,env(safe-area-inset-right)) 0 max(4px,env(safe-area-inset-left)) !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: var(--ja-panel) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--ja-border) !important;
+    position: relative !important;
+    z-index: 20 !important;
+  }
+  body .ja-app.ja-cat-agenda .ja-center > .ja-subheader {
+    display: flex !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    max-height: 48px !important;
+  }
+  body .ja-app.ja-cat-agenda .ja-center > .ja-subheader > .ja-subheader-body {
+    display: none !important;
+  }
+  .ja-app .ja-dt-left {
+    order: 1 !important;
+    flex: 0 0 40px !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    margin: 0 !important;
+  }
+  .ja-app .ja-mobile-save-main {
+    order: 2 !important;
+    display: flex !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    margin: 0 0 0 2px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .ja-app .ja-subheader-body {
+    order: 3 !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  .ja-app .ja-dt-right {
+    order: 4 !important;
+    flex: 0 0 40px !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+  .ja-app .ja-mobile-save-native button,
+  .ja-app .ja-mobile-save-native .tc-btn-invisible {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--ja-muted) !important;
+    fill: var(--ja-muted) !important;
+  }
+  .ja-app .ja-mobile-save-native svg {
+    width: 19px !important;
+    height: 19px !important;
+    fill: inherit !important;
+  }
+  .ja-app .ja-drawer-head {
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    padding-right: max(8px,env(safe-area-inset-right)) !important;
+  }
+  .ja-app .ja-drawer-head > strong {
+    min-width: 0 !important;
+    margin-right: auto !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  .ja-app .ja-drawer-head .ja-mobile-save-drawer {
+    display: flex !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .ja-app .ja-drawer-head > .ja-icon-btn {
+    flex: 0 0 38px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    margin: 0 !important;
+  }
+}
+
+/* ==============================================================
+   FORMS MOBILE — une seule zone de scroll, aucun champ emprisonné
+   ============================================================== */
+@media (max-width: 620px) {
+  .ja-jform-overlay {
+    padding: 0 !important;
+    align-items: stretch !important;
+  }
+  .ja-jform-modal,
+  .ja-agenda-shared-form,
+  .ja-agenda-form-event,
+  .ja-entity-form,
+  .ja-relation-form,
+  .ja-media-form,
+  .ja-sleep-form,
+  .ja-project-form,
+  .ja-dream-form {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+  .ja-jform-head,
+  .ja-jform-footer { flex: 0 0 auto; min-width: 0; }
+  .ja-jform-head { padding: 11px 12px 9px !important; gap: 8px; }
+  .ja-jform-body,
+  .ja-agenda-form-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+  }
+  .ja-jform-body > *,
+  .ja-agenda-form-body > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box;
+  }
+  .ja-entity-row,
+  .ja-agenda-form-row,
+  .ja-ae-dategrid,
+  .ja-ae-timerow,
+  .ja-project-dates,
+  .ja-relation-name-row,
+  .ja-relation-meta-row,
+  .ja-relation-details-row,
+  .ja-relation-editor-row,
+  .ja-media-main-row,
+  .ja-media-info-row,
+  .ja-media-extra-row,
+  .ja-sleep-main-row,
+  .ja-sleep-latency-row {
+    width: 100%;
+    min-width: 0;
+  }
+  .ja-entity-row > *,
+  .ja-agenda-form-row > *,
+  .ja-ae-dategrid > *,
+  .ja-ae-timerow > *,
+  .ja-project-dates > *,
+  .ja-relation-name-row > *,
+  .ja-relation-meta-row > *,
+  .ja-relation-details-row > *,
+  .ja-media-main-row > *,
+  .ja-media-info-row > *,
+  .ja-media-extra-row > *,
+  .ja-sleep-main-row > *,
+  .ja-sleep-latency-row > * { min-width: 0 !important; max-width: 100%; }
+
+  /* Les éditeurs grandissent dans le formulaire : pas de scroll dans le scroll. */
+  .ja-jform-modal .ja-note-area,
+  .ja-entity-editor-block .ja-note-area,
+  .ja-relation-editor-row .ja-note-area {
+    max-height: none !important;
+    overflow-y: visible !important;
+    min-height: 128px;
+  }
+  .ja-ae-repeatbody,
+  .ja-ae-prepbody,
+  .ja-todo-subtree-host,
+  .ja-todo-subtree,
+  .ja-todo-subtree-body,
+  .ja-habit-schedule-body,
+  .ja-slot-occurrences-list {
+    max-height: none !important;
+    overflow: visible !important;
+    min-height: 0 !important;
+  }
+
+  .ja-entity-section-head { flex-wrap: wrap; }
+  .ja-entity-section-head > .ja-jform-secondary { margin-left: 0 !important; }
+  .ja-sleep-quality {
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr));
+    gap: 4px;
+    overflow: visible !important;
+    width: 100%;
+  }
+  .ja-sleep-quality-item {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    flex: none !important;
+    padding-inline: 3px !important;
+  }
+  .ja-sleep-quality-label { font-size: .55rem; overflow-wrap: anywhere; }
+}
+
+@media (max-width: 520px) {
+  .ja-ae-dategrid,
+  .ja-ae-timerow,
+  .ja-media-main-row,
+  .ja-media-info-row,
+  .ja-sleep-main-row,
+  .ja-sleep-latency-row,
+  .ja-project-dates {
+    grid-template-columns: minmax(0,1fr) !important;
+  }
+  .ja-project-form .ja-ae-topline.is-no-status {
+    grid-template-columns: 34px minmax(0,1fr) !important;
+  }
+  .ja-project-form .ja-ae-topline.is-no-status .ja-ae-marker-wrap { grid-column: 1 / -1; }
+  .ja-sleep-awake-row {
+    grid-template-columns: minmax(0,1fr) 30px !important;
+  }
+  .ja-sleep-awake-row > :first-child { grid-column: 1; grid-row: 1; }
+  .ja-sleep-awake-row > :nth-child(2) { grid-column: 1; grid-row: 2; }
+  .ja-sleep-awake-row > .ja-entity-mini-remove { grid-column: 2; grid-row: 2; }
+  .ja-relation-proximity { grid-template-columns: repeat(7,minmax(32px,1fr)); overflow-x: auto; padding-bottom: 2px; }
+}
+

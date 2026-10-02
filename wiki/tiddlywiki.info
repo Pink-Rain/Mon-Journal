@@ -1,0 +1,13 @@
+{
+	"description": "Mon Journal — appli Windows et Android",
+	"plugins": [],
+	"themes": [
+		"tiddlywiki/vanilla",
+		"tiddlywiki/snowwhite"
+	],
+	"build": {
+		"app": [
+			"--render", "$:/core/save/all", "index.html", "text/plain"
+		]
+	}
+}

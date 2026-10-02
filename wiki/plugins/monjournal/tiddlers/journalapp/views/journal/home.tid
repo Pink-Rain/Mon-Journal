@@ -1,0 +1,9 @@
+title: $:/journalapp/views/journal/home
+caption: Journal
+category: $:/journalapp/categories/journal
+order: 10
+page-width: full
+slug: home
+tags: $:/tags/JournalApp/View $:/journalapp/categories/journal
+
+<$jajournal mode="day"/>

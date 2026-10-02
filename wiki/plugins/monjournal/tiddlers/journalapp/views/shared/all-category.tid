@@ -1,0 +1,8 @@
+title: $:/journalapp/views/shared/all-category
+caption: Tous les tiddlers
+inventory-source: category
+page-width: wide
+slug: all-tiddlers
+ui-subheader: $:/journalapp/ui/InventoryHeader
+
+<$transclude $tiddler="$:/journalapp/ui/CategoryItems" $mode="block"/>

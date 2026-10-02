@@ -1,0 +1,17 @@
+title: $:/journalapp/views/projet/home
+caption: Projets
+order: 10
+page-width: wide
+slug: projet
+tags: $:/tags/JournalApp/View $:/journalapp/categories/projet
+
+\whitespace trim
+<div class="ja-qe-root">
+<div class="ja-qe-head"><div class="ja-qe-kicker">Aperçu</div><h1>🧩 Projets</h1><p>Tes projets enregistrés et liés au Journal.</p></div>
+<div class="ja-qe-page-actions"><button class="ja-qe-add ja-entity-page-create" data-ja-open-entity-form="project">＋ Créer un projet</button></div>
+<div class="ja-qe-list">
+  <$list filter="[tag[Projet]!is[system]!is[draft]sort[title]]" emptyMessage="Aucun projet pour l’instant.">
+    <div class="ja-qe-card ja-qe-card-link" role="button" tabindex="0" data-ja-open-entity-detail="yes" data-ja-detail-title=<<currentTiddler>>><span class="ja-qe-icon">🧩</span><span class="ja-qe-card-title"><$text text=<<currentTiddler>>/></span><button class="ja-agenda-inline-edit is-mini ja-qe-card-edit" type="button" title="Modifier" aria-label="Modifier" data-ja-open-entity-form="project" data-ja-edit-title=<<currentTiddler>>>✎</button></div>
+  </$list>
+</div>
+</div>

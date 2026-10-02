@@ -1,0 +1,11 @@
+title: $:/
+
+layout: $:/journalapp/layout
+palette: $:/palettes/Twilight
+SiteTitle: Mon Journal
+SiteSubtitle: Journal, agenda et relations
+config/SyncLogging: no
+config/SyncThrottleInterval: 300
+config/SyncPollingInterval: 60000
+config/SyncSystemTiddlersFromServer: yes
+config/SyncFilter: [is[tiddler]] -[[$:/core]] -[[$:/library/sjcl.js]] -[prefix[$:/boot/]] -[prefix[$:/HistoryList]] -[[$:/StoryList]] -[[$:/Import]] -[status[pending]plugin-type[import]] -[[$:/isEncrypted]] -[prefix[$:/status/]] -[prefix[$:/state/]] -[prefix[$:/temp/]] -[prefix[$:/plugins/]] -[prefix[$:/themes/]] -[prefix[$:/languages/]] -[has[draft.of]]

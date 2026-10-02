@@ -1,0 +1,8 @@
+title: $:/journalapp/views/accueil/uncategorized
+caption: Sans catégorie
+inventory-source: uncategorized
+page-width: wide
+slug: uncategorized
+ui-subheader: $:/journalapp/ui/InventoryHeader
+
+<$transclude $tiddler="$:/journalapp/ui/UncategorizedItems" $mode="block"/>

@@ -1,0 +1,10 @@
+.mj-sync-btn .mj-sync-icon { fill: none !important; stroke: currentColor; }
+.mj-sync-btn .mj-sync-mark { display: none; }
+.mj-sync-idle .mj-sync-mark-ok, .mj-sync-ok .mj-sync-mark-ok { display: inline; }
+.mj-sync-syncing .mj-sync-mark-busy, .mj-sync-pending .mj-sync-mark-busy { display: inline; }
+.mj-sync-offline .mj-sync-mark-off, .mj-sync-local .mj-sync-mark-off { display: inline; }
+.mj-sync-error .mj-sync-mark-error { display: inline; }
+.mj-sync-syncing .mj-sync-icon { animation: mj-sync-pulse 1.2s ease-in-out infinite; }
+.mj-sync-error { color: #e88a8a !important; }
+.mj-sync-offline, .mj-sync-local { opacity: .75; }
+@keyframes mj-sync-pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
