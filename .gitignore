@@ -1,0 +1,9 @@
+# Données personnelles : ne jamais commiter d'export TiddlyWiki
+*.tiddlywiki.html
+tiddlers.html
+/private/
+
+# Clé de signature en clair
+*.p12
+*.jks
+*.keystore
