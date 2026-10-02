@@ -225,6 +225,17 @@ ipcMain.on("mj:open-external", (_e, url) => {
 
 // ---------- Mises à jour ----------
 
+function isNewer(a, b) {
+	const pa = String(a).split(".").map((n) => parseInt(n, 10) || 0);
+	const pb = String(b).split(".").map((n) => parseInt(n, 10) || 0);
+	for (let i = 0; i < 3; i++) {
+		if ((pa[i] || 0) !== (pb[i] || 0)) {
+			return (pa[i] || 0) > (pb[i] || 0);
+		}
+	}
+	return false;
+}
+
 function sendUpdate(event) {
 	if (win && !win.isDestroyed()) {
 		win.webContents.send("mj:updater:event", event);
@@ -249,8 +260,14 @@ handle("mj:updater:check", async () => {
 		return { available: false, version: app.getVersion() };
 	}
 	const result = await autoUpdater.checkForUpdates();
-	const version = result && result.updateInfo ? result.updateInfo.version : app.getVersion();
-	return { available: !!(result && result.isUpdateAvailable), version };
+	if (!result || !result.updateInfo) {
+		return { available: false, version: app.getVersion() };
+	}
+	const version = result.updateInfo.version;
+	const available = typeof result.isUpdateAvailable === "boolean"
+		? result.isUpdateAvailable
+		: isNewer(version, app.getVersion());
+	return { available, version };
 });
 
 handle("mj:updater:install", () => {

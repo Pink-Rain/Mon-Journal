@@ -121,9 +121,11 @@ const Host = {
 						Host.ui.toast("Tu as déjà la dernière version.");
 					}
 				}
-			} else if (manual && result && !result.available) {
+			} else if (result && !result.available) {
 				setUpdate({ state: "idle", message: "à jour" });
-				Host.ui.toast("Tu as déjà la dernière version.");
+				if (manual) {
+					Host.ui.toast("Tu as déjà la dernière version.");
+				}
 			}
 		} catch (e) {
 			setUpdate({ state: "idle", message: "" });
