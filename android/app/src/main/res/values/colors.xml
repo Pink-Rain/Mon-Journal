@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mj_background">#15161D</color>
+    <color name="colorPrimary">#1F2029</color>
+    <color name="colorPrimaryDark">#15161D</color>
+    <color name="colorAccent">#C58BD8</color>
+</resources>

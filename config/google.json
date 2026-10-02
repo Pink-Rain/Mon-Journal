@@ -1,0 +1,7 @@
+{
+	"projectId": "mon-journal-510423",
+	"desktopClientId": "1067088990249-6ocig8ubgemh4934vku07dmifkqdef27.apps.googleusercontent.com",
+	"androidClientId": "1067088990249-vpkq3pecblabpul1tp132ahqjt65k7ts.apps.googleusercontent.com",
+	"androidPackage": "com.pinkrain.monjournal",
+	"scope": "https://www.googleapis.com/auth/drive.appdata"
+}

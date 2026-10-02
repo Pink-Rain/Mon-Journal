@@ -13,11 +13,67 @@
     "url": "https://github.com/Pink-Rain/Mon-Journal.git"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
     "esbuild": "^0.28.2",
     "tiddlywiki": "^5.4.1"
   },
   "dependencies": {
-    "@capacitor/app": "^8.1.2",
-    "@capacitor/core": "^8.5.2"
+    "electron-updater": "^6.8.9"
+  },
+  "scripts": {
+    "extract": "python3 scripts/extract-plugin.py",
+    "build:web": "node scripts/build-web.mjs",
+    "dev": "node scripts/build-web.mjs --dev && npx http-server dist/web -p 8765 -c-1",
+    "build:win": "node scripts/build-web.mjs && node scripts/write-oauth-config.mjs && electron-builder --win --publish never",
+    "build:android": "node scripts/build-web.mjs && npx cap sync android"
+  },
+  "build": {
+    "appId": "com.pinkrain.monjournal",
+    "productName": "Mon Journal",
+    "copyright": "Pink-Rain",
+    "directories": {
+      "output": "release",
+      "buildResources": "build-resources"
+    },
+    "files": [
+      "electron/**/*",
+      "dist/web/**/*",
+      "config/google.json",
+      "build-resources/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build-resources/icon.ico",
+      "artifactName": "Mon-Journal-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Mon Journal",
+      "deleteAppDataOnUninstall": false
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Pink-Rain",
+        "repo": "Mon-Journal",
+        "releaseType": "release"
+      }
+    ]
   }
 }

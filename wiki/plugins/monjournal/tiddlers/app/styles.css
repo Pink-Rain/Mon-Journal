@@ -1,4 +1,4 @@
-.mj-sync-btn .mj-sync-icon { fill: none !important; stroke: currentColor; }
+.ja-app .mj-sync-btn svg.mj-sync-icon, .mj-sync-btn .mj-sync-icon { fill: none !important; stroke: currentColor; }
 .mj-sync-btn .mj-sync-mark { display: none; }
 .mj-sync-idle .mj-sync-mark-ok, .mj-sync-ok .mj-sync-mark-ok { display: inline; }
 .mj-sync-syncing .mj-sync-mark-busy, .mj-sync-pending .mj-sync-mark-busy { display: inline; }

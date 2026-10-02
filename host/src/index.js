@@ -307,12 +307,44 @@ function afterBoot() {
 		flush("pause");
 	});
 	p.onCloseRequest(() => flush("close"));
+	if (p.onBack) {
+		p.onBack(handleBack);
+	}
 	if (p.updater.supported) {
 		state.update.supported = true;
 		p.updater.onEvent(onUpdateEvent);
 		setTimeout(() => Host.checkUpdate(false), 8000);
 		setInterval(() => Host.checkUpdate(false), UPDATE_INTERVAL);
 	}
+}
+
+// Bouton « retour » d'Android : ferme d'abord ce qui est ouvert (panneau
+// Compte, fenêtres de l'appli, tiroirs du mode téléphone), sinon met l'appli
+// en arrière-plan au lieu de la quitter.
+function handleBack() {
+	if (Host.ui.modal) {
+		Host.ui.closeModal();
+		return;
+	}
+	const before = document.body.childElementCount;
+	document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true }));
+	setTimeout(() => {
+		if (document.body.childElementCount < before) {
+			return;
+		}
+		const tw = state.tw;
+		const open = (t) => tw && tw.wiki.getTiddlerText(t, "closed") === "open";
+		if (tw && (open("$:/temp/journalapp/mobile-left") || open("$:/temp/journalapp/mobile-right"))) {
+			tw.wiki.addTiddler({ title: "$:/temp/journalapp/mobile-left", text: "closed" });
+			tw.wiki.addTiddler({ title: "$:/temp/journalapp/mobile-right", text: "closed" });
+			return;
+		}
+		if (tw && tw.wiki.getTiddlerText("$:/state/journalapp/more-menu", "") === "open") {
+			tw.wiki.addTiddler({ title: "$:/state/journalapp/more-menu", text: "closed" });
+			return;
+		}
+		state.platform.minimize();
+	}, 60);
 }
 
 function showFatal(error) {

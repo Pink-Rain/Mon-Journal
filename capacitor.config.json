@@ -1,0 +1,16 @@
+{
+	"appId": "com.pinkrain.monjournal",
+	"appName": "Mon Journal",
+	"webDir": "dist/web",
+	"backgroundColor": "#15161d",
+	"android": {
+		"allowMixedContent": false,
+		"captureInput": true,
+		"webContentsDebuggingEnabled": false
+	},
+	"plugins": {
+		"CapacitorHttp": {
+			"enabled": false
+		}
+	}
+}

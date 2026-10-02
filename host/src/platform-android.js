@@ -138,6 +138,9 @@ export async function createAndroidPlatform() {
 				if (!this.pending) {
 					throw new AppError("update", "Aucune mise à jour en attente");
 				}
+				if (!this.progressListener) {
+					this.progressListener = NativeUpdater.addListener("progress", (p) => this.emit({ type: "progress", percent: p.percent }));
+				}
 				this.emit({ type: "downloading", version: this.pending.version });
 				await NativeUpdater.downloadAndInstall({ url: this.pending.url, version: this.pending.version });
 			}
@@ -147,6 +150,12 @@ export async function createAndroidPlatform() {
 		},
 		onPause(cb) {
 			App.addListener("pause", cb);
+		},
+		onBack(cb) {
+			App.addListener("backButton", cb);
+		},
+		minimize() {
+			App.minimizeApp();
 		},
 		onCloseRequest() {},
 		saveFile: async (name, content) => {
