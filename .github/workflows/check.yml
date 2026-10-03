@@ -1,11 +1,15 @@
-# Vérifie à chaque push que l'appli se construit (Windows et Android),
-# sans signature ni publication.
+# Vérifie à chaque push que l'appli se construit (Windows et Android).
+# Sur les branches de travail, publie aussi une pré-version « preview »
+# (non signée, sans connexion Google côté Windows) pour les tests internes.
 name: Check
 
 on:
   push:
     branches: ["main", "claude/**"]
   pull_request:
+
+permissions:
+  contents: write
 
 jobs:
   windows:
@@ -18,7 +22,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:win
-      - run: dir release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: release/Mon-Journal-Setup.exe
 
   android:
     runs-on: ubuntu-latest
@@ -36,8 +43,34 @@ jobs:
           java-version: 21
       - run: npm ci
       - run: npm run build:android
-      - name: Compiler l'APK (debug)
+      - name: Compiler l'APK (non signé)
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew --no-daemon assembleDebug
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release-unsigned.apk "$GITHUB_WORKSPACE/Mon-Journal-unsigned.apk"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: Mon-Journal-unsigned.apk
+
+  preview:
+    if: github.event_name == 'push'
+    needs: [windows, android]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: preview
+          name: Build de test (interne)
+          prerelease: true
+          make_latest: false
+          target_commitish: ${{ github.sha }}
+          body: Build interne de test, non signé. Les vraies versions sont les Releases « Mon Journal x.y.z ».
+          files: |
+            out/Mon-Journal-Setup.exe
+            out/Mon-Journal-unsigned.apk

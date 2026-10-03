@@ -266,6 +266,9 @@ async function openSession(session) {
 	const store = new Store(session.key);
 	await store.open();
 	state.store = store;
+	if (session.cloud) {
+		await adoptLocalProfile(store);
+	}
 
 	if (session.cloud) {
 		state.sync = new Sync({
@@ -291,6 +294,34 @@ async function openSession(session) {
 		Host.ui.hideGate();
 		afterBoot();
 	});
+}
+
+// Si l'appli a d'abord été utilisée sans compte Google (version sans
+// connexion), on rapatrie ces données dans le compte à la première connexion.
+async function adoptLocalProfile(store) {
+	const local = new Store("local");
+	try {
+		await local.open();
+		if (await local.isEmpty()) {
+			return;
+		}
+		Host.ui.showLoading("Rapatriement des données de cet appareil dans ton compte…");
+		await store.loadAll();
+		for (const fields of await local.loadAll()) {
+			if (!store.index.has(fields.title)) {
+				await store.save(fields);
+			}
+		}
+		local.close();
+		await new Promise((resolve) => {
+			const req = indexedDB.deleteDatabase("monjournal-local");
+			req.onsuccess = req.onerror = req.onblocked = () => resolve();
+		});
+	} catch (e) {
+		console.warn("[local] rapatriement impossible", e);
+	} finally {
+		local.close();
+	}
 }
 
 function afterBoot() {
