@@ -12,7 +12,7 @@ tags: $:/tags/JournalApp/View $:/journalapp/categories/settings
 <div class="ja-settings-hero">
 	<div class="ja-settings-kicker">APPARENCE · MON JOURNAL</div>
 	<h1>Global</h1>
-	<p>Clique une icône pour la changer : emoji, fichier, adresse, wiki ou Lucide.</p>
+	<p>Clique une icône pour la changer : emoji, fichier, adresse, bibliothèque ou Lucide.</p>
 </div>
 
 <details class="ja-native-fold">

@@ -87,9 +87,6 @@ PATCHES = {
     "$:/journalapp/modules/lib/entities.js": _replace_all(
         ('placeholder:"Emma, Julian…"', 'placeholder:"Alex, Sam…"'),
     ),
-    "$:/journalapp/modules/lib/entity-forms.js": _replace_all(
-        ('"Chez Emma, Parc, Maison…"', '"Chez Alex, Parc, Maison…"'),
-    ),
     "$:/journalapp/modules/lib/relation-modes.js": _replace_all(
         ('{"Andrea":["irl","msg"],"Emma":["vocal"]}', '{"Alex":["irl","msg"],"Sam":["vocal"]}'),
     ),
@@ -127,6 +124,7 @@ PATCHES = {
         ("Nom du field, ex. people", "Nom du champ, ex. people"),
     ),
     "$:/journalapp/views/settings/home": _replace_all(
+        ("emoji, fichier, adresse, wiki ou Lucide.", "emoji, fichier, adresse, bibliothèque ou Lucide."),
         ("Couleurs dans <code>$:/journalapp/settings/appearance</code>, icônes dans <code>$:/journalapp/icons/…</code>, images importées dans <code>$:/journalapp/library/…</code>. Les tags manuels d’une image vivent dans son champ <code>media-tags</code>, et les tags automatiques masqués dans <code>media-tags-off</code>.",
          "Tes couleurs, tes icônes et tes images sont enregistrées avec ton journal : sur cet appareil, et dans le dossier privé de l’appli sur ton Google Drive. Elles te suivent donc d’un appareil à l’autre."),
     ),
@@ -144,7 +142,16 @@ PATCHES = {
         ("var all=[],usage=imageUsageTags(wiki);\n  wiki.each(function(t,title){",
          "var all=[],usage=imageUsageTags(wiki);\n  wiki.eachShadowPlusTiddlers(function(t,title){"),
     ),
+    "$:/journalapp/modules/widgets/entity-settings.js": _replace_all(
+        ("Image du wiki", "Image de ma bibliothèque"),
+    ),
+    "$:/journalapp/modules/lib/entity-forms.js": _replace_all(
+        ('s.existing?"Dans le wiki":s.source', 's.existing?"Déjà enregistré":s.source'),
+        ('"Chez Emma, Parc, Maison…"', '"Chez Alex, Parc, Maison…"'),
+    ),
     "$:/journalapp/modules/widgets/journal-settings.js": _replace_all(
+        ("Depuis le wiki", "Depuis ma bibliothèque"),
+        ("Image du wiki", "Image de ma bibliothèque"),
         ('wiki.filterTiddlers("[tag[$:/tags/JournalApp/Category]]")',
          'wiki.filterTiddlers("[all[shadows+tiddlers]tag[$:/tags/JournalApp/Category]]")'),
         ('wiki.each(function(t,title){if(t&&t.fields&&/^image\\//.test(String(t.fields.type||""))){images.push(title);}});',

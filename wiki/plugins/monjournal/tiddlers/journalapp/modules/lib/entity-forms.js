@@ -149,7 +149,7 @@ function addressInput(widget,parent,label,value,opts){
     (items||[]).slice(0,10).forEach(function(s){
       var b=button(doc,menu,"ja-qe-autocomplete-item","");
       mk(doc,b,"span","ja-entity-address-main",s.label||s.value||"");
-      if(s.source){mk(doc,b,"span","ja-entity-address-source",s.existing?"Dans le wiki":s.source);}
+      if(s.source){mk(doc,b,"span","ja-entity-address-source",s.existing?"Déjà enregistré":s.source);}
       b.addEventListener("mousedown",function(e){e.preventDefault();});
       b.addEventListener("click",function(){choose(s);});
     });

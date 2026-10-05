@@ -103,7 +103,7 @@ EntitySettingsWidget.prototype.iconPicker=function(parent,item,onChange,folder){
         wiki.addTiddler(new $tw.Tiddler({title:title,type:"image/png",text:"",_canonical_uri:String(uri).trim()},{created:new Date(),modified:new Date()}));
         setImage(title);
       }},
-      {label:"🖼️ Image du wiki",run:function(){Media.openWikiImagePicker(doc,wiki,b,function(tt){setImage(tt);});}}
+      {label:"🖼️ Image de ma bibliothèque",run:function(){Media.openWikiImagePicker(doc,wiki,b,function(tt){setImage(tt);});}}
     ];
     if(item.image){items.push({sep:true},{label:"✕ Revenir à l’emoji",run:function(){setImage("");}});}
     popover(doc,b,items);

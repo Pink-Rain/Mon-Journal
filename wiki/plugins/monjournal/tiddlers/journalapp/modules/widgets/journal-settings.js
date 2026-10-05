@@ -314,7 +314,7 @@ CategoriesWidget.prototype.build=function(root){
           },{modified:new Date()}));
           drawIcon();
         }},
-        {label:"🖼️  Depuis le wiki",run:function(){pickFromWiki(anchor);}},
+        {label:"🖼️  Depuis ma bibliothèque",run:function(){pickFromWiki(anchor);}},
         {sep:true},
         {label:"✦  Lucide…",run:function(){
           openIconBrowser(doc,wiki,{color:accent(),onPick:function(svg){
@@ -860,7 +860,7 @@ JournalSettingsWidget.prototype.iconPicker=function(parent,item,onChange,folder)
         },{created:new Date(),modified:new Date()}));
         setImage(title);
       }},
-      {label:"🖼️  Image du wiki",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){setImage(tt);});}},
+      {label:"🖼️  Image de ma bibliothèque",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){setImage(tt);});}},
       {label:"✦  Lucide…",run:function(){
         openIconBrowser(doc,wiki,{onPick:function(svg,name){
           var title=(folder||LIB_FOLDER)+"/lucide-"+name;
@@ -918,7 +918,7 @@ JournalSettingsWidget.prototype.thumbPicker=function(parent,value,onChange,folde
         },{created:new Date(),modified:new Date()}));
         set(title);
       }},
-      {label:"🖼️  Depuis le wiki",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){set(tt);});}},
+      {label:"🖼️  Depuis ma bibliothèque",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){set(tt);});}},
       {label:"✦  Lucide…",run:function(){
         openIconBrowser(doc,wiki,{onPick:function(svg,name){
           var title=(folder||LIB_FOLDER)+"/lucide-"+name;
@@ -1314,7 +1314,7 @@ AgendaSettingsWidget.prototype.build=function(root){
           },{created:new Date(),modified:new Date()}));
           setImage(title);
         }},
-        {label:"🖼️  Image du wiki",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){setImage(tt);});}},
+        {label:"🖼️  Image de ma bibliothèque",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){setImage(tt);});}},
         {label:"✦  Lucide…",run:function(){
           openIconBrowser(doc,wiki,{
             color:item.color||"#e8e6ef",
@@ -1506,7 +1506,7 @@ AgendaSettingsWidget.prototype.build=function(root){
           wiki.addTiddler(new $tw.Tiddler({title:title,type:"image/png",text:"",_canonical_uri:uri.trim(),"media-name":item.label+" · "+label},{created:new Date(),modified:new Date()}));
           setBack(title);
         }},
-        {label:"🖼️  Image du wiki",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){setBack(tt);});}}
+        {label:"🖼️  Image de ma bibliothèque",run:function(){openWikiImagePicker(doc,wiki,b,function(tt){setBack(tt);});}}
       ];
       if(value()){items.push({sep:true},{label:"✕  Aucun fond automatique",run:function(){setBack("");}});}
       popover(doc,b,items);
