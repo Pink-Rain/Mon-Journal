@@ -5,7 +5,7 @@ module-type: library
 
 Mon Journal — modes d'interaction attachés à chaque Relation.
 Field persistant :
-  relation-modes: {"Andrea":["irl","msg"],"Emma":["vocal"]}
+  relation-modes: {"Alex":["irl","msg"],"Sam":["vocal"]}
 \*/
 "use strict";
 

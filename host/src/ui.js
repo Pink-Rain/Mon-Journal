@@ -179,14 +179,14 @@ export class UI {
 		const status = host.syncStatus();
 		const update = host.updateState();
 
-		const avatar = account && account.photo
+		const avatar = account && account.cloud && account.photo
 			? el("img", { class: "mj-avatar", src: account.photo, alt: "", referrerpolicy: "no-referrer" })
-			: el("div", { class: "mj-avatar mj-avatar-letter" }, ((account && (account.name || account.email)) || "?").slice(0, 1).toUpperCase());
+			: el("div", { class: "mj-avatar mj-avatar-letter" }, ((account && account.cloud && (account.name || account.email)) || "•").slice(0, 1).toUpperCase());
 		body.appendChild(el("section", { class: "mj-section mj-account" }, [
 			avatar,
 			el("div", {}, [
-				el("strong", {}, account ? account.name || account.email : "Mode local"),
-				el("div", { class: "mj-muted" }, account ? account.email : "Pas de compte Google : les données restent dans ce navigateur.")
+				el("strong", {}, account && account.cloud ? account.name || account.email : "Sans compte Google"),
+				el("div", { class: "mj-muted" }, account && account.cloud ? account.email : "Tes données restent sur cet appareil.")
 			])
 		]));
 

@@ -10,7 +10,7 @@ recherche locale et autocomplétion géographique.
 "use strict";
 
 var DEFINITIONS = {
-  person:   {tag:"Relations",kind:"person",field:"people",label:"Personnes",placeholder:"Emma, Julian…"},
+  person:   {tag:"Relations",kind:"person",field:"people",label:"Personnes",placeholder:"Alex, Sam…"},
   activity: {tag:"Activité",kind:"activity",field:"activities",label:"Activités",placeholder:"Lecture, Balade…"},
   project:  {tag:"Projet",kind:"project",field:"projects",label:"Projets",placeholder:"Mon Journal, Projet X…"},
   event:    {tag:"Agenda",kind:"event",field:"events",label:"Événements",placeholder:"Road to Agde, Rendez-vous…"},

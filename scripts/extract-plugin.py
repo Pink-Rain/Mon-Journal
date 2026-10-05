@@ -71,6 +71,17 @@ PATCHES = {
         ("[tag<ja-category>tag[$:/tags/JournalApp/View]] [tag[$:/tags/JournalApp/View]field:category<ja-category>]",
          "[all[shadows+tiddlers]tag<ja-category>tag[$:/tags/JournalApp/View]] [all[shadows+tiddlers]tag[$:/tags/JournalApp/View]field:category<ja-category>]"),
     ),
+    # Exemples neutres à la place des prénoms de la vraie vie : l'appli est
+    # partagée, les autres utilisateurs n'ont pas à les voir.
+    "$:/journalapp/modules/lib/entities.js": _replace_all(
+        ('placeholder:"Emma, Julian…"', 'placeholder:"Alex, Sam…"'),
+    ),
+    "$:/journalapp/modules/lib/entity-forms.js": _replace_all(
+        ('"Chez Emma, Parc, Maison…"', '"Chez Alex, Parc, Maison…"'),
+    ),
+    "$:/journalapp/modules/lib/relation-modes.js": _replace_all(
+        ('{"Andrea":["irl","msg"],"Emma":["vocal"]}', '{"Alex":["irl","msg"],"Sam":["vocal"]}'),
+    ),
     "$:/journalapp/modules/lib/jmedia.js": _replace_all(
         ("var all=[],usage=imageUsageTags(wiki);\n  wiki.each(function(t,title){",
          "var all=[],usage=imageUsageTags(wiki);\n  wiki.eachShadowPlusTiddlers(function(t,title){"),

@@ -377,7 +377,7 @@ function openPlace(widget,opts){
         kicker:"Lieux",icon:"📍",saveLabel:editTitle?"Enregistrer":"Créer",modalClass:"ja-place-form"
       }),doc=widget.document,
       line1=mk(doc,sh.body,"div","ja-entity-row ja-place-name-row"),
-      name=simpleInput(doc,line1,"Nom du lieu","text",String(f.label||editTitle||""),"Chez Emma, Parc, Maison…"),
+      name=simpleInput(doc,line1,"Nom du lieu","text",String(f.label||editTitle||""),"Chez Alex, Parc, Maison…"),
       placeType=fieldSelect(doc,line1,"Type de lieu",f["place-type"]||"",[["","Sans type"]].concat(cfg.types||[])),
       line2=mk(doc,sh.body,"div","ja-entity-row"),
       addr=addressInput(widget,line2,"Adresse",f.address||"",{}),
