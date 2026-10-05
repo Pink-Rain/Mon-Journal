@@ -3,7 +3,7 @@ title: $:/journalapp/ui/SidebarBottomViews
 \whitespace trim
 <$let
 	ja-bottom-category={{{ [[$:/state/journalapp/category]get[text]else[$:/journalapp/categories/accueil]] }}}
-	ja-bottom-label={{{ [<ja-bottom-category>get[all-tiddlers-label]else[Voir tous les tiddlers]] }}}
+	ja-bottom-label={{{ [<ja-bottom-category>get[all-tiddlers-label]else[Tout voir]] }}}
 >
 <div class="ja-sidebar-bottom-views">
 
@@ -29,7 +29,7 @@ title: $:/journalapp/ui/SidebarBottomViews
 	<$list filter="[<ja-bottom-category>match[$:/journalapp/categories/accueil]]">
 		<$button
 			class={{{ [<ja-view>match[$:/journalapp/views/accueil/uncategorized]then[ja-sidebar-bottom-link ja-active]else[ja-sidebar-bottom-link]] }}}
-			tooltip="Voir tous les tiddlers sans catégorie"
+			tooltip="Éléments sans catégorie"
 		>
 			<$action-setfield
 				$tiddler="$:/state/journalapp/view"
@@ -43,7 +43,7 @@ title: $:/journalapp/ui/SidebarBottomViews
 				$value="closed"
 				$timestamp="no"
 			/>
-			Voir tous les tiddlers sans catégorie
+			Éléments sans catégorie
 		</$button>
 	</$list>
 

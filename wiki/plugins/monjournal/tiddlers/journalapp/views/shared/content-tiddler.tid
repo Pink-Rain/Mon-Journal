@@ -1,5 +1,5 @@
 title: $:/journalapp/views/shared/content-tiddler
-caption: Tiddler
+caption: Fiche
 page-width: wide
 slug: content-tiddler
 ui-subheader: $:/journalapp/ui/SubHeaderContentTiddler
@@ -9,12 +9,13 @@ ui-subheader: $:/journalapp/ui/SubHeaderContentTiddler
 	ja-content-tiddler={{{ [[$:/state/journalapp/content-tiddler]get[text]] }}}
 >
 	<$list filter="[<ja-content-tiddler>is[tiddler]]">
+		{{$:/plugins/pinkrain/monjournal/ui/ContentActions}}
 		<$transclude $tiddler=<<ja-content-tiddler>> $mode="block"/>
 	</$list>
 
 	<$list filter="[<ja-content-tiddler>!is[tiddler]]">
 		<div class="ja-empty">
-			Aucun tiddler sélectionné.
+			Aucune fiche sélectionnée.
 		</div>
 	</$list>
 </$let>

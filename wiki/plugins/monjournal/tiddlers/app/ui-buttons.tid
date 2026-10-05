@@ -1,0 +1,4 @@
+title: $:/plugins/pinkrain/monjournal/ui/CreateButton
+
+\whitespace trim
+<button class="tc-btn-invisible mj-dock-btn" type="button" data-mj-action="create" title="Créer" aria-label="Créer">{{$:/core/images/new-button}}</button>

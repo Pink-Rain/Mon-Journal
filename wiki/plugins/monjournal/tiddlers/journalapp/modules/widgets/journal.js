@@ -2729,17 +2729,17 @@ JournalWidget.prototype.buildLinksField=function(parent,state){
       var body=mk(doc,rowEl,"div","ja-jmedia-rowbody");
       var url=mk(doc,body,"input","ja-jmedia-input");
       url.type="text";
-      url.placeholder=link.internal?"Titre du tiddler":"https://…";
+      url.placeholder=link.internal?"Titre de la fiche":"https://…";
       url.value=link.url||"";
       url.addEventListener("input",function(){link.url=url.value;});
 
       var opts=mk(doc,body,"div","ja-jmedia-opts");
       var intBtn=btn(doc,opts,"ja-jmedia-chip"+(link.internal?" is-on":""),"Interne");
-      intBtn.title="Pointe vers un tiddler de ce wiki";
+      intBtn.title="Pointe vers une fiche de ton journal";
       intBtn.addEventListener("click",function(){
         link.internal=!link.internal;
         intBtn.classList.toggle("is-on",link.internal);
-        url.placeholder=link.internal?"Titre du tiddler":"https://…";
+        url.placeholder=link.internal?"Titre de la fiche":"https://…";
       });
       var embBtn=btn(doc,opts,"ja-jmedia-chip"+(link.embed?" is-on":""),"Embarquer");
       embBtn.title="Afficher le contenu au lieu du lien";

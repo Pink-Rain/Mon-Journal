@@ -1,0 +1,4 @@
+title: $:/plugins/pinkrain/monjournal/ui/SearchButton
+
+\whitespace trim
+<button class="tc-btn-invisible mj-dock-btn" type="button" data-mj-action="search" title="Rechercher" aria-label="Rechercher">{{$:/core/images/advanced-search-button}}</button>

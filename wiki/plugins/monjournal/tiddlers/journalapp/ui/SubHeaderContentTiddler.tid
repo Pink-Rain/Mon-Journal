@@ -2,9 +2,9 @@ title: $:/journalapp/ui/SubHeaderContentTiddler
 
 \whitespace trim
 <$let
-	ja-content-title={{{ [[$:/state/journalapp/content-tiddler]get[text]else[Tiddler]] }}}
+	ja-content-title={{{ [[$:/state/journalapp/content-tiddler]get[text]else[Fiche]] }}}
 >
 <div class="ja-subheader-default">
-	<$text text=<<ja-content-title>>/>
+	<$text text={{{ [<ja-content-title>mjdisplay[]] }}}/>
 </div>
 </$let>

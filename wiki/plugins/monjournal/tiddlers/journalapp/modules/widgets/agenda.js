@@ -2633,7 +2633,7 @@ AgendaWidget.prototype.openItemMenu=function(item,x,y){
     if(!hi.done){add("– Annuler",function(){Agenda.setHabitStatusOnDate(self.wiki,ref,habitDate,"cancelled");});}
     if(!isPast&&(hi.explicitFailed||hi.cancelled)){add("↩ Remettre à faire",function(){Agenda.clearHabitStatusOnDate(self.wiki,ref,habitDate);});}
     add("✎ Modifier l’habitude",function(){Forms.openHabit(self,{editTitle:ref});});
-    add("↗ Ouvrir le tiddler",function(){self.dispatchEvent({type:"tm-navigate",navigateTo:ref});});
+    add("↗ Ouvrir la fiche",function(){self.dispatchEvent({type:"tm-navigate",navigateTo:ref});});
     add("🗑 Supprimer",function(){if(window.confirm("Supprimer « "+item.title+" » ?")){Agenda.deleteAgendaObject(self.wiki,ref,"habit");}},"is-danger");
   }else if(item.role==="birthday"){add("👤 Ouvrir la relation",function(){self.dispatchEvent({type:"tm-navigate",navigateTo:ref});});add("ℹ Anniversaire virtuel",function(){});}
   else{
@@ -2654,7 +2654,7 @@ AgendaWidget.prototype.openItemMenu=function(item,x,y){
       if(item.kind==="event"){add("＋ Nouvelle occurrence indépendante…",function(){Forms.openOccurrence(self,ref,Agenda.addDays(item.date||self.date,7));});}
       if(item.kind==="event"&&item.recurring){add("◉ Modifier cette occurrence…",function(){Forms.openOccurrenceEdit(self,item);});add("✕ Annuler cette occurrence",function(){Agenda.setOccurrenceOverride(self.wiki,ref,item.originalDate||item.date,{status:"annule",date:item.date});});if(item.override){add("↺ Réinitialiser cette occurrence",function(){Agenda.clearOccurrenceOverride(self.wiki,ref,item.originalDate||item.date);});}}
     }
-    add("↗ Ouvrir le tiddler",function(){self.dispatchEvent({type:"tm-navigate",navigateTo:ref});});add("🗑 Supprimer",function(){var cascade=item.kind==="todo",msg=cascade?"Supprimer « "+item.title+" » et toutes ses sous-tâches ?":"Supprimer « "+item.title+" » ?";if(window.confirm(msg)){Agenda.deleteAgendaObject(self.wiki,ref,item.kind,{cascade:cascade});}},"is-danger");
+    add("↗ Ouvrir la fiche",function(){self.dispatchEvent({type:"tm-navigate",navigateTo:ref});});add("🗑 Supprimer",function(){var cascade=item.kind==="todo",msg=cascade?"Supprimer « "+item.title+" » et toutes ses sous-tâches ?":"Supprimer « "+item.title+" » ?";if(window.confirm(msg)){Agenda.deleteAgendaObject(self.wiki,ref,item.kind,{cascade:cascade});}},"is-danger");
   }
   var away=function(e){if(!pop.contains(e.target)){pop.remove();doc.removeEventListener("mousedown",away,true);}};setTimeout(function(){doc.addEventListener("mousedown",away,true);},0);
 };

@@ -1,0 +1,8 @@
+title: $:/plugins/pinkrain/monjournal/ui/ContentActions
+
+\whitespace trim
+<$list filter="[<ja-content-tiddler>!is[system]!has[kind]] [<ja-content-tiddler>!is[system]field:kind[note]] +[limit[1]]" variable="mj-editable">
+<div class="mj-content-actions">
+<button class="ja-agenda-inline-edit mj-content-edit" type="button" data-mj-action="edit-note" data-mj-title=<<ja-content-tiddler>>>✎ Modifier</button>
+</div>
+</$list>

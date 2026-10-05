@@ -12,9 +12,9 @@ title: $:/journalapp/ui/SmartTiddlerGrid
 	>
 		<details class=<<ja-card-class>> data-card-size=<<ja-card-size>> open="open">
 			<summary class="ja-category-item-head ja-category-item-summary">
-				<span class="ja-category-item-title"><$link to=<<ja-item>>><$text text=<<ja-item>>/></$link></span>
+				<span class="ja-category-item-title"><$link to=<<ja-item>>><$text text={{{ [<ja-item>mjdisplay[]] }}}/></$link></span>
 				<span class="ja-category-item-meta">
-					<$list filter="[<ja-item>has[kind]]"><span class="ja-item-kind"><$view tiddler=<<ja-item>> field="kind"/></span></$list>
+					<$list filter="[<ja-item>has[kind]]"><span class="ja-item-kind"><$text text={{{ [<ja-item>get[kind]mjkindlabel[]] }}}/></span></$list>
 					<$list filter="[<ja-item>has[modified]]"><span class="ja-item-date">mod. <$view tiddler=<<ja-item>> field="modified" format="date" template="DD/0MM/YYYY"/></span></$list>
 				</span>
 			</summary>
@@ -24,7 +24,7 @@ title: $:/journalapp/ui/SmartTiddlerGrid
 		</details>
 	</$let>
 	<$list-empty>
-		<div class="ja-inventory-empty">Aucun tiddler ne correspond à ces critères. 🫥</div>
+		<div class="ja-inventory-empty">Rien ne correspond à ces critères. 🫥</div>
 	</$list-empty>
 </$list>
 </div>

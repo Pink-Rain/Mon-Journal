@@ -1,0 +1,4 @@
+title: $:/plugins/pinkrain/monjournal/ui/SettingsButton
+
+\whitespace trim
+<button class="tc-btn-invisible mj-dock-btn" type="button" data-mj-action="settings" title="Réglages" aria-label="Réglages">{{$:/core/images/options-button}}</button>

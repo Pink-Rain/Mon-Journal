@@ -33,7 +33,7 @@ tags: $:/tags/JournalApp/View $:/journalapp/categories/settings
 <summary>Où sont rangées les données<span class="ja-native-fold-sub">référence</span></summary>
 <div class="ja-native-fold-body">
 <div class="ja-settings-footnote">
-Couleurs dans <code>$:/journalapp/settings/appearance</code>, icônes dans <code>$:/journalapp/icons/…</code>, images importées dans <code>$:/journalapp/library/…</code>. Les tags manuels d’une image vivent dans son champ <code>media-tags</code>, et les tags automatiques masqués dans <code>media-tags-off</code>.
+Tes couleurs, tes icônes et tes images sont enregistrées avec ton journal : sur cet appareil, et dans le dossier privé de l’appli sur ton Google Drive. Elles te suivent donc d’un appareil à l’autre.
 </div>
 </div>
 </details>

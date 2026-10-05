@@ -23,10 +23,10 @@ title: $:/journalapp/ui/InventoryHeader
 	<div class="ja-inventory-toolbar">
 		<div class="ja-inventory-search-wrap">
 			<span class="ja-inventory-search-icon">⌕</span>
-			<$edit-text tiddler=<<ja-search-state>> field="text" tag="input" type="search" class="ja-inventory-search" placeholder="Rechercher dans ces tiddlers…"/>
+			<$edit-text tiddler=<<ja-search-state>> field="text" tag="input" type="search" class="ja-inventory-search" placeholder="Rechercher…"/>
 		</div>
 
-		<span class="ja-inventory-count" title="Résultats affichés / tiddlers disponibles"><strong><$text text=<<ja-result-count>>/></strong>/<span><$text text=<<ja-total-count>>/></span></span>
+		<span class="ja-inventory-count" title="Résultats affichés / éléments disponibles"><strong><$text text=<<ja-result-count>>/></strong>/<span><$text text=<<ja-total-count>>/></span></span>
 
 		<$reveal state=<<ja-panel-state>> type="match" text="open">
 			<$button setTitle=<<ja-panel-state>> setTo="" class="ja-inventory-filter-toggle ja-is-open" tooltip="Fermer les filtres">Filtres ▴</$button>
@@ -35,7 +35,7 @@ title: $:/journalapp/ui/InventoryHeader
 			<$button setTitle=<<ja-panel-state>> setTo="open" class="ja-inventory-filter-toggle" tooltip="Ouvrir les filtres">Filtres</$button>
 		</$reveal>
 
-		<label class="ja-inventory-sort-label" title="Trier les tiddlers">
+		<label class="ja-inventory-sort-label" title="Trier">
 			<span class="ja-sort-symbol">↕</span>
 			<$select tiddler=<<ja-sort-state>> field="text" class="ja-inventory-select ja-sort-select">
 				<option value="">Sans tri</option>
@@ -61,10 +61,10 @@ title: $:/journalapp/ui/InventoryHeader
 					<span class="ja-filter-chip">tag · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-tag-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
 				</$list>
 				<$list filter="[<ja-kind-state>get[text]!is[blank]]" variable="ja-active-value">
-					<span class="ja-filter-chip">kind · <$text text=<<ja-active-value>>/> <$button setTitle=<<ja-kind-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
+					<span class="ja-filter-chip">type · <$text text={{{ [<ja-active-value>mjkindlabel[]] }}}/> <$button setTitle=<<ja-kind-state>> setTo="" class="ja-filter-chip-x">×</$button></span>
 				</$list>
 				<$list filter="[<ja-field-state>get[text]!is[blank]]" variable="ja-active-value">
-					<span class="ja-filter-chip">field · <$text text=<<ja-active-value>>/><$list filter="[<ja-field-value-state>get[text]!is[blank]]" variable="ja-field-chip-value">: <$text text=<<ja-field-chip-value>>/></$list> <$button class="ja-filter-chip-x"><$action-setfield $tiddler=<<ja-field-state>> text=""/><$action-setfield $tiddler=<<ja-field-value-state>> text=""/>×</$button></span>
+					<span class="ja-filter-chip">champ · <$text text=<<ja-active-value>>/><$list filter="[<ja-field-value-state>get[text]!is[blank]]" variable="ja-field-chip-value">: <$text text=<<ja-field-chip-value>>/></$list> <$button class="ja-filter-chip-x"><$action-setfield $tiddler=<<ja-field-state>> text=""/><$action-setfield $tiddler=<<ja-field-value-state>> text=""/>×</$button></span>
 				</$list>
 				<$list filter="[<ja-date-mode-state>get[text]!is[blank]]" variable="ja-active-value">
 					<span class="ja-filter-chip">date · <$text text=<<ja-active-value>>/> <$button class="ja-filter-chip-x"><$action-setfield $tiddler=<<ja-date-mode-state>> text=""/><$action-setfield $tiddler=<<ja-date-from-state>> text=""/><$action-setfield $tiddler=<<ja-date-to-state>> text=""/>×</$button></span>
@@ -88,10 +88,10 @@ title: $:/journalapp/ui/InventoryHeader
 					</$select>
 				</label>
 
-				<label class="ja-filter-control"><span>Kind</span>
+				<label class="ja-filter-control"><span>Type</span>
 					<$select tiddler=<<ja-kind-state>> field="text" class="ja-inventory-select">
-						<option value="">Tous les kinds</option>
-						<$list filter=<<ja-kind-options-filter>> variable="ja-filter-option"><option value=<<ja-filter-option>>><$text text=<<ja-filter-option>>/></option></$list>
+						<option value="">Tous les types</option>
+						<$list filter=<<ja-kind-options-filter>> variable="ja-filter-option"><option value=<<ja-filter-option>>><$text text={{{ [<ja-filter-option>mjkindlabel[]] }}}/></option></$list>
 					</$select>
 				</label>
 
@@ -123,12 +123,12 @@ title: $:/journalapp/ui/InventoryHeader
 
 			<div class="ja-filter-section ja-filter-section-two">
 				<div>
-					<div class="ja-filter-section-title">Field personnalisé</div>
+					<div class="ja-filter-section-title">Champ personnalisé</div>
 					<div class="ja-filter-inline-fields">
-						<$edit-text tiddler=<<ja-field-state>> field="text" tag="input" type="text" class="ja-inventory-input" placeholder="Nom du field, ex. people"/>
+						<$edit-text tiddler=<<ja-field-state>> field="text" tag="input" type="text" class="ja-inventory-input" placeholder="Nom du champ, ex. people"/>
 						<$edit-text tiddler=<<ja-field-value-state>> field="text" tag="input" type="text" class="ja-inventory-input" placeholder="Valeur (facultatif)"/>
 					</div>
-					<div class="ja-filter-help">Valeur vide = tous les tiddlers possédant ce field.</div>
+					<div class="ja-filter-help">Valeur vide = tous les éléments qui ont ce champ.</div>
 				</div>
 
 				<div>

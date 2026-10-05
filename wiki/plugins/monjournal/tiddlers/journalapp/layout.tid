@@ -22,10 +22,10 @@ tags: $:/tags/Layout
 
 \define ja-dock()
 <div class="ja-dock">
-<span class="ja-core-btn" title="Nouveau tiddler">{{$:/core/ui/Buttons/new-tiddler}}</span>
-<span class="ja-core-btn" title="Paramètres">{{$:/core/ui/Buttons/control-panel}}</span>
+<span class="ja-core-btn" title="Créer">{{$:/plugins/pinkrain/monjournal/ui/CreateButton}}</span>
+<span class="ja-core-btn" title="Réglages">{{$:/plugins/pinkrain/monjournal/ui/SettingsButton}}</span>
 <span class="ja-core-btn" title="Sauvegarder">{{$:/plugins/pinkrain/monjournal/ui/SyncButton}}</span>
-<span class="ja-core-btn" title="Plus d'actions">{{$:/journalapp/ui/Buttons/more-global}}</span>
+<span class="ja-core-btn" title="Rechercher">{{$:/plugins/pinkrain/monjournal/ui/SearchButton}}</span>
 </div>
 \end
 
@@ -36,7 +36,6 @@ tags: $:/tags/Layout
 	openLinkFromOutsideRiver="top"
 	relinkOnRename={{$:/config/RelinkOnRename}}
 >
-{{$:/core/ui/CommandPaletteTemplate}}
 <$let
 	tv-config-toolbar-icons={{$:/config/Toolbar/Icons}}
 	tv-config-toolbar-text={{$:/config/Toolbar/Text}}
@@ -69,7 +68,7 @@ tags: $:/tags/Layout
 <div class=<<ja-app-class>> style=<<ja-app-style>>>
 <header class="ja-mobile-top">
 <div class="ja-mobile-nav-scroll"><<ja-nav>></div>
-<div class="ja-mobile-set">{{$:/core/ui/Buttons/control-panel}}</div>
+<div class="ja-mobile-set">{{$:/plugins/pinkrain/monjournal/ui/SearchButton}}{{$:/plugins/pinkrain/monjournal/ui/SettingsButton}}</div>
 </header>
 <$button class="ja-backdrop" tooltip="Fermer les panneaux">
 <$action-setfield $tiddler="$:/temp/journalapp/mobile-left" $field="text" $value="closed" $timestamp="no"/>
@@ -146,13 +145,12 @@ tags: $:/tags/Layout
 </div>
 </aside>
 
-<$transclude $tiddler="$:/journalapp/ui/MoreGlobalOverlay" $mode="block"/>
 
 <$list filter="[list[$:/temp/journalapp/story]limit[1]]" variable="ja-story">
 <div class="ja-story-backdrop">
 <div class="ja-story-panel">
 <div class="ja-story-top">
-<span>Fenêtre TiddlyWiki</span>
+<span>Fiche</span>
 <$button class="ja-story-close">
 <$action-setfield $tiddler="$:/temp/journalapp/story" $field="list" $value="" $timestamp="no"/>
 × Fermer
